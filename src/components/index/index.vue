@@ -28,28 +28,60 @@
         </ul>
       </div>
       <h2>玩具推荐</h2>
-
       <div class="container best-list">
         <ul class="row">
-          <router-link to="list" tag="li" class="col-xs-6">
+          <router-link :to="'/detail/'+1" tag="li" class="col-xs-6">
             <div>
               <img src="../../assets/img/index/36icons-Home.png" alt="">
               <p>名称名称名称名称名称名称名称名称</p>
             </div>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-6">
+          <router-link :to="'/detail/'+2" tag="li" class="col-xs-6">
             <div>
               <img src="../../assets/img/index/36icons-Home.png" alt="">
               <p>名称名称名称名称名称名称名称名称</p>
             </div>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-6">
+          <router-link :to="'/detail/'+3" tag="li" class="col-xs-6">
             <div>
               <img src="../../assets/img/index/36icons-Home.png" alt="">
               <p>名称名称名称名称名称名称名称名称</p>
             </div>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-6">
+          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
+            <div>
+              <img src="../../assets/img/index/36icons-Home.png" alt="">
+              <p>名称名称名称名称名称名称名称名称</p>
+            </div>
+          </router-link>
+        </ul>
+      </div>
+      <h2>新品玩具
+        <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+          更多>>
+        </router-link>
+      </h2>
+      <div class="container best-list">
+        <ul class="row">
+          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
+            <div>
+              <img src="../../assets/img/index/36icons-Home.png" alt="">
+              <p>名称名称名称名称名称名称名称名称</p>
+            </div>
+          </router-link>
+          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
+            <div>
+              <img src="../../assets/img/index/36icons-Home.png" alt="">
+              <p>名称名称名称名称名称名称名称名称</p>
+            </div>
+          </router-link>
+          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
+            <div>
+              <img src="../../assets/img/index/36icons-Home.png" alt="">
+              <p>名称名称名称名称名称名称名称名称</p>
+            </div>
+          </router-link>
+          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
             <div>
               <img src="../../assets/img/index/36icons-Home.png" alt="">
               <p>名称名称名称名称名称名称名称名称</p>
@@ -69,6 +101,9 @@
       },
       activated() {
 
+      },
+      methods: {
+
       }
     }
 </script>
@@ -82,6 +117,9 @@
   }
   .nav-global{
     padding: 8px 0;
+    .nav-index{
+      margin:0;
+    }
     li{
       p{
         margin-top:8px;
@@ -94,6 +132,10 @@
     font-size: 18px;
     margin: 10px 0;
     background-color: #cccccc;
+    a{
+      font-size: 14px;
+      float: right;
+    }
   }
   .best-list{
     li{

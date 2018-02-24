@@ -41,7 +41,8 @@ textarea {
 textarea {
   resize: none;
 }
-a {
+a,
+a:hover {
   text-decoration: none;
   color: #656565;
 }
@@ -60,11 +61,32 @@ a {
 .fr {
   float: right;
 }
+html,
 body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   position: relative;
+}
+@font-face {
+  font-family: 'iconfont';
+  /* project id 525334 */
+  src: url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.eot');
+  src: url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.woff') format('woff'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.iconfont.icon-up:after {
+  content: '\e605';
+}
+.iconfont.icon-down:after {
+  content: '\e608';
 }
 .container {
   margin: 0 auto;
@@ -78,6 +100,7 @@ body {
   bottom: 0;
   left: 0;
   background-color: #ffffff;
+  z-index: 10;
 }
 .global-nav li {
   border-top: 1px solid #666666;
@@ -92,6 +115,16 @@ body {
 }
 .main-box {
   padding: 0 0 70px 0;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+image[lazy=loading] {
+  width: 40px;
+  height: 300px;
+  margin: auto;
 }
 .child-view {
   position: absolute;
