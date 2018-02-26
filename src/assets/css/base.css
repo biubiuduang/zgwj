@@ -143,3 +143,13 @@ image[lazy=loading] {
   -webkit-transform: translate(-50px, 0);
   transform: translate(-50px, 0);
 }
+.user-header .mint-cell-wrapper {
+  padding: 20px 10px;
+}
+.mint-cell-wrapper {
+  background-image: none;
+  border-bottom: 1px solid #e1e1e1;
+}
+.mint-cell-title {
+  text-align: left;
+}

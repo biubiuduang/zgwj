@@ -61,7 +61,6 @@
       props:[],
       data() {
         return {
-          lists: [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],
           value:"",
           list: {
             isShow: false,
@@ -192,9 +191,6 @@
         },
         loadBottom: function() {
          // 加载更多数据
-          for(var i = 100 ;i <110;i++){
-            this.lists.push(i);
-          }
           this.allLoaded = true;// 若数据已全部获取完毕
           this.$refs.loadmore.onBottomLoaded();
         },

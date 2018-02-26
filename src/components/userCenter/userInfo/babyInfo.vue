@@ -1,0 +1,78 @@
+<template>
+    <div class="address">
+      <p class="title">宝宝信息:</p>
+      <el-form label-width="100px" class="demo-ruleForm">
+        <el-form-item label="宝宝姓名:">
+          <el-input type="text" placeholder="宝宝姓名" v-model="info.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="宝宝性别:">
+          <el-select v-model="info.sex" placeholder="选择宝宝性别">
+            <el-option label="男宝宝" value="1"></el-option>
+            <el-option label="女宝宝" value="0"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="出生日期:">
+            <el-form-item prop="date1">
+              <el-date-picker type="date" placeholder="选择宝宝出生日期" v-model="info.date" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+        </el-form-item>
+        <el-form-item class="enter-box">
+          <el-button type="primary" @click="submitForm('ruleForm2')">确认</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+</template>
+<script>
+    export default {
+      data() {
+        return {
+          info: {
+            name: "",
+            sex: "",
+            date: ""
+          }
+        }
+      }
+    }
+</script>
+<style lang="less">
+  .address{
+  .title{
+    line-height: 50px;
+    text-indent:2rem;
+    font-size: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 22px;
+  }
+  }
+  .el-input__inner{
+    border:none;
+    border-bottom: 1px solid #dcdcdc;
+  }
+  .el-select{
+    width: 100%;
+  }
+  .el-form-item__content{
+    text-align: left;
+  }
+  .el-input{
+    width: 80%;
+    margin-left:0;
+  }
+  .el-date-editor--date{
+    width: 80% !important;
+  }
+  .enter-box .el-form-item__content{
+    position: absolute;
+    bottom: 1rem;
+    left:0;
+    width: 100%;
+    text-align: center;
+    margin-left:0 !important;
+  .el-button{
+    width: 80%;
+  }
+  }
+</style>
+
