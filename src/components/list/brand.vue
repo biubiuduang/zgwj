@@ -1,15 +1,18 @@
 <template>
     <div class="item item-1">
         <ul class="brand-list">
-           <li class="col-xs-3" v-for="(item,index) in list" @click="handleList(item.name,index)">
-             <div v-if="item.img" :style="{ backgroundImage: 'url(' + item.img + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
-             <p>{{item.name}}</p>
+           <li class="col-xs-3" v-for="(item,index) in brand" @click="handleList(item.category_name,index,item.category_id)">
+             <div v-if="item.image_url" :style="{ backgroundImage: 'url(' + item.image_url + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
+             <p>{{item.category_name}}</p>
            </li>
         </ul>
     </div>
 </template>
 <script>
     export default {
+      props:{
+        brand: Array,
+      },
       data() {
         return {
           list: [
@@ -48,8 +51,8 @@
         }
       },
       methods: {
-        handleList: function(data,index){
-          this.$emit("handleBrand",data);
+        handleList: function(data,index,id){
+          this.$emit("handleBrand",id);
           $(".brand-list li").removeClass("active").eq(index).addClass("active");
         }
       }

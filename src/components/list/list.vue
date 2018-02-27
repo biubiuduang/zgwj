@@ -7,35 +7,35 @@
       <div class="choice-box">
         <ul class="choice-list">
           <template v-for="(item, index) in list.data">
-            <li class="col-xs-3" @click="handleList(index)">{{item}}<i class="iconfont icon-up"></i></li>
+            <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
           </template>
         </ul>
         <div class="list-popup" v-show="list.isShow">
-          <Ages @handleAges="handleAges"></Ages>
-          <Brand @handleBrand="handleBrand"></Brand>
-          <Type @handleType="handleType"></Type>
+          <Ages :ages="searchList.ages" @handleAges="handleAges"></Ages>
+          <Brand :brand="searchList.brand" @handleBrand="handleBrand"></Brand>
+          <Type :type="searchList.type" :ability="searchList.ability" @handleType="handleType"></Type>
           <Auto @handleAuto="handleAuto"></Auto>
         </div>
       </div>
       <div class="page-infinite-wrapper" ref="wrapper">
-        <template>
           <div class="list-box">
           <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" @bottom-status-change="handleBottomChange">
             <ul class="pv-list">
-              <li v-for="item in goodsList">
-                <div class="pv-img">
-                  <p class="img-box flex-center">
+              <template v-for="item in goodsList">
+              <router-link tag="li" :to="'/detail/'+item.goods_id">
+                <div class="pv-img flex-center">
                     <img :src="item.goods_thumb" alt="">
-                  </p>
                 </div>
                 <div class="pv-info">
                   <p class="p-title">{{item.goods_name}}</p>
                   <div class="info-msg">
                     <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
+                    <p class="is-stars" v-else>非星标玩具</p>
                     <p class="is-ages">{{item.age_name}}</p>
                   </div>
                 </div>
-              </li>
+              </router-link>
+              </template>
             </ul>
             <div slot="bottom" class="mint-loadmore-bottom" :class="allLoaded == true?'mint-loadmore-bottom-to':''">
               <span class="load-icon" v-if="allLoaded == false">
@@ -45,7 +45,6 @@
             </div>
           </mt-loadmore>
           </div>
-        </template>
       </div>
     </div>
 </template>
@@ -58,7 +57,6 @@
       components: {
         Ages,Brand,Type,Auto
       },
-      props:[],
       data() {
         return {
           value:"",
@@ -66,11 +64,24 @@
             isShow: false,
             data: ['年龄','品牌','筛选','默认排序'],
           },
+          searchAll: [{category_name:"全部",category_id:""}],
+          searchList: {
+            ages: [],
+            brand: [],
+            type: [],
+            ability:[],
+          },
           search: {
-            ages: this.$route.query.ages,
-            brand: this.$route.query.brand,
-            type: this.$route.query.type,
-            auto: this.$route.query.auto
+            keywords:'',
+            age_id: this.$route.query.ages,
+            brand_id: this.$route.query.brand,
+            is_star: '',
+            has_stock: '1',
+            type_id: this.$route.query.type,
+            ability_id: this.$route.query.ability,
+            order_str: 'default',
+            start: '0',
+            number:'30',
           },
           addOn: true,
           goodsList: [
@@ -88,7 +99,7 @@
               goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
               age_name: "0-6个月",
               goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:1,
+              is_star:2,
               page_count:100,
               page_number: 10,
             },
@@ -127,12 +138,40 @@
       activated() {
         console.log(this.$route.query.type);
         console.log(this.search);
+        this.handleGoodsList();
+        this.handleClassList();
         this.handleDocument();
         this.handleEnter();
+        console.log(this.goodsList.length);
       },
       methods: {
-        //list点击事件
-        handleList: function(index){
+        //获取玩具列表
+        handleGoodsList: function(d){
+          var that = this;
+          this.newAjax({
+            url: 'goods/get_goodes',
+            data: d,
+            success: function(data){
+              that.goodsList = data.data.items;
+            }
+          })
+        },
+        //获取玩具分类
+        handleClassList: function(){
+          var that = this;
+          this.newAjax({
+            url:"goods/get_categories",
+            success: function(data){
+              console.log(data);
+              that.searchList.ages = that.searchAll.concat(data.data.items[0].child[0]);
+              that.searchList.brand = that.searchAll.concat(data.data.items[1].child[0]);
+              that.searchList.type = data.data.items[3].child[0];
+              that.searchList.ability = data.data.items[4].child[0];
+            }
+          })
+        },
+        //Tabs点击事件
+        handleTabs: function(index){
           if($(".choice-list li:eq("+index+")").hasClass("active")){
             $(".choice-list li:eq("+index+")").removeClass("active");
             this.list.isShow = false;
@@ -163,28 +202,31 @@
         },
         handleAges: function(data){
           let that = this;
-          that.search.ages = data;
+          that.search.age_id = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
           console.log(that.search);
         },
         handleBrand: function(data){
           let that = this;
-          that.search.brand = data;
+          that.search.brand_id = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
           console.log(that.search);
         },
         handleType: function(data){
           let that = this;
-          that.search.type = data;
+          that.search.is_star= data.stars;
+          that.search.has_stock= data.store;
+          that.search.type_id= data.type;
+          that.search.ability_id= data.ability;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
           console.log(that.search);
         },
         handleAuto: function(data){
           let that = this;
-          that.search.auto = data;
+          that.search.order_str = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
           console.log(that.search);
@@ -309,7 +351,7 @@
         .info-msg{
           height: 1rem;
           p{
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             line-height: 1rem;
             &.is-stars{
               float:left;

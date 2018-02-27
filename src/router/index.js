@@ -145,7 +145,7 @@ export default new Router({
         title: '借个玩具-我的收藏'
       },
       name: 'userCenterCollect',
-      component: resolve => require(['../components/userCenter/userCenterCollect.vue'], resolve)
+      component: resolve => require(['../components/userCenter/collect/userCenterCollect.vue'], resolve)
     },{
       path: '/coupon',
       meta: {

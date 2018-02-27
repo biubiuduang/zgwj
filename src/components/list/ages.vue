@@ -1,22 +1,20 @@
 <template>
     <div class="item item-0">
         <ul class="ages-list">
-          <li v-for="(item, index) in list" @click="handleList(item,index)">
-            {{item}}
+          <li v-for="(item, index) in ages" @click="handleList(item.category_name,index,item.category_id)">
+            {{item.category_name}}
           </li>
         </ul>
     </div>
 </template>
 <script>
     export default {
-      data() {
-        return {
-          list: ['全部','0-6个月','6-12个月','1-2岁','2-3岁','3-6岁','6-12岁','12岁以上'],
-        }
+      props: {
+        ages: Array,
       },
       methods: {
-        handleList: function(item,index){
-          this.$emit('handleAges',item);
+        handleList: function(item,index,id){
+          this.$emit('handleAges',id);
           $(".ages-list li").removeClass("active").eq(index).addClass("active");
         }
       }

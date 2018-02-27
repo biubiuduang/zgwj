@@ -32,7 +32,7 @@ Vue.config.productionTip = false;
 //面向对象 ajax请求封装
 Vue.prototype.newAjax = function(params){
   var that = this;
-  var url ="/"+params.url;
+  var url ="http://netdisk.3vlogic.com:50081/"+params.url;
   var method = params.method || "GET";
   var data = params.data || {};
   var dataType = params.dataType || "json";
@@ -54,7 +54,6 @@ Vue.prototype.newAjax = function(params){
     method: method,
     data : data,
     dataType: dataType,
-    contentType: contentType,
     beforeSend : function(){
       $(".popup-loading").show();
     },

@@ -4,25 +4,25 @@
         <div class="filterKindBox">
           <p class="kindName">默认排序</p>
           <ul class="kindFloat list-1">
-            <li v-for="item in defaultType" :data-label="item" @click="handleList($event)"><span>{{item}}</span></li>
+            <li v-for="item in defaultType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">库存</p>
           <ul class="kindFloat list-2">
-            <li v-for="item in storeType" :data-label="item" @click="handleList($event)"><span>{{item}}</span></li>
+            <li v-for="item in storeType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">玩具类型</p><p @click="handleKindMore" class="group-more kind-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-3">
-            <li v-for="(item,index) in kindType" @click="handleList($event)" :data-label="item" class="col-xs-3" :class="index > 7 ? 'kindHide' : 'kindShow'"><span>{{item}}</span></li>
+            <li v-for="(item,index) in type" @click="handleList($event)" :data-label="item.category_id" class="col-xs-3" :class="index > 7 ? 'kindHide' : 'kindShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">锻炼能力</p><p @click="handlePowerMore" class="group-more power-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-4">
-            <li v-for="(item,index) in powerType" @click="handleList($event)" :data-label="item" class="col-xs-3"  :class="index > 7 ? 'powerHide' : 'powerShow'"><span>{{item}}</span></li>
+            <li v-for="(item,index) in ability" @click="handleList($event)" :data-label="item.category_id" class="col-xs-3"  :class="index > 7 ? 'powerHide' : 'powerShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
       </div>
@@ -34,17 +34,23 @@
 </template>
 <script>
     export default {
+      props: {
+        type: Array,
+        ability: Array
+      },
       data() {
         return {
-          defaultType: ['全部','星标','非星标'],
-          storeType: ['近看有货'],
-          kindType: ['类型一','类型二','类型三','类型四','类型五','类型六','类型七','类型八','类型九','类型十','类型十一','类型十二','类型十三'],
-          powerType: ['类型一','类型二','类型三','类型四','类型五','类型六','类型七','类型八','类型九','类型十','类型十一','类型十二','类型十三'],
+          defaultType: [
+            {category_name:'全部',category_id:''},
+            {category_name:'星标',category_id:'1'},
+            {category_name:'非星标',category_id:'2'},
+          ],
+          storeType: [{category_name:'近看有货',category_id:'1'}],
           typeData: {
             stars : '',
             store : '',
             type : '',
-            power : ''
+            ability : ''
           }
         }
       },
@@ -71,7 +77,7 @@
           this.typeData.stars = $(".list-1 .active").attr("data-label");
           this.typeData.store = $(".list-2 .active").attr("data-label");
           this.typeData.type = $(".list-3 .active").attr("data-label");
-          this.typeData.power = $(".list-4 .active").attr("data-label");
+          this.typeData.ability = $(".list-4 .active").attr("data-label");
           this.$emit('handleType',this.typeData);
         }
       }

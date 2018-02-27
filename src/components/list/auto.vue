@@ -1,8 +1,8 @@
 <template>
   <div class="item item-3">
     <ul class="auto-list">
-      <li v-for="(item, index) in list" @click="handleList(item,index)">
-        {{item}}
+      <li v-for="(item, index) in list" @click="handleList(item.category_id,index)">
+        {{item.category_name}}
       </li>
     </ul>
   </div>
@@ -11,7 +11,12 @@
   export default {
     data() {
       return {
-        list: ['默认排序','人气最高','最新上架','价格最高','价格最低'],
+        list: [{category_name:'默认排序',category_id:'default'},
+          {category_name:'人气最高',category_id:'hot'},
+          {category_name:'最新上架',category_id:'new'},
+          {category_name:'价格最高',category_id:'price_high'},
+          {category_name:'价格最低',category_id:'price_low'}
+        ],
       }
     },
     methods: {

@@ -27,83 +27,114 @@
           </router-link>
         </ul>
       </div>
-      <h2>玩具推荐</h2>
+      <template v-if="recommendShow == true">
+      <h2 >玩具推荐</h2>
       <div class="container best-list">
         <ul class="row">
-          <router-link :to="'/detail/'+1" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+2" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+3" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
+          <template v-for="item in recommendList">
+            <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
+              <div class="list-box">
+                <div class="pv-img flex-center">
+                  <img :src="item.goods_thumb" alt="">
+                </div>
+                <p>{{item.goods_name}}</p>
+              </div>
+            </router-link>
+          </template>
         </ul>
       </div>
-      <h2>新品玩具
-        <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
-          更多>>
-        </router-link>
-      </h2>
-      <div class="container best-list">
-        <ul class="row">
-          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-          <router-link :to="'/detail/'+4" tag="li" class="col-xs-6">
-            <div>
-              <img src="../../assets/img/index/36icons-Home.png" alt="">
-              <p>名称名称名称名称名称名称名称名称</p>
-            </div>
-          </router-link>
-        </ul>
-      </div>
+      </template>
 
+      <template v-if="newShow == true">
+        <h2>新品玩具
+          <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+            更多>>
+          </router-link>
+        </h2>
+        <div class="container best-list">
+          <ul class="row">
+            <template v-for="item in newList">
+              <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
+                <div class="list-box">
+                  <div class="pv-img flex-center">
+                    <img :src="item.goods_thumb" alt="">
+                  </div>
+                  <p>{{item.goods_name}}</p>
+                </div>
+              </router-link>
+            </template>
+          </ul>
+        </div>
+      </template>
     </div>
 </template>
 <script>
     export default {
       data() {
         return {
-
+          //推荐玩具列表
+          recommendShow: true,
+          recommendList:[],
+          //新品玩具列表
+          newShow: true,
+          newList:[],
         }
       },
       activated() {
-
+        this.handleRecommendList();
+        this.handleNewList();
       },
       methods: {
-
+        handleRecommendList: function(){
+          var that = this;
+          this.newAjax({
+            url: "goods/get_goodes",
+            data: {
+              is_recommend: 1,
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                if(data.data.items.length > 4){
+                  var item = [];
+                  for(var i = 0; i < 4; i++){
+                    item.push(data.data.items[i]);
+                  }
+                  that.recommendList = item;
+                }else{
+                  that.recommendList = data.data.items;
+                }
+              }else{
+                that.recommendShow = false;
+              }
+            }
+          })
+        },
+        handleNewList: function(){
+          var that = this;
+          this.newAjax({
+            url: "goods/get_goodes",
+            data: {
+              order_str: "new",
+            },
+            success: function(data){
+              console.log(data.data.items);
+              if(data.status == 200){
+                if(data.data.items.length > 4){
+                  var item = [];
+                  for(var i = 0; i < 4; i++){
+                    item.push(data.data.items[i]);
+                  }
+                  that.newList = item;
+                }else{
+                  that.newList = data.data.items;
+                }
+              }else{
+                that.newShow = false;
+              }
+            }
+          })
+        }
       }
     }
 </script>
@@ -140,19 +171,35 @@
   .best-list{
     li{
       margin-bottom:10px;
-      div{
+      .list-box{
         width: 100%;
         padding: 10px;
         background-color: #cccccc;
-        img{
-          width: 80%;
+        .pv-img{
+          width: 100%;
+          height: 6rem;
+          img{
+            width: 100%;
+          }
         }
         p{
-          margin-top:10px;
-          height: 36px;
-          line-height: 18px;
-          text-align: center;
+          text-align: left;
+          font-size: 0.7rem;
+          color: #252525;
+          padding: 0 .13rem;
+          margin:0.5rem 0 0.5rem 0;
+          white-space: normal;
+          height: 2.4rem;
+          -webkit-line-clamp: 2;
+          line-height: 1.2rem;
           overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-box-flex: 1;
+          -moz-box-flex: 1;
+          -ms-box-flex: 1;
+          box-flex: 1;
         }
       }
     }
