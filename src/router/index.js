@@ -153,6 +153,13 @@ export default new Router({
       },
       name: 'userCenterCoupon',
       component: resolve => require(['../components/userCenter/userCenterCoupon.vue'], resolve)
+    },{
+      path: '/test',
+      meta: {
+        title: '测试加载'
+      },
+      name: 'test',
+      component: resolve => require(['../components/loadmoreTest.vue'], resolve)
     }
   ]
 })

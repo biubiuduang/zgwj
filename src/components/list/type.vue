@@ -41,9 +41,9 @@
       data() {
         return {
           defaultType: [
-            {category_name:'全部',category_id:''},
+            {category_name:'全部',category_id:'2'},
             {category_name:'星标',category_id:'1'},
-            {category_name:'非星标',category_id:'2'},
+            {category_name:'非星标',category_id:'0'},
           ],
           storeType: [{category_name:'近看有货',category_id:'1'}],
           typeData: {

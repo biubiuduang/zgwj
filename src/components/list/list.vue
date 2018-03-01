@@ -19,7 +19,7 @@
       </div>
       <div class="page-infinite-wrapper" ref="wrapper">
           <div class="list-box">
-          <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" @bottom-status-change="handleBottomChange">
+            <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
             <ul class="pv-list">
               <template v-for="item in goodsList">
               <router-link tag="li" :to="'/detail/'+item.goods_id">
@@ -64,7 +64,7 @@
             isShow: false,
             data: ['年龄','品牌','筛选','默认排序'],
           },
-          searchAll: [{category_name:"全部",category_id:""}],
+          searchAll: [{category_name:"全部",category_id:"全部"}],
           searchList: {
             ages: [],
             brand: [],
@@ -75,7 +75,7 @@
             keywords:'',
             age_id: this.$route.query.ages,
             brand_id: this.$route.query.brand,
-            is_star: '',
+            is_star: '2',
             has_stock: '1',
             type_id: this.$route.query.type,
             ability_id: this.$route.query.ability,
@@ -84,65 +84,17 @@
             number:'30',
           },
           addOn: true,
-          goodsList: [
-            {
-              goods_id:1,
-              goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
-              age_name: "0-6个月",
-              goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:1,
-              page_count:100,
-              page_number: 10,
-            },
-            {
-              goods_id:1,
-              goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
-              age_name: "0-6个月",
-              goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:2,
-              page_count:100,
-              page_number: 10,
-            },
-            {
-              goods_id:1,
-              goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
-              age_name: "0-6个月",
-              goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:1,
-              page_count:100,
-              page_number: 10,
-            },
-            {
-              goods_id:1,
-              goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
-              age_name: "0-6个月",
-              goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:1,
-              page_count:100,
-              page_number: 10,
-            },
-            {
-              goods_id:1,
-              goods_name: "产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称",
-              age_name: "0-6个月",
-              goods_thumb:"/static/img/36icons-Home.9cf4650.png",
-              is_star:1,
-              page_count:100,
-              page_number: 10,
-            }
-          ],
+          goodsList: [],
+          listCount: 0,
           bottomStatus: '',
-          allLoaded: false,
+          allLoaded: true,
         }
       },
       activated() {
-        console.log(this.$route.query.type);
         console.log(this.search);
-        this.handleGoodsList();
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
-        console.log(this.goodsList.length);
       },
       methods: {
         //获取玩具列表
@@ -152,10 +104,28 @@
             url: 'goods/get_goodes',
             data: d,
             success: function(data){
-              that.goodsList = data.data.items;
+              if(data.status == 200){
+                if('page' in data.data){
+                  that.goodsList = that.goodsList.concat(data.data.items);
+                  that.listCount = data.data.page.count;
+                  if(that.goodsList.length == that.listCount){
+                    that.allLoaded = true;// 若数据已全部获取完毕
+                  }else{
+                    that.search.start = that.goodsList.length;
+                    that.allLoaded = false;
+                  }
+                }else{
+                  that.goodsList = [];
+                  that.allLoaded = true;
+                }
+              }else{
+                that.allLoaded = true;
+              }
+
             }
           })
         },
+
         //获取玩具分类
         handleClassList: function(){
           var that = this;
@@ -193,26 +163,48 @@
           })
         },
         handleEnter: function(){
+          var that = this;
           $('.mint-searchbar-core').bind('keyup', function(event) {
             if (event.keyCode == "13") {
               //回车执行查询
-              alert($(this).val());
+              that.search.keywords = $(this).val();
+              that.goodsList = [];
+              that.search.start = that.goodsList.length;
+              that.allLoaded = true;
+              that.handleGoodsList(that.search);
             }
           });
         },
         handleAges: function(data){
           let that = this;
-          that.search.age_id = data;
+          if(data == '全部'){
+            delete that.search.age_id;
+          }else{
+            that.search.age_id = data;
+          }
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-          console.log(that.search);
+
+          that.goodsList = [];
+          that.search.start = that.goodsList.length;
+          that.allLoaded = true;
+          that.handleGoodsList(that.search);
         },
         handleBrand: function(data){
           let that = this;
-          that.search.brand_id = data;
+          if(data == '全部'){
+            delete that.search.brand_id;
+          }else {
+            that.search.brand_id = data;
+          }
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-          console.log(that.search);
+
+          that.goodsList = [];
+          that.search.start = that.goodsList.length;
+          that.allLoaded = true;
+          that.handleGoodsList(that.search);
+
         },
         handleType: function(data){
           let that = this;
@@ -220,24 +212,33 @@
           that.search.has_stock= data.store;
           that.search.type_id= data.type;
           that.search.ability_id= data.ability;
+
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-          console.log(that.search);
+
+          that.goodsList = [];
+          that.search.start = that.goodsList.length;
+          that.allLoaded = true;
+          that.handleGoodsList(that.search);
         },
         handleAuto: function(data){
           let that = this;
           that.search.order_str = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-          console.log(that.search);
+
+          that.goodsList = [];
+          that.search.start = that.goodsList.length;
+          that.allLoaded = true;
+          that.handleGoodsList(that.search);
         },
         loadBottom: function() {
          // 加载更多数据
-          this.allLoaded = true;// 若数据已全部获取完毕
+          this.handleGoodsList(this.search);
           this.$refs.loadmore.onBottomLoaded();
         },
-        handleBottomChange: function(status) {
-          this.bottomStatus = status;
+        handleBottomChange: function() {
+
         },
       }
     }
@@ -245,6 +246,8 @@
 <style scoped lang="less">
   .mint-search{
     height: auto;
+    position: relative;
+    z-index: 3;
   }
   .choice-box{
     position: relative;

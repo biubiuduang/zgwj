@@ -21,7 +21,7 @@
             <img src="../../assets/img/index/36icons-Introduction.png" alt="">
             <p>新手指南</p>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-3">
+          <router-link to="member" tag="li" class="col-xs-3">
             <img src="../../assets/img/index/36icons-VIP.png" alt="">
             <p>成为会员</p>
           </router-link>

@@ -2,42 +2,99 @@
     <div>
       <div class="swipe">
         <mt-swipe :auto="4000">
-          <mt-swipe-item>1</mt-swipe-item>
-          <mt-swipe-item>2</mt-swipe-item>
-          <mt-swipe-item>3</mt-swipe-item>
+          <mt-swipe-item class="detail-swipe-item" v-for="item in details.goods_images" :style="{'background-image':'url('+ item.image_url +')','background-repeat':'no-repeat','background-size':'cover','background-position':'center'}"></mt-swipe-item>
         </mt-swipe>
       </div>
       <div class="detail-info">
-        <p class="title">玩具名称玩具名称玩具名称玩具名称玩具名称</p>
-        <p class="age-info"><span class="is-stars">星标玩具</span><span class="age">适用年龄</span></p>
+        <p class="title">{{details.goods_name}}</p>
+        <p class="age-info">
+          <span class="is-stars">
+            <span v-if="details.is_star == 1">星标玩具</span>
+            <span v-else>非星标玩具</span>
+          </span>
+          <span class="age">{{details.age_name}}</span>
+        </p>
         <div class="info-img">
-
+          {{details.goods_desc}}
         </div>
       </div>
       <div class="handle">
         <a href="javascript:void(0);" class="collect">收藏</a>
-        <a href="javascript:void(0);" class="shopping">加入购物车</a>
+        <a href="javascript:void(0);" class="shopping"
+           :class="details.on_sale == 0 ? 'disable' : ''"
+           @click="handleAddCar(details.goods_id)"
+        >加入购物车</a>
       </div>
     </div>
 </template>
 <script>
+    import { Toast } from 'mint-ui';
     export default {
       data() {
         return {
-
+          detailId: {
+            goods_id: this.$route.params.id
+          },
+          details: {}
         }
       },
       activated() {
-        this.getId();
+        this.handleDetail(this.detailId);
       },
       methods: {
-        getId: function(){
-          console.log(this.$route.params.id);
-        },
-        handleBack: function(){
-          $("#go").click(function(){
-
+        //获取详情
+        handleDetail: function(params){
+          var that = this;
+          this.newAjax({
+            url: "goods/get_goods",
+            data: params,
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                if(data.data.length == 0){
+                  alert("获取产品详情失败.");
+                  that.$router.push("/list");
+                }else{
+                  that.details = data.data;
+                }
+              }else{
+                alert(data.message);
+                that.$router.push("/list");
+              }
+            },
+            error: function(){
+              alert("获取产品详情失败.");
+              that.$router.push("/list");
+            }
           })
+        },
+        //加入购物车
+        handleAddCar: function(id){
+          var that = this;
+          if(this.details.on_sale == 1){
+            that.newAjax({
+              url: "order/add_carts",
+              method: "POST",
+              data: {
+                goods_id: id
+              },
+              success: function(data){
+                console.log(data);
+                if(data.status == 200){
+                  Toast({
+                    message: '加入成功',
+                    iconClass: 'mintui mintui-success',
+                    duration: 2000
+                  });
+                }else{
+                  Toast({
+                    message: '加入失败',
+                    duration: 2000
+                  });
+                }
+              }
+            })
+          }
         }
       }
     }
@@ -48,6 +105,10 @@
     width: 100%;
     .mint-swipe-item{
       background-color: #999999;
+    }
+    .detail-swipe-item{
+      width: 100%;
+      height: 100%;
     }
   }
   .detail-info{
@@ -90,6 +151,9 @@
       }
       &.shopping{
         width: 70%;
+        &.disable{
+           background-color: red;
+         }
       }
     }
   }

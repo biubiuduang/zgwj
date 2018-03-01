@@ -15,7 +15,6 @@ import "./assets/js/bootstrap"
 
 import "./assets/js/common"
 
-
 Vue.use(Mint);
 Vue.use(Cascader);
 Vue.use(Form);

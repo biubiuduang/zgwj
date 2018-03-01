@@ -22,7 +22,9 @@
         for (let i = 1; i <= 10; i++) {
           this.list.push(last + i);
         }
-        this.allLoaded = true;// 若数据已全部获取完毕
+        if(this.list.length >= 30){
+          this.allLoaded = true;// 若数据已全部获取完毕
+        }
 
         this.$refs.loadmore.onBottomLoaded();
       },
