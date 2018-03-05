@@ -24,6 +24,20 @@
           }
         ]
       }
+    },
+    activated() {
+      this.handleGetList();
+    },
+    methods: {
+      handleGetList: function(){
+        var that = this;
+        this.newAjax({
+          url: "user/get_gradecards",
+          success: function(data){
+            console.log(data);
+          }
+        })
+      }
     }
   }
 </script>

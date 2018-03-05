@@ -91,7 +91,6 @@
         }
       },
       activated() {
-        console.log(this.search);
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
@@ -132,7 +131,6 @@
           this.newAjax({
             url:"goods/get_categories",
             success: function(data){
-              console.log(data);
               that.searchList.ages = that.searchAll.concat(data.data.items[0].child[0]);
               that.searchList.brand = that.searchAll.concat(data.data.items[1].child[0]);
               that.searchList.type = data.data.items[3].child[0];

@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index'
+import User from '@/components/userCenter/userInfo'
+import store from '../store'
+
 
 Vue.use(Router)
 
-export default new Router({
+let router =  new Router({
   //mode: 'history',
   routes: [
     {
@@ -13,6 +16,14 @@ export default new Router({
         title: '首页'
       },
       redirect: '/index'
+    },
+    {
+      path: '/login',
+      meta: {
+        title: '登录'
+      },
+      name: 'login',
+      component: resolve => require(['../components/login.vue'], resolve)
     },
     {
       path: '/',
@@ -41,17 +52,43 @@ export default new Router({
       },{
         path: '/userCenter',
         meta: {
-          title: '借个玩具-个人中心'
+          title: '借个玩具-个人中心',
+          requireAuth: true
         },
         name: 'userCenter',
         component: resolve => require(['../components/userCenter/userCenter.vue'], resolve)
       },]
     },
+    {
+      path: '/userCenter',
+      component: User,
+      children: [
+        {
+          path: '/userCenter/info',
+          meta: {
+            title: '用户信息',
+            requireAuth: true
+          },
+          name: 'userCenterSet',
+          component: resolve => require(['../components/userCenter/userInfo/userCenterSet.vue'], resolve)
+        },
+        {
+          path: '/userCenter/babyInfo',
+          meta: {
+            title: '宝宝信息',
+            requireAuth: true
+          },
+          name: 'babyInfo',
+          component: resolve => require(['../components/userCenter/userInfo/babyInfo.vue'], resolve)
+        }
+      ]
+    },
     //购物车
     {
       path: '/shoppingCar',
       meta: {
-        title: '借个玩具-购物车'
+        title: '借个玩具-购物车',
+        requireAuth: true
       },
       name: 'shoppingCar',
       component: resolve => require(['../components/shoppingCar/shoppingCar.vue'], resolve)
@@ -59,7 +96,8 @@ export default new Router({
     {
       path: '/enterOrder',
       meta: {
-        title: '确认订单'
+        title: '确认订单',
+        requireAuth: true
       },
       name: 'enterOrder',
       component: resolve => require(['../components/shoppingCar/address.vue'], resolve)
@@ -75,25 +113,10 @@ export default new Router({
     },
     //个人中心
     {
-      path: '/userCenterSet',
-      meta: {
-        title: '借个玩具-个人设置'
-      },
-      name: 'userCenterSet',
-      component: resolve => require(['../components/userCenter/userInfo/userCenterSet.vue'], resolve)
-    },
-    {
-      path: '/babyInfo',
-      meta: {
-        title: '借个玩具-宝宝信息'
-      },
-      name: 'babyInfo',
-      component: resolve => require(['../components/userCenter/userInfo/babyInfo.vue'], resolve)
-    },
-    {
       path: '/userAddress',
       meta: {
-        title: '借个玩具-我的地址'
+        title: '借个玩具-我的地址',
+        requireAuth: true
       },
       name: 'userAddress',
       component: resolve => require(['../components/userCenter/userInfo/userAddress.vue'], resolve)
@@ -102,7 +125,7 @@ export default new Router({
     {
       path: '/member',
       meta: {
-        title: '借个玩具-会员卡'
+        title: '玩具派对-会员卡'
       },
       name: 'userCenterMember',
       component: resolve => require(['../components/userCenter/member/userCenterMember.vue'], resolve)
@@ -110,7 +133,7 @@ export default new Router({
     {
       path: '/memberClass',
       meta: {
-        title: '借个玩具-会员卡'
+        title: '玩具派对-会员详情'
       },
       name: 'memberClass',
       component: resolve => require(['../components/userCenter/member/memberClass.vue'], resolve)
@@ -119,7 +142,8 @@ export default new Router({
     {
       path: '/memberInfo',
       meta: {
-        title: '借个玩具-会员权利'
+        title: '玩具派对-会员权利',
+        requireAuth: true
       },
       name: 'userCenterMemberInfo',
       component: resolve => require(['../components/userCenter/memberInfo/userCenterMemberInfo.vue'], resolve)
@@ -127,7 +151,8 @@ export default new Router({
     {
       path: '/memberState',
       meta: {
-        title: '借个玩具-会员状态'
+        title: '玩具派对-会员状态',
+        requireAuth: true
       },
       name: 'memberState',
       component: resolve => require(['../components/userCenter/memberInfo/memberState.vue'], resolve)
@@ -135,21 +160,24 @@ export default new Router({
     {
       path: '/order',
       meta: {
-        title: '借个玩具-我的订单'
+        title: '玩具派对-我的订单',
+        requireAuth: true
       },
       name: 'userCenterOrder',
       component: resolve => require(['../components/userCenter/order/userCenterOrder.vue'], resolve)
     },{
       path: '/collect',
       meta: {
-        title: '借个玩具-我的收藏'
+        title: '玩具派对-我的收藏',
+        requireAuth: true
       },
       name: 'userCenterCollect',
       component: resolve => require(['../components/userCenter/collect/userCenterCollect.vue'], resolve)
     },{
       path: '/coupon',
       meta: {
-        title: '借个玩具-我的卡券'
+        title: '玩具派对-我的卡券',
+        requireAuth: true
       },
       name: 'userCenterCoupon',
       component: resolve => require(['../components/userCenter/userCenterCoupon.vue'], resolve)
@@ -162,4 +190,21 @@ export default new Router({
       component: resolve => require(['../components/loadmoreTest.vue'], resolve)
     }
   ]
-})
+});
+
+router.beforeEach((to ,from ,next ) => {
+  if(to.matched.some(record => record.meta.requireAuth)){
+    if(store.state.token == '' || store.state.token == null){
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+      })
+    }else{
+      next();
+    }
+  }else{
+    next();
+  }
+});
+
+export default router;

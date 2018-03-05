@@ -9,7 +9,7 @@
           <el-input type="text" v-model="ruleForm2.addr" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="手机号:" prop="tel">
-          <el-input v-model.number="ruleForm2.tel"></el-input>
+          <el-input v-model.number="ruleForm2.tel" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="enter-box">
           <el-button type="primary" @click="submitForm('ruleForm2')">确认订单</el-button>
@@ -18,21 +18,28 @@
     </div>
 </template>
 <script>
-    export default {data() {
+    export default {
+      data() {
       var validateUser = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入收货人姓名.'));
+        }else{
+          callback();
         }
       };
       var validateAdd= (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入收货地址.'));
+        }else{
+          callback();
         }
       };
       var checkTel = (rule, value, callback) => {
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if (!myreg.test(value)) {
           return callback(new Error('请输入11位手机号'));
+        }else{
+          callback();
         }
       };
       return {
@@ -55,7 +62,7 @@
       };
     },
       methods: {
-        submitForm(formName) {
+        submitForm: function(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
               alert('submit!');

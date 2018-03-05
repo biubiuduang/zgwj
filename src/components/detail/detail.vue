@@ -2,7 +2,9 @@
     <div>
       <div class="swipe">
         <mt-swipe :auto="4000">
-          <mt-swipe-item class="detail-swipe-item" v-for="item in details.goods_images" :style="{'background-image':'url('+ item.image_url +')','background-repeat':'no-repeat','background-size':'cover','background-position':'center'}"></mt-swipe-item>
+          <template v-for="item in details.goods_images">
+            <mt-swipe-item class="detail-swipe-item" :style="{'background-image':'url('+ item.image_url +')','background-repeat':'no-repeat','background-size':'cover','background-position':'center'}"></mt-swipe-item>
+          </template>
         </mt-swipe>
       </div>
       <div class="detail-info">

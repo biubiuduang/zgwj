@@ -93,7 +93,6 @@
               is_recommend: 1,
             },
             success: function(data){
-              console.log(data);
               if(data.status == 200){
                 if(data.data.items.length > 4){
                   var item = [];
@@ -118,7 +117,6 @@
               order_str: "new",
             },
             success: function(data){
-              console.log(data.data.items);
               if(data.status == 200){
                 if(data.data.items.length > 4){
                   var item = [];

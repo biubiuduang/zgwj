@@ -3,34 +3,40 @@
       <p class="title">宝宝信息:</p>
       <el-form label-width="100px" class="demo-ruleForm">
         <el-form-item label="宝宝姓名:">
-          <el-input type="text" placeholder="宝宝姓名" v-model="info.name" auto-complete="off"></el-input>
+          <el-input type="text" placeholder="宝宝姓名" v-model="info.baby_name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="宝宝性别:">
-          <el-select v-model="info.sex" placeholder="选择宝宝性别">
-            <el-option label="男宝宝" value="1"></el-option>
-            <el-option label="女宝宝" value="0"></el-option>
+          <el-select v-model="info.baby_sex" placeholder="选择宝宝性别">
+            <el-option label="男宝宝" value="male"></el-option>
+            <el-option label="女宝宝" value="female"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="出生日期:">
             <el-form-item prop="date1">
-              <el-date-picker type="date" placeholder="选择宝宝出生日期" v-model="info.date" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择宝宝出生日期" v-model="info.baby_birthday" style="width: 100%;"></el-date-picker>
             </el-form-item>
         </el-form-item>
         <el-form-item class="enter-box">
-          <el-button type="primary" @click="submitForm('ruleForm2')">确认</el-button>
+          <el-button type="primary" @click="submitForm">确认</el-button>
         </el-form-item>
       </el-form>
     </div>
 </template>
 <script>
     export default {
+      props: {
+        info: Object
+      },
       data() {
         return {
-          info: {
-            name: "",
-            sex: "",
-            date: ""
-          }
+
+        }
+      },
+      activated(){
+      },
+      methods: {
+        submitForm: function(){
+          console.log(this.info.baby_birthday);
         }
       }
     }
