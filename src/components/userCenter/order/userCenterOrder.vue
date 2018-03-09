@@ -1,52 +1,98 @@
 <template>
     <div>
-      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
-        <ul class="order-list">
-          <li>
-            <p class="order-number">订单号:100000012 <span>已完成</span></p>
-            <div class="pv-img">
-              <p class="img-box flex-center">
-                <img src="/static/img/36icons-Home.9cf4650.png" alt="">
-              </p>
-            </div>
-            <div class="pv-info">
-              <p class="p-title">产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称</p>
-              <div class="info-msg">
-                <p class="is-stars">星标玩具</p>
-                <p class="is-ages">订单状态</p>
+      <div v-if="orderNormal" class="order-normal flex-center">
+        <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+      </div>
+      <template v-else>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+          <ul class="order-list">
+            <li v-for="item in orderList">
+              <p class="order-number">订单号:{{item.order_no}} <span>{{item.order_status_name}}</span></p>
+              <div class="order-goods-list" v-for="goods in item.goods_items">
+                <div class="pv-img">
+                  <p class="img-box flex-center">
+                    <img src="/static/img/36icons-Home.9cf4650.png" alt="">
+                  </p>
+                </div>
+                <div class="pv-info">
+                  <p class="p-title">{{goods.goods_name}}</p>
+                  <div class="info-msg">
+                    <p class="is-stars" v-if="goods.is_star == 1">星标玩具</p>
+                    <p class="is-stars" v-else>非星标玩具</p>
+                    <p class="is-ages" v-if="goods.goods_status == 1">租借中</p>
+                    <p class="is-ages" v-else-if="goods.goods_status == 2">归还中</p>
+                    <p class="is-ages" v-else>已归还</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-        <p class="loading-bottom" v-if="allLoaded == true">没有更多数据了.</p>
-      </mt-loadmore>
+            </li>
+          </ul>
+          <p class="loading-bottom" v-if="allLoaded == true">没有更多数据了.</p>
+        </mt-loadmore>
+      </template>
     </div>
 </template>
 <script>
     export default {
       data() {
         return {
+          orderNormal: true,
+          orderList: [],
           allLoaded : false,
-          list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+          list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+          page:{
+            start: 0,
+            count: 0
+          },
         }
       },
+      activated() {
+        this.handleOrderList();
+      },
       methods: {
+        handleOrderList: function(){
+          var that = this;
+          this.newAjax({
+            url:"order/get_orders",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              start : that.page.start
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                if(data.data.items != undefined){
+                  that.orderNormal = false;
+                  that.orderList = data.data.items;
+                }
+              }else{
+                alert(data.message);
+              }
+            }
+          })
+        },
         loadBottom: function(){
           let last = this.list[this.list.length - 1];
           for (let i = 1; i <= 10; i++) {
             this.list.push(last + i);
           }
           this.allLoaded = true;// 若数据已全部获取完毕
-
-          this.$refs.loadmore.onBottomLoaded();
-        },
-        handleBottomChange: function(){
-          console.log(1212121);
         }
       }
     }
 </script>
 <style scoped lang="less">
+  .order-normal{
+    width: 100%;
+    height: 100%;
+    p{
+      font-size: 1rem;
+      color:#1b6d85;
+    }
+  }
   .order-list{
     overflow: scroll;
     max-height:100%;
@@ -66,6 +112,10 @@
       border-bottom: 1px solid #ebebeb;
       overflow: hidden;
       padding: 0.5rem;
+      .order-goods-list{
+        overflow: hidden;
+        margin:10px auto;
+      }
       .pv-img{
         width: 6rem;
         height: 6rem;

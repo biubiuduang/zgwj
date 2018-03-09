@@ -23,6 +23,7 @@
     </div>
 </template>
 <script>
+  import { Toast } from 'mint-ui';
     export default {
       props: {
         info: Object
@@ -36,8 +37,37 @@
       },
       methods: {
         submitForm: function(){
-          console.log(this.info.baby_birthday);
-        }
+          var that = this;
+          console.log(this.info.baby_sex);
+          console.log(this.$moment(this.info.baby_birthday).format("YYYY-MM-DD"));
+          this.newAjax({
+            url: "user/update_profile",
+            method: "POST",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              baby_name: that.info.baby_name,
+              baby_sex: that.info.baby_sex,
+              baby_birthday: that.info.baby_birthday
+            },
+            success: function(data){
+              if(data.status == 200){
+                Toast({
+                  message: '修改成功',
+                  iconClass: 'mintui mintui-success',
+                  duration: 2000
+                });
+              }else{
+                Toast({
+                  message: '修改失败',
+                  duration: 2000
+                });
+              }
+            }
+          })
+        },
       }
     }
 </script>

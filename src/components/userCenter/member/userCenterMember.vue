@@ -11,18 +11,7 @@
   export default {
     data() {
       return {
-        memberList: [
-          {
-            card_id:"1",
-            card_name:"包年卡"
-          },{
-            card_id:"2",
-            card_name:"包月卡"
-          },{
-            card_id:"3",
-            card_name:"VIP卡"
-          }
-        ]
+        memberList: []
       }
     },
     activated() {
@@ -34,7 +23,7 @@
         this.newAjax({
           url: "user/get_gradecards",
           success: function(data){
-            console.log(data);
+            that.memberList = data.data.items
           }
         })
       }

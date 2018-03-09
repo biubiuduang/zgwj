@@ -105,6 +105,7 @@
             success: function(data){
               if(data.status == 200){
                 if('page' in data.data){
+                  console.log(data);
                   that.goodsList = that.goodsList.concat(data.data.items);
                   that.listCount = data.data.page.count;
                   if(that.goodsList.length == that.listCount){
@@ -124,7 +125,6 @@
             }
           })
         },
-
         //获取玩具分类
         handleClassList: function(){
           var that = this;
@@ -307,9 +307,6 @@
     height: 28px;
     display: block;
     margin:0 auto;
-  }
-  .mint-loadmore-bottom-to{
-    margin-bottom: 0;
   }
   .pv-list{
     overflow: scroll;

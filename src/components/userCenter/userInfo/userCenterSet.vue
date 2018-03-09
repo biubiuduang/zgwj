@@ -9,12 +9,12 @@
         <span v-else>已设置</span>
       </mt-cell>
       <mt-cell title="我的地址" is-link to="/userAddress">
-        <span>未设置</span>
+        <span></span>
       </mt-cell>
       <mt-cell title="绑定手机">
         <span>{{info.user_mobile}}</span>
       </mt-cell>
-      <input class="exit" type="button" value="退出登录" />
+      <input class="exit" type="button" value="退出登录" @click="handleLogOut" />
     </div>
 </template>
 <script>
@@ -31,7 +31,10 @@
 
       },
       methods: {
-
+        handleLogOut: function(){
+          localStorage.setItem("token","");
+          this.$router.push("/index");
+        }
       }
     }
 </script>

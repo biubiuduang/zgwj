@@ -4,8 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
-import { Cascader, Form, FormItem, Input, Button, DatePicker, Select, Option } from 'element-ui'
+import { Cascader, Form, FormItem, Input, Button, DatePicker, Select, Option, CheckboxGroup, Checkbox } from 'element-ui'
 import Mint from 'mint-ui'
+import moment from 'moment'
 
 import "./assets/css/bootstrap.css"
 import "mint-ui/lib/style.css"
@@ -14,7 +15,7 @@ import "./assets/css/base.css"
 import "./assets/js/jquery.min"
 import "./assets/js/bootstrap"
 
-//import "./assets/js/common"
+import "./assets/js/common"
 
 import { baseJs } from "./assets/js/common"
 
@@ -27,6 +28,11 @@ Vue.use(Button);
 Vue.use(DatePicker);
 Vue.use(Select);
 Vue.use(Option);
+Vue.use(CheckboxGroup);
+Vue.use(Checkbox);
+
+
+Vue.prototype.$moment = moment;
 
 Vue.config.productionTip = false;
 
@@ -64,7 +70,16 @@ Vue.prototype.newAjax = function(params){
     complete : function(){
       $(".popup-loading").hide();
     },
-    success : success,
+    success : function(data){
+      if(data.status == 10002){
+        alert("登录超时,请重新登录!");
+        $(".popup-loading").hide();
+        that.$router.push('/login');
+        return;
+      }else{
+        success(data);
+      }
+    },
     error : error
   })
 };

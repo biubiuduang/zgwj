@@ -1,16 +1,16 @@
 <template>
     <div class="member-class">
       <router-link tag="p" class="title" to="/member">
-        包年卡
+        {{memberInfo.card_name}}
         <p class="triangle"></p>
       </router-link>
-      <mt-cell title="价格" value="￥888"></mt-cell>
-      <mt-cell title="可选类型" value="星标1件，非星标1件"></mt-cell>
-      <mt-cell title="有效期" label="第一次收到玩具开始计时" value="12个月"></mt-cell>
-      <mt-cell title="免费配送" value="N次"></mt-cell>
-      <mt-cell title="更换次数" value="N次"></mt-cell>
+      <mt-cell title="价格" :value="'￥'+memberInfo.card_price"></mt-cell>
+      <mt-cell title="可选类型" :value="'星标'+cardRules.star_toys_count_pertime+'件，非星标'+cardRules.normal_toys_count_pertime+'件'"></mt-cell>
+      <mt-cell title="有效期" label="第一次收到玩具开始计时" :value="memberInfo.card_duration"></mt-cell>
+      <mt-cell title="免费配送" :value="cardRules.express_times+'次'"></mt-cell>
+      <mt-cell title="更换次数" :value="cardRules.toys_total_count+'次'"></mt-cell>
       <div class="pay">
-        <label for="btnPay">￥888</label>
+        <label for="btnPay">￥{{memberInfo.card_price}}</label>
         <input id="btnPay" type="button" value="购买">
       </div>
     </div>
@@ -19,9 +19,29 @@
     export default {
       data() {
         return {
-          memberList: [
-            "包年卡","包月卡","VIP卡"
-          ]
+          memberInfo: {},
+          cardRules: {},
+          starCount:'',
+          normalCount: ''
+        }
+      },
+      activated(){
+        this.handleInfo();
+      },
+      methods: {
+        handleInfo : function(){
+          var that = this;
+          this.newAjax({
+            url:"user/get_gradecard",
+            data: {
+              card_id: this.$route.query.id
+            },
+            success: function(data){
+              console.log(data);
+              that.memberInfo = data.data;
+              that.cardRules = data.data.card_rules;
+            }
+          })
         }
       }
     }

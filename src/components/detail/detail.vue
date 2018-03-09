@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="handle">
-        <a href="javascript:void(0);" class="collect">收藏</a>
+        <a href="javascript:void(0);" class="collect" @click="handleCollect(details.goods_id)">收藏</a>
         <a href="javascript:void(0);" class="shopping"
            :class="details.on_sale == 0 ? 'disable' : ''"
            @click="handleAddCar(details.goods_id)"
@@ -77,6 +77,10 @@
             that.newAjax({
               url: "order/add_carts",
               method: "POST",
+              header: {
+                Accept: "application/json; charset=utf-8",
+                token: localStorage.getItem("token")
+              },
               data: {
                 goods_id: id
               },
@@ -97,6 +101,35 @@
               }
             })
           }
+        },
+        handleCollect: function(id){
+          var that = this;
+          this.newAjax({
+            url: "user/add_collect",
+            method: "POST",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              goods_id: id
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                Toast({
+                  message: '收藏成功',
+                  iconClass: 'mintui mintui-success',
+                  duration: 2000
+                });
+              }else{
+                Toast({
+                  message: '收藏失败',
+                  duration: 2000
+                });
+              }
+            }
+          })
         }
       }
     }

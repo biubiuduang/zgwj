@@ -5,6 +5,9 @@
         <el-form-item label="收货人:" prop="addUser">
           <el-input type="text" v-model="ruleForm2.addUser" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="城市:">
+          <el-cascader :options="options" v-model="selectedOptions"></el-cascader>
+        </el-form-item>
         <el-form-item label="地址:" prop="addr">
           <el-input type="text" v-model="ruleForm2.addr" auto-complete="off"></el-input>
         </el-form-item>
@@ -43,11 +46,22 @@
         }
       };
       return {
-        ruleForm2: {
+        oldAddr: {
           addUser: '',
+          areas: '',
           addr: '',
           tel: ''
         },
+        ruleForm2: {
+          addUser: '',
+          areas: '',
+          addr: '',
+          tel: ''
+        },
+        addAddr: true,
+        addrId: '',
+        options:[],
+        selectedOptions:[],
         rules2: {
           addUser: [
             { validator: validateUser, trigger: 'blur' }
@@ -61,19 +75,162 @@
         }
       };
     },
-      methods: {
-        submitForm: function(formName) {
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
-              alert('submit!');
-            } else {
-              console.log('error submit!!');
-              return false;
+    activated(){
+      this.handleGetAreas();
+      this.handleGetUserAddr();
+    },
+    methods: {
+      submitForm: function(formName) {
+        var that = this;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(that.$route.query.buy);
+            if(that.addAddr == true){
+              that.handleAddAddr();
+            }else{
+              if(that.ruleForm2.addUser == that.oldAddr.addUser  &&
+                that.selectedOptions.join("-") == that.oldAddr.areas &&
+                that.ruleForm2.addr == that.oldAddr.addr  &&
+                that.ruleForm2.tel== that.oldAddr.tel)
+              {
+
+                console.log(1);
+                that.handleSubOrder();
+              }else{
+                console.log(2);
+                that.handleResetAddr();
+              }
+
             }
-          });
-        }
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      handleGetAreas: function(){
+        var that = this;
+        this.newAjax({
+          url:"user/get_areas",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success:function(data){
+            console.log(data);
+            that.options = data.data.items;
+          }
+        })
+      },
+      handleGetUserAddr: function(){
+        var that = this;
+        this.newAjax({
+          url: "user/get_addresses",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success: function(data){
+            console.log(data);
+            if(data.status == 200){
+              if(data.data.length == 0){
+                that.selectedOptions = ["1","2"];
+              }else{
+                that.oldAddr.addUser = data.data.items[0].consignee;
+                that.oldAddr.areas = data.data.items[0].area_id;
+                that.oldAddr.addr = data.data.items[0].address;
+                that.oldAddr.tel = data.data.items[0].mobile;
+
+                that.ruleForm2.addUser = data.data.items[0].consignee;
+                that.ruleForm2.areas = data.data.items[0].area_id;
+                that.ruleForm2.addr = data.data.items[0].address;
+                that.ruleForm2.tel = data.data.items[0].mobile;
+
+                that.addrId = data.data.items[0].address_id;
+
+                that.selectedOptions = that.ruleForm2.areas.split("-");
+
+                that.addAddr = false;
+              }
+            }else{
+              that.selectedOptions = ["1","2"];
+            }
+          }
+        })
+      },
+      handleAddAddr: function(){
+        var that = this;
+        this.newAjax({
+          url: "user/add_address",
+          method: "POST",
+          data: {
+            consignee:that.ruleForm2.addUser,
+            mobile: that.ruleForm2.tel,
+            area_id:that.selectedOptions.join("-"),
+            address:that.ruleForm2.addr,
+            is_default: 1
+          },
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success: function(data){
+            if(data.status == 200){
+              that.addrId = data.data.address_id;
+              that.handleSubOrder();
+            }else{
+              alert("请求错误,请刷新后重新提交.");
+            }
+          }
+        })
+      },
+      handleResetAddr: function(){
+        var that = this;
+        this.newAjax({
+          url: "user/edit_address",
+          method: "POST",
+          data: {
+            address_id:that.addrId,
+            consignee:that.ruleForm2.addUser,
+            mobile: that.ruleForm2.tel,
+            area_id:that.selectedOptions.join("-"),
+            address:that.ruleForm2.addr,
+            is_default: 1
+          },
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success: function(data){
+            if(data.status == 200){
+              that.handleSubOrder();
+            }else{
+              alert("请求错误,请刷新后重新提交.");
+            }
+          }
+        })
+      },
+      handleSubOrder: function(){
+        var that = this;
+        this.newAjax({
+          url: "order/add_order",
+          method: "POST",
+          data:{
+            order_goods_id: that.$route.query.buy,
+            address_id: that.addrId,
+            goods_id: that.$route.query.return
+          },
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success: function(data){
+            console.log(data);
+          }
+        })
       }
     }
+  }
 </script>
 <style lang="less">
   .address{

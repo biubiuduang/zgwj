@@ -114,6 +114,8 @@ body {
   color: #ffffff;
 }
 .main-box {
+  width: 100%;
+  height: 100%;
   padding: 0 0 70px 0;
 }
 .flex-center {
@@ -125,6 +127,12 @@ image[lazy=loading] {
   width: 40px;
   height: 300px;
   margin: auto;
+}
+.mint-loadmore-bottom-to {
+  margin-bottom: 0;
+}
+.el-checkbox__label {
+  display: none;
 }
 .child-view {
   position: absolute;
