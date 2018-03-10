@@ -23,9 +23,7 @@
             <ul class="pv-list">
               <template v-for="item in goodsList">
               <router-link tag="li" :to="'/detail/'+item.goods_id">
-                <div class="pv-img flex-center">
-                    <img :src="item.goods_thumb" alt="">
-                </div>
+                <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                 <div class="pv-info">
                   <p class="p-title">{{item.goods_name}}</p>
                   <div class="info-msg">

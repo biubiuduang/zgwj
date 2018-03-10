@@ -34,9 +34,7 @@
           <template v-for="item in recommendList">
             <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
               <div class="list-box">
-                <div class="pv-img flex-center">
-                  <img :src="item.goods_thumb" alt="">
-                </div>
+                <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                 <p>{{item.goods_name}}</p>
               </div>
             </router-link>

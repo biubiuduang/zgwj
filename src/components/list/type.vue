@@ -169,9 +169,9 @@
       line-height: 1.32rem;
       box-sizing: border-box;
       &.finishBtn{
-         border: 1px #7079c3 solid;
+         border: 1px #2396FF solid;
          color: #fff;
-         background-color: #89abd9;
+         background-color: #2396FF;
        }
     }
   }

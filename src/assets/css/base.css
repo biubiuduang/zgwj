@@ -104,6 +104,9 @@ body {
 .iconfont.icon-collect:after {
   content: '\e628';
 }
+.iconfont.icon-delete:after {
+  content: '\e69d';
+}
 .container {
   margin: 0 auto;
   position: relative;

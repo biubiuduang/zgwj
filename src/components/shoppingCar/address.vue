@@ -21,6 +21,7 @@
     </div>
 </template>
 <script>
+  import { MessageBox } from 'mint-ui';
     export default {
       data() {
       var validateUser = (rule, value, callback) => {
@@ -93,11 +94,8 @@
                 that.ruleForm2.addr == that.oldAddr.addr  &&
                 that.ruleForm2.tel== that.oldAddr.tel)
               {
-
-                console.log(1);
                 that.handleSubOrder();
               }else{
-                console.log(2);
                 that.handleResetAddr();
               }
 
@@ -225,7 +223,15 @@
             token: localStorage.getItem("token")
           },
           success: function(data){
-            console.log(data);
+
+            MessageBox.confirm('',{
+              title: '提示',
+              message: data.message,
+              confirmButtonText: '查看订单',
+              cancelButtonText: '取消'
+            }).then(action => {
+              that.$router.push("/order");
+            });
           }
         })
       }

@@ -24,12 +24,12 @@
   ul{
     li{
       text-align: left;
-      line-height: 24px;
-      font-size: 14px;
-      color:#000000;
-      padding:5px 15px;
+      line-height: 1.92rem;
+      font-size: 0.7rem;
+      color:#3e3e3e;
+      padding: 0 0.7rem;
       &.active{
-        color:#2e6da4;
+        color:#2396FF;
       }
     }
   }
