@@ -14,7 +14,7 @@
         <span>订单状态</span>
       </mt-cell>
       <mt-cell title="我的收藏" is-link to="/collect">
-        <span>已收藏0个</span>
+        <span>已收藏{{collectCount}}个</span>
       </mt-cell>
       <mt-cell title="我的卡券" is-link to="/coupon">
       </mt-cell>
@@ -24,11 +24,13 @@
     export default {
       data() {
         return {
-          userInfo:{}
+          userInfo:{},
+          collectCount: 0
         }
       },
       activated() {
         this.handleUserInfo();
+        this.handleCollectCount();
       },
       methods: {
         handleUserInfo: function(){
@@ -46,7 +48,33 @@
               }
             }
           })
-        }
+        },
+        handleCollectCount: function(){
+          var that = this;
+          this.newAjax({
+            url: "user/get_collects",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                if(data.data.items == undefined){
+                  that.collectCount = 0;
+                }else{
+                  if(data.data.page.count < 100){
+                    that.collectCount = data.data.page.count;
+                  }else{
+                    that.collectCount = "99+";
+                  }
+                }
+              }else{
+                that.collectCount = 0;
+              }
+            }
+          })
+        },
       }
 
     }

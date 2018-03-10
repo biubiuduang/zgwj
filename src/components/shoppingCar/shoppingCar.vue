@@ -125,7 +125,6 @@
             success: function(data){
               if(data.status == 200){
                 if('page' in data.data){
-                  console.log(data.data.returnning_items);
                   if(data.data.returnning_items == undefined ){
                     that.returnHide = true;
                     that.returnList = [];
@@ -167,8 +166,7 @@
               console.log(data);
               if(data.status == 200){
                 if('page' in data.data){
-
-                  if(data.data.returnning_items == "undefined" ){
+                  if(data.data.returnning_items == undefined){
                     that.returnHide = true;
                     that.returnList = [];
                   }else{
@@ -224,14 +222,15 @@
             },
             success: function(data){
               console.log(data);
-              var len = data.data.gradecard_items.length;
-              for(var i = 0; i < len; i++){
-                if(data.data.gradecard_items[i].card_status == "使用中"){
-                  that.toyCount.star = data.data.gradecard_items[i].remain_rules.star_toys_count_pertime;
-                  that.toyCount.normal = data.data.gradecard_items[i].remain_rules.normal_toys_count_pertime;
-                  that.toyCount.max = data.data.gradecard_items[i].remain_rules.toys_count_pertime;
+                if(data.data.gradecard == undefined){
+                  that.toyCount.star = 0;
+                  that.toyCount.normal = 0;
+                  that.toyCount.max = 0;
+                }else{
+                  that.toyCount.star = data.data.gradecard.remain_rules.star_toys_count_pertime;
+                  that.toyCount.normal = data.data.gradecard.remain_rules.normal_toys_count_pertime;
+                  that.toyCount.max = data.data.gradecard.remain_rules.toys_count_pertime;
                 }
-              }
             }
           })
         },

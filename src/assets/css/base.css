@@ -24,6 +24,7 @@ input {
 }
 body {
   font-size: 12px;
+  color: #3e3e3e;
 }
 img {
   border: none;
@@ -71,8 +72,8 @@ body {
 @font-face {
   font-family: 'iconfont';
   /* project id 525334 */
-  src: url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.eot');
-  src: url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.woff') format('woff'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_at9wp8hbni0e8kt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot');
+  src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.woff') format('woff'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -88,35 +89,49 @@ body {
 .iconfont.icon-down:after {
   content: '\e608';
 }
+.iconfont.icon-index:after {
+  content: '\e722';
+}
+.iconfont.icon-toys:after {
+  content: '\e6e1';
+}
+.iconfont.icon-cart:after {
+  content: '\e698';
+}
+.iconfont.icon-account:after {
+  content: '\e6b8';
+}
 .container {
   margin: 0 auto;
   position: relative;
 }
 .global-nav {
   width: 100%;
-  height: 50px;
-  line-height: 60px;
+  height: 2.5rem;
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: #ffffff;
+  background-color: #FAFAFA;
   z-index: 10;
+  border-top: 1px solid #dfdfdf;
 }
 .global-nav li {
-  border-top: 1px solid #666666;
-  border-right: 1px solid #666666;
+  padding: 0.25rem 0;
+  color: #979797;
 }
-.global-nav li:last-child {
-  border-right: none;
+.global-nav li p {
+  font-size: 0.6rem;
+  line-height: 1rem;
+}
+.global-nav li p i {
+  font-size: 1rem;
 }
 .global-nav li.router-link-active {
-  background-color: #cccccc;
-  color: #ffffff;
+  color: #2396FF;
 }
 .main-box {
   width: 100%;
-  height: 100%;
-  padding: 0 0 70px 0;
+  padding: 0 0 2.5rem 0;
 }
 .flex-center {
   display: flex;
@@ -128,11 +143,27 @@ image[lazy=loading] {
   height: 300px;
   margin: auto;
 }
+.loading-bottom {
+  margin-top: 0.5rem;
+  line-height: 1.5rem;
+  font-size: 0.8rem;
+}
 .mint-loadmore-bottom-to {
   margin-bottom: 0;
 }
 .el-checkbox__label {
   display: none;
+}
+.order-normal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.order-normal p {
+  font-size: 1rem;
+  color: #1b6d85;
 }
 .child-view {
   position: absolute;

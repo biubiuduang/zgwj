@@ -34,22 +34,21 @@
     export default {
       data() {
         return {
-          detailId: {
-            goods_id: this.$route.params.id
-          },
           details: {}
         }
       },
       activated() {
-        this.handleDetail(this.detailId);
+        this.handleDetail();
       },
       methods: {
         //获取详情
-        handleDetail: function(params){
+        handleDetail: function(){
           var that = this;
           this.newAjax({
             url: "goods/get_goods",
-            data: params,
+            data: {
+              goods_id: this.$route.params.id
+            },
             success: function(data){
               console.log(data);
               if(data.status == 200){

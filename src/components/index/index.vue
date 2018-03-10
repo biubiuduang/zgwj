@@ -44,7 +44,6 @@
         </ul>
       </div>
       </template>
-
       <template v-if="newShow == true">
         <h2>新品玩具
           <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
@@ -138,44 +137,52 @@
 </script>
 <style scoped lang="less">
   .swipe{
-    height: 8rem;
+    height: 7.92rem;
     width: 100%;
+    background-color: #d8d8d8;
     .mint-swipe-item{
-      background-color: #999999;
+      height: 7.92rem;
     }
   }
   .nav-global{
-    padding: 8px 0;
+    padding: 1rem 0 0.5rem 0;
     .nav-index{
       margin:0;
     }
     li{
+      padding:0 0.7rem;
       p{
-        margin-top:8px;
+        font-size: 0.7rem;
+        margin-top:0.7rem;
+      }
+      img{
+        width: 100%;
       }
     }
   }
   h2{
-    height: 40px;
-    line-height: 40px;
-    font-size: 18px;
-    margin: 10px 0;
-    background-color: #cccccc;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 0.7rem;
+    text-align: left;
+    padding:0 0.7rem;
+    margin: 0.5rem 0;
     a{
-      font-size: 14px;
+      font-size: 0.5rem;
+      color:#979797;
       float: right;
     }
   }
   .best-list{
     li{
-      margin-bottom:10px;
+      padding:0 0.7rem;
+      margin-bottom:0.5rem;
       .list-box{
-        width: 100%;
-        padding: 10px;
-        background-color: #cccccc;
         .pv-img{
           width: 100%;
-          height: 6rem;
+          background-color: #d8d8d8;
+          border-radius:5px;
+          height: 6.817rem;
           img{
             width: 100%;
           }
@@ -183,7 +190,7 @@
         p{
           text-align: left;
           font-size: 0.7rem;
-          color: #252525;
+          color: #3e3e3e;
           padding: 0 .13rem;
           margin:0.5rem 0 0.5rem 0;
           white-space: normal;

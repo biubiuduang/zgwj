@@ -1,52 +1,141 @@
 <template>
   <div>
-    <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
-      <ul class="order-list">
-        <li>
-          <div class="pv-img">
-            <p class="img-box flex-center">
-              <img src="/static/img/36icons-Home.9cf4650.png" alt="">
-            </p>
-          </div>
-          <div class="pv-info">
-            <p class="p-title">产品名称产品名称产品名称产品名称产品名称产品名称产品名称产品名称</p>
-            <div class="info-msg">
-              <p class="is-stars">星标玩具</p>
-            </div>
-            <div class="info-msg">
-              <p class="is-stars">0-6个月</p>
-            </div>
-            <div class="info-collect">
-              <p class="is-stars">暂时无货</p>
-              <p class="is-ages">取消收藏</p>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <p class="loading-bottom" v-if="allLoaded == true">没有更多数据了.</p>
-    </mt-loadmore>
+    <div v-if="collectNormal" class="order-normal flex-center">
+      <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+    </div>
+    <template v-else>
+      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+        <ul class="order-list">
+          <template v-for="item in collectList">
+            <router-link tag="li"  :to="'/detail/'+item.goods_id">
+              <div class="pv-img">
+                <p class="img-box flex-center">
+                  <img :src="item.goods_thumb" alt="">
+                </p>
+              </div>
+              <div class="pv-info">
+                <p class="p-title">{{item.goods_name}}</p>
+                <div class="info-msg">
+                  <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
+                  <p class="is-stars" v-else>非星标玩具</p>
+                </div>
+                <div class="info-msg">
+                  <p class="is-stars">0-6个月</p>
+                </div>
+                <div class="info-collect">
+                  <p class="is-stars" v-if="item.goods_number == 0">暂时无货</p>
+                  <p class="is-ages" @click="handleUnfollow($event,item.collect_id)">取消收藏</p>
+                </div>
+              </div>
+            </router-link>
+          </template>
+        </ul>
+        <p class="loading-bottom" v-if="allLoaded == true">没有更多数据了.</p>
+        <p class="loading-bottom" v-else>上拉加载更多</p>
+      </mt-loadmore>
+    </template>
   </div>
 </template>
 <script>
+  import { Toast } from 'mint-ui';
   export default {
     data() {
       return {
+        collectNormal: true,
         allLoaded : false,
-        list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+        collectList: [],
+        page:{
+          start: 0,
+          count: 0
+        },
       }
     },
+    activated() {
+      this.handleCollectList();
+    },
     methods: {
-      loadBottom: function(){
-        let last = this.list[this.list.length - 1];
-        for (let i = 1; i <= 10; i++) {
-          this.list.push(last + i);
-        }
-        this.allLoaded = true;// 若数据已全部获取完毕
-
-        this.$refs.loadmore.onBottomLoaded();
+      handleInit: function(){
+        var that = this;
+        that.allLoaded = false;
+        that.collectList = [];
+        that.page = {
+          start:0,
+          count:0
+        };
+        that.handleCollectList();
       },
-      handleBottomChange: function(){
-        console.log(1212121);
+      handleCollectList: function(){
+        var that = this;
+        this.newAjax({
+          url:"user/get_collects",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          data: {
+            start: that.page.start
+          },
+          success: function(data){
+            console.log(data);
+            if(data.status == 200){
+              if(data.data.items == undefined){
+                that.collectList = [];
+                that.collectNormal = true;
+              }else{
+                that.collectNormal = false;
+                that.collectList = data.data.items;
+
+                that.page.count = data.data.page.count;
+                if(that.collectList.length == that.page.count){
+                  that.allLoaded = true;
+                }else{
+                  that.page.start = that.collectList.length;
+                  that.allLoaded = false;
+                }
+              }
+            }else{
+              that.allLoaded = true;
+              that.collectNormal = true;
+              alert(data.message);
+            }
+          }
+        })
+      },
+      loadBottom: function(){
+        if(this.allLoaded == false){
+          this.handleCollectList();
+        }
+      },
+      handleUnfollow: function(event,id){
+        event.stopPropagation();
+        var that = this;
+        this.newAjax({
+          url: "user/delete_collect",
+          method: "POST",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          data: {
+            collect_id: id
+          },
+          success: function(data){
+            console.log(data);
+            if(data.status == 200){
+              Toast({
+                message: '取消成功',
+                iconClass: 'mintui mintui-success',
+                duration: 2000
+              });
+              that.handleCollectList();
+            }else{
+              Toast({
+                message: '取消失败',
+                duration: 2000
+              });
+            }
+          }
+        })
       }
     }
   }
@@ -120,10 +209,5 @@
   }
   }
   }
-  }
-  .loading-bottom{
-    margin-top:0.5rem;
-    line-height: 1.5rem;
-    font-size: 0.8rem;
   }
 </style>

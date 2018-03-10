@@ -173,22 +173,24 @@ let router =  new Router({
       },
       name: 'userCenterCollect',
       component: resolve => require(['../components/userCenter/collect/userCenterCollect.vue'], resolve)
-    },{
-      path: '/coupon',
-      meta: {
-        title: '玩具派对-我的卡券',
-        requireAuth: true
-      },
-      name: 'userCenterCoupon',
-      component: resolve => require(['../components/userCenter/userCenterCoupon.vue'], resolve)
-    },{
-      path: '/test',
-      meta: {
-        title: '测试加载'
-      },
-      name: 'test',
-      component: resolve => require(['../components/loadmoreTest.vue'], resolve)
-    }
+    },
+    // {
+    //   path: '/coupon',
+    //   meta: {
+    //     title: '玩具派对-我的卡券',
+    //     requireAuth: true
+    //   },
+    //   name: 'userCent erCoupon',
+    //   component: resolve => require(['../components/userCenter/userCenterCoupon.vue'], resolve)
+    // },
+    // {
+    //   path: '/test',
+    //   meta: {
+    //     title: '测试加载'
+    //   },
+    //   name: 'test',
+    //   component: resolve => require(['../components/loadmoreTest.vue'], resolve)
+    // }
   ]
 });
 

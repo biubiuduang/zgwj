@@ -39,7 +39,6 @@
           orderNormal: true,
           orderList: [],
           allLoaded : false,
-          list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
           page:{
             start: 0,
             count: 0
@@ -47,11 +46,22 @@
         }
       },
       activated() {
-        this.handleOrderList();
+        this.handleInit();
       },
       methods: {
+        handleInit: function(){
+          var that = this;
+          this.orderList=[];
+          this.allLoaded = false;
+          this.page = {
+            start: 0,
+            count: 0
+          };
+          that.handleOrderList();
+        },
         handleOrderList: function(){
           var that = this;
+
           this.newAjax({
             url:"order/get_orders",
             header: {
@@ -62,37 +72,39 @@
               start : that.page.start
             },
             success: function(data){
-              console.log(data);
               if(data.status == 200){
                 if(data.data.items != undefined){
                   that.orderNormal = false;
                   that.orderList = data.data.items;
+
+                  that.page.count = data.data.page.count;
+                  if(that.orderList.length == that.page.count){
+                    that.allLoaded = true;// 若数据已全部获取完毕
+                  }else{
+                    that.page.start = that.orderList.length;
+                    that.allLoaded = false;
+                  }
+                }else{
+                  this.orderList=[];
+                  that.orderNormal = true;
                 }
               }else{
+                that.allLoaded = true;
+                that.orderNormal = true;
                 alert(data.message);
               }
             }
           })
         },
         loadBottom: function(){
-          let last = this.list[this.list.length - 1];
-          for (let i = 1; i <= 10; i++) {
-            this.list.push(last + i);
+          if(this.allLoaded == false){
+            this.handleOrderList();
           }
-          this.allLoaded = true;// 若数据已全部获取完毕
         }
       }
     }
 </script>
 <style scoped lang="less">
-  .order-normal{
-    width: 100%;
-    height: 100%;
-    p{
-      font-size: 1rem;
-      color:#1b6d85;
-    }
-  }
   .order-list{
     overflow: scroll;
     max-height:100%;
@@ -162,10 +174,5 @@
         }
       }
     }
-  }
-  .loading-bottom{
-    margin-top:0.5rem;
-    line-height: 1.5rem;
-    font-size: 0.8rem;
   }
 </style>
