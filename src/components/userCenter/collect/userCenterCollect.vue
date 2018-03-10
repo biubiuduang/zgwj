@@ -20,7 +20,7 @@
                   <p class="is-stars" v-else>非星标玩具</p>
                 </div>
                 <div class="info-msg">
-                  <p class="is-stars">0-6个月</p>
+                  <p class="is-stars">{{item.age_name}}</p>
                 </div>
                 <div class="info-collect">
                   <p class="is-stars" v-if="item.goods_number == 0">暂时无货</p>

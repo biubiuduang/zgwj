@@ -8,7 +8,13 @@
         </mt-swipe>
       </div>
       <div class="detail-info">
-        <p class="title">{{details.goods_name}}</p>
+        <div class="title-info">
+          <p class="title">{{details.goods_name}}名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称</p>
+          <div class="collect" @click="handleCollect(details.goods_id)">
+            <p><i class="iconfont icon-collect"></i></p>
+            <p>收藏</p>
+          </div>
+        </div>
         <p class="age-info">
           <span class="is-stars">
             <span v-if="details.is_star == 1">星标玩具</span>
@@ -21,11 +27,7 @@
         </div>
       </div>
       <div class="handle">
-        <a href="javascript:void(0);" class="collect" @click="handleCollect(details.goods_id)">收藏</a>
-        <a href="javascript:void(0);" class="shopping"
-           :class="details.on_sale == 0 ? 'disable' : ''"
-           @click="handleAddCar(details.goods_id)"
-        >加入购物车</a>
+        <input type="button" :disable="details.on_sale == 0 ? 'true' : 'false'" @click="handleAddCar(details.goods_id)" value="加入购物车" />
       </div>
     </div>
 </template>
@@ -135,10 +137,12 @@
 </script>
 <style scoped lang="less">
   .swipe{
-    height: 10rem;
+    height: 18rem;
     width: 100%;
+    background-color: #d8d8d8;
     .mint-swipe-item{
-      background-color: #999999;
+      width: 100%;
+      height:18rem;
     }
     .detail-swipe-item{
       width: 100%;
@@ -147,18 +151,54 @@
   }
   .detail-info{
     width: 100%;
-    padding:0 10px;
+    padding:0 0.7rem;
+    margin:0.5rem auto;
     text-align: left;
-    p{
-      line-height: 40px;
+    .title-info{
+      height: 2.4rem;
+      overflow: hidden;
+      .title{
+        float:left;
+        height: 2.4rem;
+        font-size: 0.8rem;
+        width: 14rem;
+        line-height: 1.2rem;
+        color:#3e3e3e;
+        white-space: normal;
+        height: 2.4rem;
+        -webkit-line-clamp: 2;
+        line-height: 1.2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -ms-box-flex: 1;
+        box-flex: 1;
+      }
+      .collect{
+        float: right;
+        width: 2.6rem;
+        text-align: center;
+        color:#979797;
+        font-size: 0.6rem;
+        i{
+          font-size: 1rem;
+        }
+      }
     }
     .age-info{
       width: 100%;
       overflow: hidden;
+      font-size: 0.6rem;
+      margin:0.2rem 0 1rem 0;
+      color:#3e3e3e;
       span{
         display: block;
         float: left;
         &.age{
+          color:#979797;
           float:right;
         }
       }
@@ -169,26 +209,17 @@
     bottom: 0;
     left:0;
     width: 100%;
-    height: 50px;
-    a{
-      border-radius: 5px;
-      background-color: #cccccc;
+    height: 2.5rem;
+    input{
+      background-color: #2396FF;
       color:#ffffff;
-      border:1px solid #000000;
       box-sizing: border-box;
       float:left;
-      height:50px;
-      line-height:50px;
+      height:2.5rem;
+      width: 100%;
+      line-height:2.5rem;
+      font-size: 0.8rem;
       display:block;
-      &.collect{
-        width: 30%;
-      }
-      &.shopping{
-        width: 70%;
-        &.disable{
-           background-color: red;
-         }
-      }
     }
   }
 </style>

@@ -101,6 +101,9 @@ body {
 .iconfont.icon-account:after {
   content: '\e6b8';
 }
+.iconfont.icon-collect:after {
+  content: '\e628';
+}
 .container {
   margin: 0 auto;
   position: relative;
