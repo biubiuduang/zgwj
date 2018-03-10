@@ -3,8 +3,8 @@
     <div v-if="collectNormal" class="order-normal flex-center">
       <router-link tag="p" to="/list">去挑选玩具 >></router-link>
     </div>
-    <template v-else>
-      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+    <div v-else class="page-infinite-wrapper" ref="wrapper">
+      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="order-list">
           <template v-for="item in collectList">
             <router-link tag="li"  :to="'/detail/'+item.goods_id">
@@ -30,10 +30,15 @@
             </router-link>
           </template>
         </ul>
-        <p class="loading-bottom" v-if="allLoaded == true">没有更多数据了.</p>
-        <p class="loading-bottom" v-else>上拉加载更多</p>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
+          <span v-show="bottomStatus === 'loading'">
+                  <mt-spinner type="snake"></mt-spinner>
+                </span>
+        </div>
+        <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
       </mt-loadmore>
-    </template>
+    </div>
   </div>
 </template>
 <script>
@@ -48,10 +53,11 @@
           start: 0,
           count: 0
         },
+        bottomStatus: ''
       }
     },
     activated() {
-      this.handleCollectList();
+      this.handleInit();
     },
     methods: {
       handleInit: function(){
@@ -105,6 +111,10 @@
         if(this.allLoaded == false){
           this.handleCollectList();
         }
+        this.$refs.loadmore.onBottomLoaded();
+      },
+      handleBottomChange(status) {
+        this.bottomStatus = status;
       },
       handleUnfollow: function(event,id){
         event.stopPropagation();

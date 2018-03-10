@@ -1,10 +1,10 @@
 <template>
     <div>
-      <mt-search
-        v-model="value"
-        placeholder="搜索">
-      </mt-search>
       <div class="choice-box">
+        <mt-search
+          v-model="value"
+          placeholder="搜索">
+        </mt-search>
         <ul class="choice-list">
           <template v-for="(item, index) in list.data">
             <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
@@ -19,7 +19,7 @@
       </div>
       <div class="page-infinite-wrapper" ref="wrapper">
           <div class="list-box">
-            <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
+            <mt-loadmore :bottom-method="loadBottom"  @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
             <ul class="pv-list">
               <template v-for="item in goodsList">
               <router-link tag="li" :to="'/detail/'+item.goods_id">
@@ -37,12 +37,13 @@
               </router-link>
               </template>
             </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" :class="allLoaded == true?'mint-loadmore-bottom-to':''">
-              <span class="load-icon" v-if="allLoaded == false">
-                <mt-spinner type="fading-circle"></mt-spinner>
-              </span>
-              <span v-else>没有更多数据了</span>
-            </div>
+              <div slot="bottom" class="mint-loadmore-bottom">
+                <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
+                <span v-show="bottomStatus === 'loading'">
+                  <mt-spinner type="snake"></mt-spinner>
+                </span>
+              </div>
+              <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
           </mt-loadmore>
           </div>
       </div>
@@ -87,10 +88,11 @@
           goodsList: [],
           listCount: 0,
           bottomStatus: '',
-          allLoaded: true,
+          allLoaded: false,
         }
       },
       activated() {
+        this.handleInitList();
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
@@ -124,6 +126,13 @@
 
             }
           })
+        },
+        handleInitList: function(){
+          var that = this;
+          this.search.start = 0;
+          this.allLoaded = false;
+          this.goodsList = [];
+          this.handleGoodsList(this.search);
         },
         //获取玩具分类
         handleClassList: function(){
@@ -232,11 +241,13 @@
         },
         loadBottom: function() {
          // 加载更多数据
-          this.handleGoodsList(this.search);
+          if(this.allLoaded == false){
+            this.handleGoodsList(this.search);
+          }
           this.$refs.loadmore.onBottomLoaded();
         },
-        handleBottomChange: function() {
-
+        handleBottomChange(status) {
+          this.bottomStatus = status;
         },
       }
     }
@@ -247,8 +258,21 @@
     position: relative;
     z-index: 3;
   }
+  .mint-searchbar {
+    background-color: #000000;
+    padding: 0.665rem 0.5rem;
+  }
+  .mint-searchbar-inner{
+    height: 1.73rem;
+    line-height: 1.73rem;
+    border-radius: 0.25rem;
+  }
   .choice-box{
-    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+    position: fixed;
+    left:0;
+    top:0;
     z-index:3;
     .list-popup{
       position: fixed;
@@ -268,13 +292,15 @@
   }
   .choice-list{
     overflow:hidden;
-    height: 30px;
-    margin-top:10px;
+    height: 46px;
+    padding: 13px 0;
     border-bottom:1px solid #e1e1e1;
     li{
       line-height: 20px;
       padding: 0 5px;
+      font-size: 14px;
       border-right: 1px solid #333;
+      color:#3e3e3e;
       &:last-child{
         border-right: none;
        }
@@ -289,13 +315,8 @@
     }
   }
   .page-infinite-wrapper{
-    position: fixed;
-    top: 0;
-    left:0;
-    width: 100%;
-    height: 100%;
+    padding-top: 90px;
     z-index: 2;
-    padding:86px 0 50px 0;
     .list-box{
       width: 100%;
       height: 100%;
@@ -312,12 +333,13 @@
     overflow: scroll;
     max-height:100%;
     li{
-      border-bottom: 1px solid #ebebeb;
       overflow: hidden;
-      padding: 0.5rem;
+      padding: 0.7rem;
       .pv-img{
-        width: 6rem;
-        height: 6rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: #d8d8d8;
+        border-radius: 5px;
         float:left;
         img{
           width: 100%;
@@ -325,18 +347,17 @@
       }
       .pv-info{
         float:left;
-        width: 11rem;
+        width: 13.6rem;
         padding-left: 0.46rem;
         text-align: left;
         .p-title{
-          font-size: 0.8rem;
+          font-size: 0.7rem;
           color: #252525;
           padding: 0 .13rem;
-          margin:0.5rem 0 2.1rem 0;
           white-space: normal;
-          height: 2.4rem;
+          height: 1.92rem;
           -webkit-line-clamp: 2;
-          line-height: 1.2rem;
+          line-height: 0.96rem;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -347,10 +368,11 @@
           box-flex: 1;
         }
         .info-msg{
-          height: 1rem;
+          margin-top:0.38rem;
+          height: 0.7rem;
           p{
             font-size: 0.7rem;
-            line-height: 1rem;
+            line-height: 0.7rem;
             &.is-stars{
               float:left;
             }
