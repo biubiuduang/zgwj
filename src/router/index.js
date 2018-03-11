@@ -57,6 +57,20 @@ let router =  new Router({
         },
         name: 'userCenter',
         component: resolve => require(['../components/userCenter/userCenter.vue'], resolve)
+      },{
+        path: '/help',
+        meta: {
+          title: '借个玩具-新手指南'
+        },
+        name: 'help',
+        component: resolve => require(['../components/other/help.vue'], resolve)
+      },{
+        path: '/party',
+        meta: {
+          title: '借个玩具-派对服务'
+        },
+        name: 'party',
+        component: resolve => require(['../components/other/party.vue'], resolve)
       },]
     },
     {

@@ -13,11 +13,11 @@
             <img src="../../assets/img/index/36icons-Home.png" alt="">
             <p>全部玩具</p>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-3">
+          <router-link to="party" tag="li" class="col-xs-3">
             <img src="../../assets/img/index/36icons-party.png" alt="">
             <p>派对服务</p>
           </router-link>
-          <router-link to="list" tag="li" class="col-xs-3">
+          <router-link to="help" tag="li" class="col-xs-3">
             <img src="../../assets/img/index/36icons-Introduction.png" alt="">
             <p>新手指南</p>
           </router-link>
