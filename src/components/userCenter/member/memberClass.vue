@@ -54,7 +54,6 @@
     font-size: 0.8rem;
     line-height: 8rem;
     background-color: #e1e1e1;
-    border-bottom: 1px solid #ffffff;
     margin-bottom: 30px;
     position: relative;
     .triangle{

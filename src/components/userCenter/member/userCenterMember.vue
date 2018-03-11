@@ -36,8 +36,9 @@
   li{
     width: 15.12rem;
     height: 5.04rem;
+    margin: 1rem auto;
     font-size: 0.8rem;
-    line-height: 8rem;
+    line-height: 5.04rem;
     border-radius: 0.8rem;
     background-color: #d8d8d8;
     border-bottom: 1px solid #ffffff;

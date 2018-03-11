@@ -5,14 +5,21 @@
         <mt-tab-item id="2">已使用</mt-tab-item>
         <mt-tab-item id="3">已过期</mt-tab-item>
       </mt-navbar>
-
       <!-- tab-container -->
-      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
-        <ul class="">
-          <li v-for="item in list">{{item}}</li>
-        </ul>
-        <p class="" v-if="allLoaded == true">没有更多数据了.</p>
-      </mt-loadmore>
+      <div class="page-infinite-wrapper" ref="wrapper">
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="handleBottomChange" ref="loadmore">
+          <ul class="">
+            <li v-for="item in list">{{item}}</li>
+          </ul>
+          <div slot="bottom" class="mint-loadmore-bottom">
+            <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
+            <span v-show="bottomStatus === 'loading'">
+                  <mt-spinner type="snake"></mt-spinner>
+                </span>
+          </div>
+          <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
+        </mt-loadmore>
+      </div>
     </div>
 </template>
 <script>
@@ -21,6 +28,7 @@
         return {
           selected: "1",
           allLoaded : false,
+          bottomStatus: '',
           list: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
         }
       },
@@ -45,9 +53,9 @@
 
           this.$refs.loadmore.onBottomLoaded();
         },
-        handleBottomChange: function(){
-          console.log(1212121);
-        }
+        handleBottomChange(status) {
+          this.bottomStatus = status;
+        },
       }
     }
 </script>

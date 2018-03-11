@@ -332,7 +332,6 @@
     max-height:100%;
     li{
       overflow: hidden;
-      background-color: #f5f5f5;
       padding: 0.7rem;
       margin-bottom:2px;
       .pv-img{
