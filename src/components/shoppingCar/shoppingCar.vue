@@ -67,6 +67,7 @@
     </div>
 </template>
 <script>
+  import { MessageBox } from 'mint-ui';
     export default {
       data() {
         return {
@@ -100,7 +101,7 @@
           var buyStr = this.toyCount.buyData.join(",");
           var returnStr = this.toyCount.returnData.join(",");
           if(this.toyCount.buyData.length == 0 && this.toyCount.returnData.length == 0){
-            alert("请选择退换的玩具.");
+            MessageBox('提示', '请选择退换的玩具.');
           }else{
             that.$router.push({path:'/enterOrder',query:{buy:buyStr,return:returnStr}});
           }

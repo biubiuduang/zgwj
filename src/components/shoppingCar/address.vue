@@ -177,7 +177,7 @@
               that.addrId = data.data.address_id;
               that.handleSubOrder();
             }else{
-              alert("请求错误,请刷新后重新提交.");
+              MessageBox('提示', '请求错误,请刷新后重新提交.');
             }
           }
         })
@@ -203,7 +203,7 @@
             if(data.status == 200){
               that.handleSubOrder();
             }else{
-              alert("请求错误,请刷新后重新提交.");
+              MessageBox('提示', '请求错误,请刷新后重新提交.');
             }
           }
         })

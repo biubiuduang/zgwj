@@ -14,6 +14,7 @@
     </div>
 </template>
 <script>
+  import { MessageBox } from 'mint-ui';
     export default {
       data() {
         var checkTel = (rule, value, callback) => {
@@ -68,7 +69,7 @@
                     that.$store.commit('getLogin',true);
                     that.$router.go(-1);
                   }else{
-                    alert(data.message);
+                    MessageBox('提示', data.message);
                   }
                 }
               })

@@ -96,11 +96,7 @@
               }else{
                 that.allLoaded = true;
                 that.orderNormal = true;
-                MessageBox({
-                  title: '提示',
-                  message: data.message,
-                  showCancelButton: '确定'
-                });
+                MessageBox('提示', data.message);
               }
             }
           })

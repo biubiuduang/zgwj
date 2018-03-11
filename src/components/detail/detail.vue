@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-    import { Toast } from 'mint-ui';
+    import { Toast, MessageBox } from 'mint-ui';
     export default {
       data() {
         return {
@@ -55,18 +55,18 @@
               console.log(data);
               if(data.status == 200){
                 if(data.data.length == 0){
-                  alert("获取产品详情失败.");
+                  MessageBox('提示', '获取产品详情失败.');
                   that.$router.push("/list");
                 }else{
                   that.details = data.data;
                 }
               }else{
-                alert(data.message);
+                MessageBox('提示', data.message);
                 that.$router.push("/list");
               }
             },
             error: function(){
-              alert("获取产品详情失败.");
+              MessageBox('提示', '获取产品详情失败.');
               that.$router.push("/list");
             }
           })

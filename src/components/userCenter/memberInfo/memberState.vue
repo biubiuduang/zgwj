@@ -16,6 +16,7 @@
     </div>
 </template>
 <script>
+  import { MessageBox } from 'mint-ui';
     export default {
       data() {
         return {
@@ -67,7 +68,7 @@
               handle_type: key
             },
             success: function(data){
-              alert(data.message);
+              MessageBox('提示', data.message);
               that.handleGetInfo();
             }
           })

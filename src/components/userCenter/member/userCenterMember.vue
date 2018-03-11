@@ -32,12 +32,14 @@
 </script>
 <style lang="less">
 .member-list{
+  text-align: center;
   li{
-    width: 100%;
-    height: 8rem;
+    width: 15.12rem;
+    height: 5.04rem;
     font-size: 0.8rem;
     line-height: 8rem;
-    background-color: #e1e1e1;
+    border-radius: 0.8rem;
+    background-color: #d8d8d8;
     border-bottom: 1px solid #ffffff;
   }
 }

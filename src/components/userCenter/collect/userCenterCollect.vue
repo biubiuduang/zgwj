@@ -40,7 +40,7 @@
   </div>
 </template>
 <script>
-  import { Toast } from 'mint-ui';
+  import { Toast, MessageBox } from 'mint-ui';
   export default {
     data() {
       return {
@@ -104,7 +104,7 @@
             }else{
               that.allLoaded = true;
               that.collectNormal = true;
-              alert(data.message);
+              MessageBox('提示', data.message);
             }
           }
         })
