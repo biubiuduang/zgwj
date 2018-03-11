@@ -1,30 +1,28 @@
 <template>
-  <div>
+  <div class="userCenter">
     <div v-if="collectNormal" class="order-normal flex-center">
       <router-link tag="p" to="/list">去挑选玩具 >></router-link>
     </div>
     <div v-else class="page-infinite-wrapper" ref="wrapper">
+      <p class="count">已收藏{{collectCount}}个玩具</p>
       <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="order-list">
           <template v-for="item in collectList">
             <router-link tag="li"  :to="'/detail/'+item.goods_id">
-              <div class="pv-img">
-                <p class="img-box flex-center">
-                  <img :src="item.goods_thumb" alt="">
-                </p>
+              <div class="pv-img flex-center">
+                <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
               </div>
               <div class="pv-info">
                 <p class="p-title">{{item.goods_name}}</p>
                 <div class="info-msg">
                   <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
                   <p class="is-stars" v-else>非星标玩具</p>
-                </div>
-                <div class="info-msg">
                   <p class="is-stars">{{item.age_name}}</p>
                 </div>
                 <div class="info-collect">
                   <p class="is-stars" v-if="item.goods_number == 0">暂时无货</p>
-                  <p class="is-ages" @click="handleUnfollow($event,item.collect_id)">取消收藏</p>
+                  <p class="is-stars" v-else>有库存</p>
+                  <p class="is-ages" @click="handleUnfollow($event,item.collect_id)"><i class="iconfont icon-delete"></i></p>
                 </div>
               </div>
             </router-link>
@@ -47,6 +45,7 @@
     data() {
       return {
         collectNormal: true,
+        collectCount: 0,
         allLoaded : false,
         collectList: [],
         page:{
@@ -89,10 +88,13 @@
                 that.collectNormal = true;
               }else{
                 that.collectNormal = false;
-                that.collectList = data.data.items;
-
-                that.page.count = data.data.page.count;
-                if(that.collectList.length == that.page.count){
+                that.collectList = that.collectList.concat(data.data.items);
+                if(data.data.page.count > 99){
+                  that.collectCount = '99+';
+                }else{
+                  that.collectCount = data.data.page.count;
+                }
+                if(that.collectList.length >= data.data.page.count){
                   that.allLoaded = true;
                 }else{
                   that.page.start = that.collectList.length;
@@ -137,7 +139,7 @@
                 iconClass: 'mintui mintui-success',
                 duration: 2000
               });
-              that.handleCollectList();
+              that.handleInit();
             }else{
               Toast({
                 message: '取消失败',
@@ -151,46 +153,46 @@
   }
 </script>
 <style scoped lang="less">
-  .order-list{
-    overflow: scroll;
-    max-height:100%;
-  .order-number{
-    line-height: 2rem;
-    background-color: #e1e1e1;
-    font-size: 0.7rem;
+  .page-infinite-wrapper{
+    background-color: #ffffff;
+  }
+  .count{
+    text-indent:0.7rem;
+    font-size: 0.8rem;
     text-align: left;
-    text-indent: 1rem;
-    margin:-0.5rem -0.5rem 0.5rem -0.5rem;
-  span{
-    float: right;
-    margin-right: 1rem;
+    line-height: 2.16rem;
   }
-  }
+  .order-list{
   li{
-    border-bottom: 1px solid #ebebeb;
     overflow: hidden;
-    padding: 0.5rem;
+    padding:0 0.7rem;
+  .order-goods-list{
+    height:6.4rem;
+    overflow: hidden;
+    margin:10px auto;
+  }
   .pv-img{
-    width: 6rem;
-    height: 7.5rem;
+    width: 5rem;
+    height: 6.4rem;
     float:left;
-    .img-box{
-      height: 7.5rem;
-    }
-    img{
-      width: 100%;
-    }
+  .img-box{
+    background-color: #d8d8d8;
+    width: 4.5rem;
+    height:4.5rem;
+    border-radius: 0.4rem;
+  }
   }
   .pv-info{
     float:left;
     width: 11rem;
-    padding-left: 0.46rem;
+    margin-left: 0.6rem;
     text-align: left;
   .p-title{
+    font-weight: 800;
     font-size: 0.8rem;
-    color: #252525;
+    color: #3e3e3e;
     padding: 0 .13rem;
-    margin:0.5rem 0 0.6rem 0;
+    margin:0.96rem 0 0.2rem 0;
     white-space: normal;
     height: 2.4rem;
     -webkit-line-clamp: 2;
@@ -205,17 +207,23 @@
     box-flex: 1;
   }
   .info-msg,.info-collect{
-    height: 1.5rem;
-  p{
-    font-size: 0.8rem;
-    line-height: 1rem;
-  &.is-stars{
-     float:left;
-   }
-  &.is-ages{
-     float:right;
-   }
+    height: 1rem;
+    p{
+      font-size: 0.8rem;
+      line-height: 1rem;
+    &.is-stars{
+       float:left;
+       font-size: 0.7rem;
+     }
+    &.is-ages{
+       float:right;
+     }
+    }
   }
+  .info-collect{
+    p.is-stars{
+      color:#ff0000;
+    }
   }
   }
   }

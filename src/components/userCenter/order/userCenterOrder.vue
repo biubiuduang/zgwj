@@ -133,7 +133,7 @@
     }
     li{
       overflow: hidden;
-      padding: 0.5rem;
+      padding:0 0.7rem;
       .order-goods-list{
         height:6.4rem;
         overflow: hidden;
@@ -156,8 +156,9 @@
         margin-left: 0.6rem;
         text-align: left;
         .p-title{
+          font-weight: 800;
           font-size: 0.8rem;
-          color: #252525;
+          color: #3e3e3e;
           padding: 0 .13rem;
           margin:0.96rem 0 0.5rem 0;
           white-space: normal;
