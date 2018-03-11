@@ -38,8 +38,6 @@
       methods: {
         submitForm: function(){
           var that = this;
-          console.log(this.info.baby_sex);
-          console.log(this.$moment(this.info.baby_birthday).format("YYYY-MM-DD"));
           this.newAjax({
             url: "user/update_profile",
             method: "POST",
@@ -50,7 +48,7 @@
             data: {
               baby_name: that.info.baby_name,
               baby_sex: that.info.baby_sex,
-              baby_birthday: that.info.baby_birthday
+              baby_birthday: that.$moment(that.info.baby_birthday).format("YYYY-MM-DD")
             },
             success: function(data){
               if(data.status == 200){

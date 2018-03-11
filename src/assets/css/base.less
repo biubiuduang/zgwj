@@ -31,22 +31,74 @@
     height: 100%;
     overflow-x: hidden;
     position: relative;
+    background-color: #ffffff;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
   @font-face {
     font-family: 'iconfont';  /* project id 525334 */
-    src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot');
-    src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.woff') format('woff'),
-    url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.eot');
+    src: url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.woff') format('woff'),
+    url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.svg#iconfont') format('svg');
   }
-  .iconfont{
+  .iconfont,.mintui{
     font-family:"iconfont" !important;
     font-size:16px;
     font-style:normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
+    &.mintui-success{
+      &:before{
+        content:'\e6d1';
+      }
+    }
+    &.mintui-common{
+      &:before{
+        content:'\e692';
+      }
+    }
+    &.mintui-vip{
+      &:before{
+        content:'\e613';
+      }
+    }
+    &.mintui-viporder{
+      &:before{
+        content:'\e60b';
+      }
+    }
+    &.mintui-order{
+      &:before{
+        content:'\e609';
+      }
+    }
+    &.mintui-collect{
+      &:before{
+        content:'\e628';
+      }
+    }
+    &.mintui-coupon{
+      &:before{
+        content:'\e627';
+      }
+    }
+    &.mintui-nav{
+      &:before{
+        content:'\e62b';
+      }
+    }
+    &.mintui-location{
+      &:before{
+        content:'\e614';
+      }
+    }
+    &.mintui-phone{
+      &:before{
+        content:'\e64f';
+      }
+    }
     &.icon-up{
       &:after{
         content:'\e605';
@@ -118,6 +170,10 @@
   }
   .main-box{
     width: 100%;
+    min-height: 100%;
+  }
+
+  .padding-box{
     padding: 0 0 2.5rem 0;
   }
   .flex-center{
@@ -156,6 +212,14 @@
       color:#1b6d85;
     }
   }
+  //用户中心
+  .userCenter{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    min-height: 32rem;
+    background-color: #f5f5f5;
+  }
 }
 //用户中心
 .user-header .mint-cell-wrapper{
@@ -163,7 +227,6 @@
 }
 .mint-cell-wrapper{
   background-image: none;
-  border-bottom: 1px solid #e1e1e1;
 }
 .mint-cell-title {
   text-align: left;

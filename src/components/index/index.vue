@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="padding-box">
       <div class="swipe">
         <mt-swipe :auto="4000">
           <mt-swipe-item>1</mt-swipe-item>

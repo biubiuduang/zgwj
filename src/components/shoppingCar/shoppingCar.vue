@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="padding-box">
       <div class="give-back list-box" v-if="returnHide == false">
         <p class="title">待归还的玩具</p>
         <ul class="give-list wait-give-back">

@@ -140,22 +140,31 @@ let router =  new Router({
     },
     //会员权限
     {
-      path: '/memberInfo',
+      path: '/userCenter/memberInfo',
       meta: {
         title: '玩具派对-会员权利',
         requireAuth: true
       },
       name: 'userCenterMemberInfo',
-      component: resolve => require(['../components/userCenter/memberInfo/userCenterMemberInfo.vue'], resolve)
+      component: resolve => require(['../components/userCenter/memberInfo/memberInfo.vue'], resolve)
     },
     {
-      path: '/memberState',
+      path: '/userCenter/memberState',
       meta: {
         title: '玩具派对-会员状态',
         requireAuth: true
       },
       name: 'memberState',
       component: resolve => require(['../components/userCenter/memberInfo/memberState.vue'], resolve)
+    },
+    {
+      path: '/userCenter/memberOrder',
+      meta: {
+        title: '会员购买记录',
+        requireAuth: true
+      },
+      name: 'memberOrder',
+      component: resolve => require(['../components/userCenter/memberInfo/memberOrder.vue'], resolve)
     },
     {
       path: '/order',

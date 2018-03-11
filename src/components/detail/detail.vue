@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="padding-box">
       <div class="swipe">
         <mt-swipe :auto="4000">
           <template v-for="item in details.goods_images">

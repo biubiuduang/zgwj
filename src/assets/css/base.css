@@ -68,14 +68,17 @@ body {
   height: 100%;
   overflow-x: hidden;
   position: relative;
+  background-color: #ffffff;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 @font-face {
   font-family: 'iconfont';
   /* project id 525334 */
-  src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot');
-  src: url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.woff') format('woff'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_xx51gidpf8g833di.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.eot');
+  src: url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.woff') format('woff'), url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_woqi48uk0uc2qpvi.svg#iconfont') format('svg');
 }
-.iconfont {
+.iconfont,
+.mintui {
   font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
@@ -83,28 +86,76 @@ body {
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
-.iconfont.icon-up:after {
-  content: '\e605';
+.iconfont.mintui-success:before,
+.mintui.mintui-success:before {
+  content: '\e6d1';
 }
-.iconfont.icon-down:after {
-  content: '\e608';
+.iconfont.mintui-common:before,
+.mintui.mintui-common:before {
+  content: '\e692';
 }
-.iconfont.icon-index:after {
-  content: '\e722';
+.iconfont.mintui-vip:before,
+.mintui.mintui-vip:before {
+  content: '\e613';
 }
-.iconfont.icon-toys:after {
-  content: '\e6e1';
+.iconfont.mintui-viporder:before,
+.mintui.mintui-viporder:before {
+  content: '\e60b';
 }
-.iconfont.icon-cart:after {
-  content: '\e698';
+.iconfont.mintui-order:before,
+.mintui.mintui-order:before {
+  content: '\e609';
 }
-.iconfont.icon-account:after {
-  content: '\e6b8';
-}
-.iconfont.icon-collect:after {
+.iconfont.mintui-collect:before,
+.mintui.mintui-collect:before {
   content: '\e628';
 }
-.iconfont.icon-delete:after {
+.iconfont.mintui-coupon:before,
+.mintui.mintui-coupon:before {
+  content: '\e627';
+}
+.iconfont.mintui-nav:before,
+.mintui.mintui-nav:before {
+  content: '\e62b';
+}
+.iconfont.mintui-location:before,
+.mintui.mintui-location:before {
+  content: '\e614';
+}
+.iconfont.mintui-phone:before,
+.mintui.mintui-phone:before {
+  content: '\e64f';
+}
+.iconfont.icon-up:after,
+.mintui.icon-up:after {
+  content: '\e605';
+}
+.iconfont.icon-down:after,
+.mintui.icon-down:after {
+  content: '\e608';
+}
+.iconfont.icon-index:after,
+.mintui.icon-index:after {
+  content: '\e722';
+}
+.iconfont.icon-toys:after,
+.mintui.icon-toys:after {
+  content: '\e6e1';
+}
+.iconfont.icon-cart:after,
+.mintui.icon-cart:after {
+  content: '\e698';
+}
+.iconfont.icon-account:after,
+.mintui.icon-account:after {
+  content: '\e6b8';
+}
+.iconfont.icon-collect:after,
+.mintui.icon-collect:after {
+  content: '\e628';
+}
+.iconfont.icon-delete:after,
+.mintui.icon-delete:after {
   content: '\e69d';
 }
 .container {
@@ -137,6 +188,9 @@ body {
 }
 .main-box {
   width: 100%;
+  min-height: 100%;
+}
+.padding-box {
   padding: 0 0 2.5rem 0;
 }
 .flex-center {
@@ -171,6 +225,13 @@ image[lazy=loading] {
   font-size: 1rem;
   color: #1b6d85;
 }
+.userCenter {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: 32rem;
+  background-color: #f5f5f5;
+}
 .child-view {
   position: absolute;
   width: 100%;
@@ -193,7 +254,6 @@ image[lazy=loading] {
 }
 .mint-cell-wrapper {
   background-image: none;
-  border-bottom: 1px solid #e1e1e1;
 }
 .mint-cell-title {
   text-align: left;

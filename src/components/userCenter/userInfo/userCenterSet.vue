@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div class="userCenter">
       <mt-cell title="" class="user-header">
         <span>{{info.user_nickname}}</span>
         <img slot="icon" :src="info.user_avatar" width="60" height="60">
       </mt-cell>
-      <mt-cell title="宝宝信息" is-link to="/userCenter/babyInfo">
+      <mt-cell title="宝宝信息" icon="nav" is-link to="/userCenter/babyInfo">
         <span v-if="info.baby_name == ''">未设置</span>
         <span v-else>已设置</span>
       </mt-cell>
-      <mt-cell title="我的地址" is-link to="/userAddress">
+      <mt-cell title="我的地址" icon="location" is-link to="/userAddress">
         <span></span>
       </mt-cell>
-      <mt-cell title="绑定手机">
+      <mt-cell title="绑定手机" icon="phone">
         <span>{{info.user_mobile}}</span>
       </mt-cell>
       <input class="exit" type="button" value="退出登录" @click="handleLogOut" />

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="padding-box">
       <div class="choice-box">
         <mt-search
           v-model="value"
@@ -108,7 +108,7 @@
                   console.log(data);
                   that.goodsList = that.goodsList.concat(data.data.items);
                   that.listCount = data.data.page.count;
-                  if(that.goodsList.length == that.listCount){
+                  if(that.goodsList.length >= that.listCount){
                     that.allLoaded = true;// 若数据已全部获取完毕
                   }else{
                     that.search.start = that.goodsList.length;
@@ -332,7 +332,9 @@
     max-height:100%;
     li{
       overflow: hidden;
+      background-color: #f5f5f5;
       padding: 0.7rem;
+      margin-bottom:2px;
       .pv-img{
         width: 3rem;
         height: 3rem;

@@ -39,13 +39,14 @@
             },
             success: function(data){
               if(data.status == 200){
-                that.userInfo = data.data.gradecard_items[0];
-                that.remainRules = data.data.gradecard_items[0].remain_rules;
-                if(data.data.gradecard_items[0].paused_at != 0 && data.data.gradecard_items[0].unpaused_at == 0){
+                that.userInfo = data.data.gradecard;
+                that.remainRules = data.data.gradecard.remain_rules;
+                if(data.data.gradecard.paused_at != 0 && data.data.gradecard.unpaused_at == 0){
                   that.remainStatus = false;
-                  var pausedDate = new Date(data.data.gradecard_items[0].paused_at);
+                  var pausedDate = new Date(data.data.gradecard.paused_at);
                   var nowDate = new Date();
-                  that.pauseDate = Math.floor((nowDate.getTime() - pausedDate.getTime())/1000*60*60*24);
+                  console.log((nowDate.getTime()-pausedDate.getTime())/(1000*60*60*24));
+                  that.pauseDate = Math.floor((nowDate.getTime() - pausedDate.getTime())/(1000*60*60*24));
                 }
               }
             }
@@ -62,7 +63,7 @@
               token: localStorage.getItem("token")
             },
             data: {
-              user_card_id: that.userInfo.card_id,
+              user_card_id: that.userInfo.user_card_id,
               handle_type: key
             },
             success: function(data){

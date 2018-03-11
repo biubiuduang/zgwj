@@ -7,6 +7,7 @@ import router from './router'
 import { Cascader, Form, FormItem, Input, Button, DatePicker, Select, Option, CheckboxGroup, Checkbox } from 'element-ui'
 import Mint from 'mint-ui'
 import moment from 'moment'
+import { MessageBox } from 'mint-ui';
 
 import "./assets/css/bootstrap.css"
 import "mint-ui/lib/style.css"
@@ -55,7 +56,7 @@ Vue.prototype.newAjax = function(params){
 
   };
   var error = params.error || function(){
-    alert('请求错误,请刷新页面');
+    MessageBox('提示', '请求错误,请刷新页面');
   };
 
   $.ajax({
@@ -72,7 +73,7 @@ Vue.prototype.newAjax = function(params){
     },
     success : function(data){
       if(data.status == 10002){
-        alert("登录超时,请重新登录!");
+        //alert("登录超时,请重新登录!");
         $(".popup-loading").hide();
         that.$router.push('/login');
         return;
