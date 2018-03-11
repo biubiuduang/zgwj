@@ -116,12 +116,13 @@
 <style scoped lang="less">
   .order-list{
     .order-number{
+      height: 2rem;
       line-height: 2rem;
       background-color: #f5f5f5;
       font-size: 0.7rem;
       text-align: left;
       text-indent: 1rem;
-      margin:-0.5rem -0.5rem 0.5rem -0.5rem;
+      margin:0 -0.5rem;
       span{
         float: right;
         margin-right: 1rem;
