@@ -10,19 +10,19 @@
       <div class="container nav-global">
         <ul class="nav-index row">
           <router-link to="list" tag="li" class="col-xs-3">
-            <img src="../../assets/img/index/36icons-Home.png" alt="">
+            <img src="../../assets/img/index/1.png" alt="">
             <p>全部玩具</p>
           </router-link>
           <router-link to="party" tag="li" class="col-xs-3">
-            <img src="../../assets/img/index/36icons-party.png" alt="">
+            <img src="../../assets/img/index/2.png" alt="">
             <p>派对服务</p>
           </router-link>
           <router-link to="help" tag="li" class="col-xs-3">
-            <img src="../../assets/img/index/36icons-Introduction.png" alt="">
+            <img src="../../assets/img/index/3.png" alt="">
             <p>新手指南</p>
           </router-link>
           <router-link to="member" tag="li" class="col-xs-3">
-            <img src="../../assets/img/index/36icons-VIP.png" alt="">
+            <img src="../../assets/img/index/4.png" alt="">
             <p>成为会员</p>
           </router-link>
         </ul>
@@ -53,9 +53,7 @@
             <template v-for="item in newList">
               <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
                 <div class="list-box">
-                  <div class="pv-img flex-center">
-                    <img :src="item.goods_thumb" alt="">
-                  </div>
+                  <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                   <p>{{item.goods_name}}</p>
                 </div>
               </router-link>

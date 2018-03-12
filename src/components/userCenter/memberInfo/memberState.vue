@@ -46,8 +46,9 @@
                   that.remainStatus = false;
                   var pausedDate = new Date(data.data.gradecard.paused_at);
                   var nowDate = new Date();
-                  console.log((nowDate.getTime()-pausedDate.getTime())/(1000*60*60*24));
                   that.pauseDate = Math.floor((nowDate.getTime() - pausedDate.getTime())/(1000*60*60*24));
+                }else{
+                  that.remainStatus == true;
                 }
               }
             }
