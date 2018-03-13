@@ -266,7 +266,7 @@
               margin-bottom:0.33rem;
               font-size: 0.7rem;
               &.p-title{
-                 font-size: 0.7rem;
+                 font-size: 0.8rem;
                  color: #3e3e3e;
                  white-space: normal;
                  height: 1.92rem;
