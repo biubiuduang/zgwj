@@ -1,11 +1,16 @@
 <template>
     <div>
-      <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="手机号:" prop="tel">
-          <el-input v-model.number="loginForm.tel" close></el-input>
+      <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
+        <el-form-item  prop="tel">
+          <el-input prefix-icon="mintui mintui-phone" v-model.number="loginForm.tel"  clearable></el-input>
         </el-form-item>
-        <el-form-item label="密码:" prop="psw">
-          <el-input type="password" v-model="loginForm.psw"></el-input>
+        <el-form-item prop="key">
+          <el-input class="code" prefix-icon="mintui mintui-code" type="text" v-model="loginForm.key"></el-input>
+          <img class="imgCode" :src="captcha.img" alt="" @click="handleGetImgCode">
+        </el-form-item>
+        <el-form-item prop="psw">
+          <el-input prefix-icon="mintui mintui-tel-msg" type="text" v-model="loginForm.psw"></el-input>
+          <el-button class="getCode" type="primary" :disabled="telCodeStatus" @click="handleTelCode">{{countBtn}}</el-button>
         </el-form-item>
         <el-form-item class="enter-box">
           <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
@@ -27,19 +32,30 @@
         };
         var checkPsw = (rule, value, callback) => {
           if (value === '') {
-            return callback(new Error('请输入密码'));
+            return callback(new Error('请输入验证码'));
           }else{
             callback();
           }
         };
         return {
+          telCodeStatus: false,
+          timeCount: 60,
+          countBtn: '获取验证码',
           loginForm: {
             tel: '',
+            key:'',
             psw: ''
+          },
+          captcha: {
+            key: '',
+            img: ''
           },
           rules: {
             tel: [
               { validator: checkTel, trigger: 'blur' }
+            ],
+            key: [
+              { validator: checkPsw, trigger: 'blur' }
             ],
             psw: [
               { validator: checkPsw, trigger: 'blur' }
@@ -48,19 +64,75 @@
         }
       },
       activated() {
-
+        this.handleGetImgCode();
       },
       methods: {
+        handleGetImgCode: function () {
+          var that = this;
+          this.newAjax({
+            url: "common/get_verifycode",
+            success: function(data){
+              that.captcha.key = data.data.captcha_key;
+              that.captcha.img = data.data.captcha_img;
+            }
+          })
+        },
+        handleTelCode: function() {
+          var that = this;
+          if(this.loginForm.tel == ''){
+            MessageBox('提示', '请输入手机号!');
+            return;
+          }else if(this.loginForm.key == ''){
+            MessageBox('提示', '请输入图形验证码');
+            return;
+          }else{
+            that.telCodeStatus = true;
+            that.newAjax({
+              url: 'common/get_sms',
+              data:{
+                mobile: that.loginForm.tel,
+                captcha_key: that.captcha.key,
+                captcha_value: that.loginForm.key
+              },
+              success: function(data){
+                if(data.status == 200){
+                  that.countDown(that.timeCount);
+                }else{
+                  that.loginForm.key = '';
+                  MessageBox('提示', '获取短信失败,请重新获取.');
+                }
+              }
+            })
+          }
+        },
+        countDown: function(t){
+          var that = this;
+          var setTime;
+          if(t == 0){
+            this.telCodeStatus = false;
+            this.countBtn = '获取验证码';
+            this.timeCount = 60;
+            clearTimeout(setTime);
+          }else{
+            this.countBtn = t+"s重新获取";
+            t--;
+            setTime = setTimeout(function() {
+                that.countDown(t)
+              },
+              1000)
+
+          }
+        },
         submitForm: function(formName) {
           var that = this;
           this.$refs[formName].validate((valid) => {
             if (valid) {
               that.newAjax({
-                url: "user/login",
+                url: "user/login_sms",
                 method: "POST",
                 data: {
-                  account: that.loginForm.tel,
-                  password: that.loginForm.psw
+                  mobile: that.loginForm.tel,
+                  sms_code: that.loginForm.psw
                 },
                 success: function(data){
                   console.log(data);
@@ -78,10 +150,38 @@
               return false;
             }
           });
-        }
+        },
+
       }
     }
 </script>
-<style>
+<style lang="less">
+  .login-form{
+    padding: 0 1.92rem;
+    color:#2396FF;
+    .el-input__inner{
+      border-radius: 0;
+      height: 2rem;
+      border: none;
+      border-bottom: 1px solid #2396FF;
+    }
+    .el-input__prefix{
+      color:#2396FF;
+      font-size: 0.8rem;
+    }
+    .imgCode,.getCode{
+      display: block;
+      width: 4.8rem;
+      height: 1.8rem;
+      position: absolute;
+      right:  0;
+      bottom: 0.2rem;
+    }
+    .enter-box{
+      button{
+        width: 100%;
+      }
+    }
+  }
 
 </style>
