@@ -11,7 +11,7 @@
         <div class="title-info">
           <p class="title">{{details.goods_name}}名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称</p>
           <div class="collect" @click="handleCollect(details.goods_id)">
-            <p><i class="iconfont icon-collect"></i></p>
+            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
             <p>收藏</p>
           </div>
         </div>
@@ -36,7 +36,8 @@
     export default {
       data() {
         return {
-          details: {}
+          details: {},
+          collectStatus: false
         }
       },
       activated() {
@@ -45,6 +46,8 @@
       methods: {
         //获取详情
         handleDetail: function(){
+
+          this.collectStatus= false;
           var that = this;
           this.newAjax({
             url: "goods/get_goods",
@@ -105,32 +108,35 @@
         },
         handleCollect: function(id){
           var that = this;
-          this.newAjax({
-            url: "user/add_collect",
-            method: "POST",
-            header: {
-              Accept: "application/json; charset=utf-8",
-              token: localStorage.getItem("token")
-            },
-            data: {
-              goods_id: id
-            },
-            success: function(data){
-              console.log(data);
-              if(data.status == 200){
-                Toast({
-                  message: '收藏成功',
-                  iconClass: 'mintui mintui-success',
-                  duration: 2000
-                });
-              }else{
-                Toast({
-                  message: '收藏失败',
-                  duration: 2000
-                });
+          if(this.collectStatus == false){
+            this.newAjax({
+              url: "user/add_collect",
+              method: "POST",
+              header: {
+                Accept: "application/json; charset=utf-8",
+                token: localStorage.getItem("token")
+              },
+              data: {
+                goods_id: id
+              },
+              success: function(data){
+                console.log(data);
+                if(data.status == 200){
+                  that.collectStatus = true;
+                  Toast({
+                    message: '收藏成功',
+                    iconClass: 'mintui mintui-success',
+                    duration: 2000
+                  });
+                }else{
+                  Toast({
+                    message: '收藏失败',
+                    duration: 2000
+                  });
+                }
               }
-            }
-          })
+            })
+          }
         }
       }
     }
@@ -185,6 +191,9 @@
         font-size: 0.6rem;
         i{
           font-size: 1rem;
+          &.red{
+            color:#ff0000;
+           }
         }
       }
     }

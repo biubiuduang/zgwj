@@ -1,6 +1,6 @@
 <template>
     <div class="padding-box">
-      <div class="give-back list-box" v-if="returnHide == false">
+      <div class="give-back list-box" v-if="returnHide">
         <p class="title">待归还的玩具</p>
         <ul class="give-list wait-give-back">
           <li v-for="item in returnList">
@@ -27,7 +27,7 @@
         <p class="title">期望租借的玩具</p>
         <p class="tip">温馨提示:<br/>
           <span v-if="isVIP">您的会员权限一次可以租借{{toyCount.star}}件星标玩具，{{toyCount.normal}}件常规玩具。</span>
-          <span v-else>您不是会员,没有权限租玩具. <router-link to="/member"></router-link> 成为会员</span>
+          <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具.成为会员</router-link>
         </p>
         <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="give-list wait-give-back">
