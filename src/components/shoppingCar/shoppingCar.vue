@@ -30,7 +30,7 @@
       <div class="borrow list-box" v-if="borrowShow">
         <p class="title">期望租借的玩具</p>
         <p class="tip">温馨提示:<br/>
-          <span v-if="isVIP">您的会员权限一次可以租借{{toyCount.star}}件星标玩具，{{toyCount.normal}}件常规玩具。</span>
+          <span v-if="isVIP" >您的会员权限一次可以租借{{toyCount.star}}件星标玩具 或 {{toyCount.normal}}件常规玩具。</span>
           <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
         </p>
         <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
@@ -219,7 +219,6 @@
           })
         },
         handleCheck: function(){
-          this.toyCount.max = (this.toyCount.star + this.toyCount.normal - this.returnList.length + this.toyCount.returnData.length);
           this.toyCount.buyToy = this.toyCount.buyData.length;
           this.toyCount.returnToy = this.toyCount.returnData.length;
           this.toyCount.buyToy = this.toyCount.buyData.length;
