@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div class="padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <keep-alive>
         <router-view :info="userInfo"></router-view>
       </keep-alive>
@@ -28,6 +32,9 @@
             console.log(data);
             if(data.status == 200){
               that.userInfo = data.data;
+              if(data.data.baby_sex == "unselect"){
+                that.userInfo.baby_sex = '';
+              }
             }
           }
         })

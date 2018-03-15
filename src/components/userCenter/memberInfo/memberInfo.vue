@@ -1,5 +1,9 @@
 <template>
-    <div class="userCenter">
+    <div class="userCenter padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <p class="member-info"></p>
       <mt-cell title="会员类型" :value="userInfo.card_name"></mt-cell>
       <mt-cell title="剩余天数" :value="userInfo.remain_duration"></mt-cell>

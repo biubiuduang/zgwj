@@ -1,5 +1,9 @@
 <template>
     <div class="padding-box">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <div class="swipe">
         <mt-swipe :auto="4000">
           <template v-for="item in details.goods_images">

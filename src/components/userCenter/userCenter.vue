@@ -1,5 +1,10 @@
 <template>
     <div class="userCenter">
+
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <div class="user-limit">
         <mt-cell :title="userInfo.user_nickname" is-link class="user-header" to="/userCenter/info">
           <span>个人设置</span>
@@ -22,8 +27,8 @@
         <mt-cell title="我的收藏" icon="collect" is-link to="/collect">
           <span>已收藏{{collectCount}}个</span>
         </mt-cell>
-        <mt-cell title="我的卡券" icon="coupon" is-link to="/coupon">
-        </mt-cell>
+        <!--<mt-cell title="我的卡券" icon="coupon" is-link to="/coupon">-->
+        <!--</mt-cell>-->
       </div>
     </div>
 </template>

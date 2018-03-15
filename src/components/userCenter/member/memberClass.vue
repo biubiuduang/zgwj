@@ -1,5 +1,9 @@
 <template>
-    <div class="member-class">
+    <div class="member-class padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <router-link tag="p" class="title" to="/member">
         {{memberInfo.card_name}}
         <p class="triangle"></p>

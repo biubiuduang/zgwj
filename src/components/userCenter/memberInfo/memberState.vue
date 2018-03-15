@@ -1,5 +1,9 @@
 <template>
-    <div class="member-state">
+    <div class="member-state padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <p class="state-pause" v-if="remainStatus == false">您已暂停会员{{pauseDate}}天</p>
       <div class="state-box">
         <p class="title">

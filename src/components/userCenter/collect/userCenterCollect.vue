@@ -1,5 +1,9 @@
 <template>
   <div class="userCenter">
+    <p class="backNav">
+      <i class="el-icon-arrow-left" @click="$router.back()"></i>
+      {{$store.state.title}}
+    </p>
     <div v-if="collectNormal" class="order-normal flex-center">
       <router-link tag="p" to="/list">去挑选玩具 >></router-link>
     </div>

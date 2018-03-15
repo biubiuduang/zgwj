@@ -4,11 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
-    token: localStorage.getItem("token")
+    token: localStorage.getItem("token"),
+    title: '享玩玩具派对'
   },
   mutations: {
-    getLogin : function(state, data){
+    setLogin: function(state, data){
       state.token = data;
+    },
+    setTitle: function(state, data){
+      state.title = data;
     }
   },
   getters: {

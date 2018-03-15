@@ -38,7 +38,7 @@ let router =  new Router({
       children: [{
         path: '/index',
         meta: {
-          title: '首页'
+          title: '享玩玩具派对'
         },
         name: 'index',
         component: resolve => require(['../components/index/index.vue'], resolve)
@@ -52,7 +52,7 @@ let router =  new Router({
       },{
         path: '/userCenter',
         meta: {
-          title: '借个玩具-个人中心',
+          title: '个人中心',
           requireAuth: true
         },
         name: 'userCenter',
@@ -60,14 +60,14 @@ let router =  new Router({
       },{
         path: '/help',
         meta: {
-          title: '借个玩具-新手指南'
+          title: '新手指南'
         },
         name: 'help',
         component: resolve => require(['../components/other/help.vue'], resolve)
       },{
         path: '/party',
         meta: {
-          title: '借个玩具-派对服务'
+          title: '派对服务'
         },
         name: 'party',
         component: resolve => require(['../components/other/party.vue'], resolve)
@@ -101,7 +101,7 @@ let router =  new Router({
     {
       path: '/shoppingCar',
       meta: {
-        title: '借个玩具-购物车',
+        title: '购物车',
         requireAuth: true
       },
       name: 'shoppingCar',
@@ -110,7 +110,7 @@ let router =  new Router({
     {
       path: '/enterOrder',
       meta: {
-        title: '确认订单',
+        title: '收货地址',
         requireAuth: true
       },
       name: 'enterOrder',
@@ -121,7 +121,7 @@ let router =  new Router({
       path: '/detail/:id',
       name: 'detail',
       meta: {
-        title: '借个玩具-玩具详情'
+        title: '玩具详情'
       },
       component: resolve => require(['../components/detail/detail.vue'], resolve)
     },
@@ -129,7 +129,7 @@ let router =  new Router({
     {
       path: '/userAddress',
       meta: {
-        title: '借个玩具-我的地址',
+        title: '我的地址',
         requireAuth: true
       },
       name: 'userAddress',
@@ -139,7 +139,7 @@ let router =  new Router({
     {
       path: '/member',
       meta: {
-        title: '玩具派对-会员卡'
+        title: '会员卡'
       },
       name: 'userCenterMember',
       component: resolve => require(['../components/userCenter/member/userCenterMember.vue'], resolve)
@@ -147,7 +147,7 @@ let router =  new Router({
     {
       path: '/memberClass',
       meta: {
-        title: '玩具派对-会员详情'
+        title: '会员详情'
       },
       name: 'memberClass',
       component: resolve => require(['../components/userCenter/member/memberClass.vue'], resolve)
@@ -156,7 +156,7 @@ let router =  new Router({
     {
       path: '/userCenter/memberInfo',
       meta: {
-        title: '玩具派对-会员权利',
+        title: '会员权利',
         requireAuth: true
       },
       name: 'userCenterMemberInfo',
@@ -165,7 +165,7 @@ let router =  new Router({
     {
       path: '/userCenter/memberState',
       meta: {
-        title: '玩具派对-会员状态',
+        title: '会员状态',
         requireAuth: true
       },
       name: 'memberState',
@@ -183,7 +183,7 @@ let router =  new Router({
     {
       path: '/order',
       meta: {
-        title: '玩具派对-我的订单',
+        title: '我的订单',
         requireAuth: true
       },
       name: 'userCenterOrder',
@@ -191,7 +191,7 @@ let router =  new Router({
     },{
       path: '/collect',
       meta: {
-        title: '玩具派对-我的收藏',
+        title: '我的收藏',
         requireAuth: true
       },
       name: 'userCenterCollect',
@@ -226,9 +226,11 @@ router.beforeEach((to ,from ,next ) => {
       })
     }else{
       next();
+      store.commit('setTitle',to.meta.title);
     }
   }else{
     next();
+    store.commit('setTitle',to.meta.title);
   }
 });
 

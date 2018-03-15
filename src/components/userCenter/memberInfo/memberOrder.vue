@@ -1,5 +1,9 @@
 <template>
   <div>
+    <p class="backNav">
+      <i class="el-icon-arrow-left" @click="$router.back()"></i>
+      {{$store.state.title}}
+    </p>
     <div v-if="orderNormal" class="order-normal flex-center">
       <router-link tag="p" to="/member">去购买会员 >></router-link>
     </div>

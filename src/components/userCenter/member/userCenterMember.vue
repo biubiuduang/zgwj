@@ -1,5 +1,9 @@
 <template>
   <div>
+    <p class="backNav">
+      <i class="el-icon-arrow-left" @click="$router.back()"></i>
+      {{$store.state.title}}
+    </p>
     <ul class="member-list">
       <template v-for="item in memberList">
         <router-link tag="li" :to="{path:'/memberClass',query:{id: item.card_id} }">{{item.card_name}}</router-link>

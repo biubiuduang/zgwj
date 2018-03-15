@@ -11,7 +11,6 @@
           </router-link>
         </template>
       </ul>
-      </mt-tabbar>
     </div>
 </template>
 <script>
@@ -41,7 +40,7 @@
             }
           ]
         }
-      }
+      },
     }
 </script>
 <style scoped lang="less">

@@ -1,5 +1,8 @@
 <template>
     <div>
+      <div class="logo">
+        <img src="../assets/img/Logo.jpg" alt="">
+      </div>
       <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
         <el-form-item  prop="tel">
           <el-input prefix-icon="mintui mintui-phone" v-model.number="loginForm.tel"  clearable></el-input>
@@ -138,7 +141,7 @@
                   console.log(data);
                   if(data.status == 200){
                     localStorage.setItem("token",data.data.token);
-                    that.$store.commit('getLogin',true);
+                    that.$store.commit('setLogin',true);
                     that.$router.go(-1);
                   }else{
                     MessageBox('提示', data.message);
@@ -156,6 +159,14 @@
     }
 </script>
 <style lang="less">
+  .logo{
+    width: 100%;
+    margin:2rem auto;
+    height: 5rem;
+    img {
+      width: 5rem;
+    }
+  }
   .login-form{
     padding: 0 1.92rem;
     color:#2396FF;

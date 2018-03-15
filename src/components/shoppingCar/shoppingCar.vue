@@ -1,6 +1,10 @@
 <template>
-    <div class="padding-box">
-      <div class="give-back list-box" v-if="returnHide">
+    <div class="padding-box padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
+      <div class="give-back list-box" v-if="returnShow">
         <p class="title">待归还的玩具</p>
         <ul class="give-list wait-give-back">
           <li v-for="item in returnList">
@@ -23,11 +27,11 @@
           </li>
         </ul>
       </div>
-      <div class="borrow list-box">
+      <div class="borrow list-box" v-if="borrowShow">
         <p class="title">期望租借的玩具</p>
         <p class="tip">温馨提示:<br/>
           <span v-if="isVIP">您的会员权限一次可以租借{{toyCount.star}}件星标玩具，{{toyCount.normal}}件常规玩具。</span>
-          <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具.成为会员</router-link>
+          <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
         </p>
         <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="give-list wait-give-back">
@@ -60,6 +64,11 @@
         </div>
         </mt-loadmore>
       </div>
+      <div class="normal" v-if="borrowShow == false">
+        <img src="../../assets/img/Logo.jpg" alt="">
+        <p>您还没有选购任何玩具,快去选购吧</p>
+        <router-link tag="a" to="/list">去挑选</router-link>
+      </div>
       <div class="bottom-count">
         <p class="count">新租{{toyCount.buyToy}}件,归还{{toyCount.returnToy}}件</p>
         <a class="btn-submit" href="javascript:void(0);" @click="handleSubmit">提交订单</a>
@@ -82,7 +91,8 @@
           },
           isVIP: false,
           returnList: [],
-          returnHide: false,
+          returnShow: false,
+          borrowShow: false,
           buyList: [],
           allLoaded: false,
           page:{
@@ -131,14 +141,22 @@
               if(data.status == 200){
                 if('page' in data.data){
                   if(data.data.returnning_items == undefined){
-                    that.returnHide = true;
+                    that.returnShow = false;
                     that.returnList = [];
                   }else{
-                    that.returnHide = false;
+                    that.returnShow = true;
                     that.returnList = data.data.returnning_items;
                   }
-                  that.buyList = that.buyList.concat(data.data.items);
-                  that.page.count = data.data.page.count;
+
+                  if(data.data.items == undefined){
+                    that.buyList = [];
+                    that.borrowShow = false;
+                  }else{
+                    that.borrowShow = true;
+                    that.buyList = that.buyList.concat(data.data.items);
+                    that.page.count = data.data.page.count;
+                  }
+
                   if(that.buyList.length == that.page.count){
                     that.allLoaded = true;// 若数据已全部获取完毕
                   }else{
@@ -300,6 +318,27 @@
            }
         }
       }
+    }
+  }
+  .normal{
+    padding: 0 0.7rem;
+    text-align:center;
+    img{
+      width: 5rem;
+      margin: 1rem auto;
+    }
+    p{
+      line-height: 2rem;
+      font-size: 1rem;
+    }
+    a{
+      display: block;
+      font-size: 1rem;
+      color:#ffffff;
+      width: 100%;
+      line-height: 2rem;
+      background-color: #2396FF;
+      margin-top:2rem;
     }
   }
   .bottom-count{

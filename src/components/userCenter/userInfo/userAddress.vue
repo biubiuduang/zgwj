@@ -1,7 +1,11 @@
 <template>
-  <div class="address">
-    <p class="title">物流信息:</p>
-    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+  <div class="address padding-top">
+    <p class="backNav">
+      <i class="el-icon-arrow-left" @click="$router.back()"></i>
+      {{$store.state.title}}
+    </p>
+    <p class="title"></p>
+    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="address-form">
       <el-form-item label="收货人:" prop="addUser">
         <el-input type="text" v-model="ruleForm2.addUser" auto-complete="off"></el-input>
       </el-form-item>
@@ -233,6 +237,9 @@
   }
 </script>
 <style lang="less">
+  .address-form{
+    padding-right: 2rem;
+  }
   .address{
   .title{
     line-height: 50px;
@@ -249,10 +256,6 @@
   }
   .el-form-item__content{
     text-align: left;
-  }
-  .el-input{
-    width: 80%;
-    margin-left:0;
   }
   .enter-box .el-form-item__content{
     position: absolute;
