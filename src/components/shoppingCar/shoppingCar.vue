@@ -208,6 +208,7 @@
                   that.toyCount.star = 0;
                   that.toyCount.normal = 0;
                   that.toyCount.max = 0;
+                  that.isVIP = false;
                 }else{
                   that.toyCount.star = data.data.gradecard.remain_rules.star_toys_count_pertime;
                   that.toyCount.normal = data.data.gradecard.remain_rules.normal_toys_count_pertime;
@@ -222,7 +223,6 @@
           this.toyCount.buyToy = this.toyCount.buyData.length;
           this.toyCount.returnToy = this.toyCount.returnData.length;
           this.toyCount.buyToy = this.toyCount.buyData.length;
-          console.log(this.toyCount.buyData);
         }
       }
     }

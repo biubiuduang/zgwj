@@ -13,7 +13,7 @@
       </div>
       <div class="detail-info">
         <div class="title-info">
-          <p class="title">{{details.goods_name}}名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称</p>
+          <p class="title">{{details.goods_name}}</p>
           <div class="collect" @click="handleCollect(details.goods_id)">
             <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
             <p>收藏</p>
@@ -27,7 +27,7 @@
           <span class="age">{{details.age_name}}</span>
         </p>
         <div class="info-img">
-          {{details.goods_desc}}
+
         </div>
       </div>
       <div class="handle">
@@ -65,6 +65,7 @@
                   MessageBox('提示', '获取产品详情失败.');
                   that.$router.push("/list");
                 }else{
+                  $(".info-img").html(data.data.goods_desc);
                   that.details = data.data;
                 }
               }else{
