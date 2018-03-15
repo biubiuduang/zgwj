@@ -9,10 +9,8 @@
         <ul class="give-list wait-give-back">
           <li v-for="item in returnList">
             <div class="wait-checkbox">
-              <input v-if="item.is_star == 1" type="checkbox" name="wait-star" :value="item.order_id+'-'+item.goods_id" />
-              <input v-else type="checkbox" name="wait-normal" :value="item.order_id+'-'+item.goods_id" />
               <el-checkbox-group v-model="toyCount.returnData" @change="handleCheck" >
-                <el-checkbox :key="item.order_id+'-'+item.goods_id" :checked="true"></el-checkbox>
+                <el-checkbox :label="item.order_id+'-'+item.goods_id" :checked="true"></el-checkbox>
               </el-checkbox-group>
             </div>
             <div class="pv-img flex-center">
@@ -22,7 +20,9 @@
               <p class="p-title">{{item.goods_name}}</p>
               <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
               <p class="is-stars" v-else>非星标玩具</p>
-              <p class="is-state">{{item.goods_status}}</p>
+              <p class="is-state" v-if="item.goods_status == 1">租借中</p>
+              <p class="is-state" v-if="item.goods_status == 2">归还中</p>
+              <p class="is-state" v-if="item.goods_status == 3">已归还</p>
             </div>
           </li>
         </ul>
@@ -204,7 +204,6 @@
               token: localStorage.getItem("token")
             },
             success: function(data){
-              console.log(data);
                 if(data.data.gradecard == undefined){
                   that.toyCount.star = 0;
                   that.toyCount.normal = 0;

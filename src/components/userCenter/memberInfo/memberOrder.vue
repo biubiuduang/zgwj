@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="padding-top">
     <p class="backNav">
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}

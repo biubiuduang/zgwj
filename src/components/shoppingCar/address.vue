@@ -35,8 +35,8 @@
         }
       };
       var validateAdd= (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入收货地址.'));
+        if (value.length < 6) {
+          callback(new Error('请输入6个字以上的收货地址.'));
         }else{
           callback();
         }
@@ -101,7 +101,6 @@
               }else{
                 that.handleResetAddr();
               }
-
             }
           } else {
             console.log('error submit!!');
@@ -176,6 +175,7 @@
             token: localStorage.getItem("token")
           },
           success: function(data){
+            console.log(111111);
             if(data.status == 200){
               that.addrId = data.data.address_id;
               that.handleSubOrder();
@@ -203,6 +203,7 @@
             token: localStorage.getItem("token")
           },
           success: function(data){
+            console.log(22222222);
             if(data.status == 200){
               that.handleSubOrder();
             }else{
@@ -226,7 +227,7 @@
             token: localStorage.getItem("token")
           },
           success: function(data){
-
+            console.log(data);
             MessageBox.confirm('',{
               title: '提示',
               message: data.message,
