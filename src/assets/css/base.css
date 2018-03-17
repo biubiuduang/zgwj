@@ -284,6 +284,44 @@ image[lazy=loading] {
   -webkit-transform: translate(-50px, 0);
   transform: translate(-50px, 0);
 }
+.loading-background,
+.mint-loadmore-top span {
+  -webkit-transition: .2s linear;
+  transition: 0.2s linear;
+}
+.mint-loadmore-top span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.mint-loadmore-top span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.page-loadmore .mint-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+.page-loadmore-desc {
+  text-align: center;
+  color: #666;
+  padding-bottom: 5px;
+}
+.page-loadmore-wrapper {
+  overflow: scroll;
+}
+.mint-loadmore-bottom {
+  margin-bottom: 0;
+}
+.mint-loadmore-bottom span {
+  display: inline-block;
+  -webkit-transition: .2s linear;
+  transition: .2s linear;
+  vertical-align: middle;
+}
+.mint-loadmore-bottom span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 .user-header .mint-cell-wrapper {
   padding: 20px 10px;
 }
