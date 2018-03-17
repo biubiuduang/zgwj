@@ -1,5 +1,5 @@
 <template>
-  <div class="address padding-top">
+  <div class="address padding-top userAddr">
     <p class="backNav">
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}
@@ -240,7 +240,7 @@
   .address-form{
     padding-right: 2rem;
   }
-  .address{
+  .userAddr{
   .title{
     line-height: 50px;
     text-indent:2rem;

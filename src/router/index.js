@@ -71,7 +71,7 @@ let router =  new Router({
         },
         name: 'party',
         component: resolve => require(['../components/other/party.vue'], resolve)
-      },]
+      }]
     },
     {
       path: '/userCenter',
@@ -206,14 +206,14 @@ let router =  new Router({
     //   name: 'userCent erCoupon',
     //   component: resolve => require(['../components/userCenter/userCenterCoupon.vue'], resolve)
     // },
-    // {
-    //   path: '/test',
-    //   meta: {
-    //     title: '测试加载'
-    //   },
-    //   name: 'test',
-    //   component: resolve => require(['../components/loadmoreTest.vue'], resolve)
-    // }
+    {
+      path: '/test',
+      meta: {
+        title: '测试加载'
+      },
+      name: 'test',
+      component: resolve => require(['../components/loadmoreTest.vue'], resolve)
+    }
   ]
 });
 

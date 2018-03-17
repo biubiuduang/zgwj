@@ -15,7 +15,7 @@
           <el-input prefix-icon="mintui mintui-tel-msg" type="text" v-model="loginForm.psw"></el-input>
           <el-button class="getCode" type="primary" :disabled="telCodeStatus" @click="handleTelCode">{{countBtn}}</el-button>
         </el-form-item>
-        <el-form-item class="enter-box">
+        <el-form-item class="login-btn">
           <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
         </el-form-item>
       </el-form>
@@ -117,7 +117,7 @@
             this.timeCount = 60;
             clearTimeout(setTime);
           }else{
-            this.countBtn = t+"s重新获取";
+            this.countBtn = t+"s";
             t--;
             setTime = setTimeout(function() {
                 that.countDown(t)
@@ -161,9 +161,10 @@
 <style lang="less">
   .logo{
     width: 100%;
-    margin:2rem auto;
-    height: 5rem;
+    overflow:hidden;
     img {
+      display: block;
+      margin:2rem auto;
       width: 5rem;
     }
   }
@@ -188,7 +189,7 @@
       right:  0;
       bottom: 0.2rem;
     }
-    .enter-box{
+    .login-btn{
       button{
         width: 100%;
       }

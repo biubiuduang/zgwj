@@ -1,51 +1,50 @@
 <template>
-    <div class="padding-box">
+
+  <div class="page-loadmore">
+      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <div class="choice-box">
-        <mt-search
-          v-model="value"
-          placeholder="搜索">
-        </mt-search>
-        <ul class="choice-list">
-          <template v-for="(item, index) in list.data">
-            <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
+          <mt-search
+            v-model="value"
+            placeholder="搜索">
+          </mt-search>
+          <ul class="choice-list">
+            <template v-for="(item, index) in list.data">
+              <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
+            </template>
+          </ul>
+          <div class="list-popup" v-show="list.isShow">
+            <Ages :ages="searchList.ages" @handleAges="handleAges"></Ages>
+            <Brand :brand="searchList.brand" @handleBrand="handleBrand"></Brand>
+            <Type :type="searchList.type" :ability="searchList.ability" @handleType="handleType"></Type>
+            <Auto @handleAuto="handleAuto"></Auto>
+          </div>
+        </div>
+      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+        <ul class="page-loadmore-list">
+          <template v-for="item in goodsList">
+            <router-link tag="li" class="page-loadmore-listitem goods-list" :to="'/detail/'+item.goods_id">
+              <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
+              <div class="pv-info">
+                <p class="p-title">{{item.goods_name}}</p>
+                <div class="info-msg">
+                  <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
+                  <p class="is-stars" v-else>非星标玩具</p>
+                  <p class="is-ages">{{item.age_name}}</p>
+                </div>
+              </div>
+            </router-link>
           </template>
         </ul>
-        <div class="list-popup" v-show="list.isShow">
-          <Ages :ages="searchList.ages" @handleAges="handleAges"></Ages>
-          <Brand :brand="searchList.brand" @handleBrand="handleBrand"></Brand>
-          <Type :type="searchList.type" :ability="searchList.ability" @handleType="handleType"></Type>
-          <Auto @handleAuto="handleAuto"></Auto>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-if="allLoaded== false" v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑加载更多</span>
+          <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+          <span v-if="allLoaded">没有更多数据了!</span>
         </div>
-      </div>
-      <div class="page-infinite-wrapper" ref="wrapper">
-          <div class="list-box">
-            <mt-loadmore :bottom-method="loadBottom"  @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
-            <ul class="pv-list">
-              <template v-for="item in goodsList">
-              <router-link tag="li" :to="'/detail/'+item.goods_id">
-                <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
-                <div class="pv-info">
-                  <p class="p-title">{{item.goods_name}}</p>
-                  <div class="info-msg">
-                    <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
-                    <p class="is-stars" v-else>非星标玩具</p>
-                    <p class="is-ages">{{item.age_name}}</p>
-                  </div>
-                </div>
-              </router-link>
-              </template>
-            </ul>
-              <div slot="bottom" class="mint-loadmore-bottom">
-                <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
-                <span v-show="bottomStatus === 'loading'">
-                  <mt-spinner type="snake"></mt-spinner>
-                </span>
-              </div>
-              <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
-          </mt-loadmore>
-          </div>
-      </div>
+      </mt-loadmore>
     </div>
+  </div>
 </template>
 <script>
     import Ages from "./ages.vue";
@@ -87,6 +86,7 @@
           listCount: 0,
           bottomStatus: '',
           allLoaded: false,
+          wrapperHeight: 0
         }
       },
       activated() {
@@ -97,47 +97,64 @@
       },
       methods: {
         //获取玩具列表
-        handleGoodsList: function(d){
+        handleGoodsList: function () {
           var that = this;
+          this.search.start = this.goodsList.length;
           this.newAjax({
             url: 'goods/get_goodes',
-            data: d,
-            success: function(data){
-              if(data.status == 200){
-                if('page' in data.data){
+            data: that.search,
+            success: function (data) {
+              if (data.status == 200) {
+                if (data.data.items != undefined) {
                   console.log(data);
-                  that.goodsList = that.goodsList.concat(data.data.items);
-                  that.listCount = data.data.page.count;
-                  if(that.goodsList.length >= that.listCount){
-                    that.allLoaded = true;// 若数据已全部获取完毕
-                  }else{
-                    that.search.start = that.goodsList.length;
-                    that.allLoaded = false;
+                  var len = data.data.items.length;
+                  for (var i = 0; i < len; i++) {
+                    that.goodsList.push(data.data.items[i]);
                   }
-                }else{
+                } else {
                   that.goodsList = [];
                   that.allLoaded = true;
                 }
-              }else{
+              } else {
+                that.allLoaded = true;
+              }
+            }
+          })
+        },
+        handleInitList: function () {
+          var that = this;
+          this.search.start = 0;
+          this.goodsList = [];
+          this.newAjax({
+            url: 'goods/get_goodes',
+            data: that.search,
+            success: function (data) {
+              if (data.status == 200) {
+                if (data.data.items != undefined) {
+                  console.log(data);
+                  var len = data.data.items.length;
+                  for (var i = 0; i < len; i++) {
+                    that.goodsList.push(data.data.items[i]);
+                  }
+                  that.listCount = data.data.page.count;
+                  that.allLoaded = false;
+                } else {
+                  that.goodsList = [];
+                  that.allLoaded = true;
+                }
+              } else {
                 that.allLoaded = true;
               }
 
             }
           })
         },
-        handleInitList: function(){
-          var that = this;
-          this.search.start = 0;
-          this.allLoaded = false;
-          this.goodsList = [];
-          this.handleGoodsList(this.search);
-        },
         //获取玩具分类
-        handleClassList: function(){
+        handleClassList: function () {
           var that = this;
           this.newAjax({
-            url:"goods/get_categories",
-            success: function(data){
+            url: "goods/get_categories",
+            success: function (data) {
               that.searchList.ages = that.searchAll.concat(data.data.items[0].child[0]);
               that.searchList.brand = that.searchAll.concat(data.data.items[1].child[0]);
               that.searchList.type = data.data.items[3].child[0];
@@ -146,111 +163,106 @@
           })
         },
         //Tabs点击事件
-        handleTabs: function(index){
-          if($(".choice-list li:eq("+index+")").hasClass("active")){
-            $(".choice-list li:eq("+index+")").removeClass("active");
+        handleTabs: function (index) {
+          if ($(".choice-list li:eq(" + index + ")").hasClass("active")) {
+            $(".choice-list li:eq(" + index + ")").removeClass("active");
             this.list.isShow = false;
-          }else{
+          } else {
             $(".choice-list li").removeClass("active").eq(index).addClass("active");
             $(".item").hide();
-            $(".item-"+index).show();
+            $(".item-" + index).show();
             this.list.isShow = true;
           }
         },
-        handleDocument: function(){
+        handleDocument: function () {
           let that = this;
-          $(document).on("click",function(){
+          $(document).on("click", function () {
             that.list.isShow = false;
             $(".choice-list li").removeClass("active");
           });
-          $(".choice-box .item,.choice-box .choice-list").on("click",function(event){
+          $(".choice-box .item,.choice-box .choice-list").on("click", function (event) {
             event.stopPropagation();
           })
         },
-        handleEnter: function(){
+        handleEnter: function () {
           var that = this;
-          $('.mint-searchbar-core').bind('keyup', function(event) {
+          $('.mint-searchbar-core').bind('keyup', function (event) {
             if (event.keyCode == "13") {
               //回车执行查询
               that.search.keywords = $(this).val();
               that.goodsList = [];
               that.search.start = that.goodsList.length;
-              that.allLoaded = true;
-              that.handleGoodsList(that.search);
+              that.handleInitList();
             }
           });
         },
-        handleAges: function(data){
+        handleAges: function (data) {
           let that = this;
-          if(data == '全部'){
+          if (data == '全部') {
             delete that.search.age_id;
-          }else{
+          } else {
             that.search.age_id = data;
           }
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
-          that.goodsList = [];
-          that.search.start = that.goodsList.length;
-          that.allLoaded = true;
-          that.handleGoodsList(that.search);
+          that.handleInitList();
         },
-        handleBrand: function(data){
+        handleBrand: function (data) {
           let that = this;
-          if(data == '全部'){
+          if (data == '全部') {
             delete that.search.brand_id;
-          }else {
+          } else {
             that.search.brand_id = data;
           }
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
-          that.goodsList = [];
-          that.search.start = that.goodsList.length;
-          that.allLoaded = true;
-          that.handleGoodsList(that.search);
+          that.handleInitList();
 
         },
-        handleType: function(data){
+        handleType: function (data) {
           let that = this;
-          that.search.is_star= data.stars;
-          that.search.has_stock= data.store;
-          that.search.type_id= data.type;
-          that.search.ability_id= data.ability;
+          that.search.is_star = data.stars;
+          that.search.has_stock = data.store;
+          that.search.type_id = data.type;
+          that.search.ability_id = data.ability;
 
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
-          that.goodsList = [];
-          that.search.start = that.goodsList.length;
-          that.allLoaded = true;
-          that.handleGoodsList(that.search);
+          that.handleInitList();
         },
-        handleAuto: function(data){
+        handleAuto: function (data) {
           let that = this;
           that.search.order_str = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
-          that.goodsList = [];
-          that.search.start = that.goodsList.length;
-          that.allLoaded = true;
-          that.handleGoodsList(that.search);
-        },
-        loadBottom: function() {
-         // 加载更多数据
-          if(this.allLoaded == false){
-            this.handleGoodsList(this.search);
-          }
-          this.$refs.loadmore.onBottomLoaded();
+          that.handleInitList();
         },
         handleBottomChange(status) {
           this.bottomStatus = status;
         },
+        loadBottom: function(){
+          if (this.goodsList.length < this.listCount) {
+            this.handleGoodsList();
+          } else {
+            this.allLoaded = true;
+          }
+
+          this.$refs.loadmore.onBottomLoaded();
+        },
+      },
+      mounted() {
+        this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       }
     }
 </script>
 <style scoped lang="less">
+  .mint-loadmore{
+    padding: 90px 0 2.5rem 0;
+  }
   .mint-search{
     height: auto;
     position: relative;
@@ -312,73 +324,52 @@
        }
     }
   }
-  .page-infinite-wrapper{
-    padding-top: 90px;
-    z-index: 2;
-    .list-box{
-      width: 100%;
-      height: 100%;
-      overflow: scroll;
-    }
-  }
-  .load-icon{
-    width: 28px;
-    height: 28px;
-    display: block;
-    margin:0 auto;
-  }
-  .pv-list{
-    overflow: scroll;
-    max-height:100%;
-    li{
-      overflow: hidden;
-      padding: 0.7rem;
-      margin-bottom:2px;
-      .pv-img{
-        width: 3rem;
-        height: 3rem;
-        background-color: #d8d8d8;
-        border-radius: 5px;
-        float:left;
-        img{
-          width: 100%;
-        }
+  .goods-list{
+    width: 100%;
+    padding: 15px;
+    height: 90px;
+    .pv-img{
+      width: 60px;
+      height: 60px;
+      background-color: #d8d8d8;
+      border-radius: 5px;
+      float: left;
+      img{
+        width: 100%;
       }
-      .pv-info{
-        float:left;
-        width: 13.6rem;
-        padding-left: 0.46rem;
-        text-align: left;
-        .p-title{
-          font-size: 0.7rem;
-          color: #252525;
-          padding: 0 .13rem;
-          white-space: normal;
-          height: 1.92rem;
-          -webkit-line-clamp: 2;
-          line-height: 0.96rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-box-flex: 1;
-          -moz-box-flex: 1;
-          -ms-box-flex: 1;
-          box-flex: 1;
-        }
-        .info-msg{
-          margin-top:0.38rem;
-          height: 0.7rem;
-          p{
-            font-size: 0.7rem;
-            line-height: 0.7rem;
-            &.is-stars{
-              float:left;
+    }
+    .pv-info{
+      text-align: left;
+      width: 100%;
+      padding-left: 75px;
+      position: relative;
+      font-size: 14px;
+      .p-title{
+        color: #252525;
+        white-space: normal;
+        height: 36px;
+        -webkit-line-clamp: 2;
+        line-height: 18px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -ms-box-flex: 1;
+        box-flex: 1;
+      }
+      .info-msg{
+        overflow:hidden;
+        margin-top:8px;
+        p{
+          line-height: 16px;
+          &.is-stars{
+            float: left;
+           }
+           &.is-ages{
+            float: right;
             }
-            &.is-ages{
-              float:right;
-            }
-          }
         }
       }
     }

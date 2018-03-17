@@ -71,42 +71,43 @@
 </script>
 <style lang="less">
   .address{
-  .title{
-    line-height: 50px;
-    text-indent:2rem;
-    font-size: 0.8rem;
-    text-align: left;
-    border-bottom: 1px solid #e1e1e1;
-    margin-bottom: 22px;
+    .title{
+      line-height: 50px;
+      text-indent:2rem;
+      font-size: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #e1e1e1;
+      margin-bottom: 22px;
+    }
+    .el-input__inner{
+      border:none;
+      border-bottom: 1px solid #dcdcdc;
+    }
+    .el-select{
+      width: 100%;
+    }
+    .el-form-item__content{
+      text-align: left;
+    }
+    .el-input{
+      width: 80%;
+      margin-left:0;
+    }
+    .el-date-editor--date{
+      width: 80% !important;
+    }
+    .enter-box .el-form-item__content{
+      position: absolute;
+      bottom: 1rem;
+      left:0;
+      width: 100%;
+      text-align: center;
+      margin-left:0 !important;
+      .el-button{
+        width: 80%;
+      }
+    }
   }
-  }
-  .el-input__inner{
-    border:none;
-    border-bottom: 1px solid #dcdcdc;
-  }
-  .el-select{
-    width: 100%;
-  }
-  .el-form-item__content{
-    text-align: left;
-  }
-  .el-input{
-    width: 80%;
-    margin-left:0;
-  }
-  .el-date-editor--date{
-    width: 80% !important;
-  }
-  .enter-box .el-form-item__content{
-    position: absolute;
-    bottom: 1rem;
-    left:0;
-    width: 100%;
-    text-align: center;
-    margin-left:0 !important;
-  .el-button{
-    width: 80%;
-  }
-  }
+
 </style>
 
