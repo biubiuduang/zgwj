@@ -9,8 +9,9 @@
         <p class="title">
           年卡会员暂停权利:
         </p>
-        <p>1.您是年卡会员,有一次暂停会员权利,最长30天;</p>
-        <p>2.您可以在归还所有玩具时暂停会员,您的会员时间会因此顺延;</p>
+        <p>1.年卡会员,有一次暂停会员权利,最长30天;</p>
+        <p>2.年卡会员在归还所有玩具时暂停会员,您的会员时间会因此顺延;</p>
+        <p>3.暂停后30内可以手动恢复;</p>
         <p>3.暂停后30天会自动恢复.</p>
         <template>
           <input v-if="remainStatus == true" type="button" @click="handlePaused('pause')" value="暂停" />
@@ -73,8 +74,12 @@
               handle_type: key
             },
             success: function(data){
-              MessageBox('提示', data.message);
-              that.handleGetInfo();
+              MessageBox({
+                title: '提示',
+                message: data.message,
+              }).then(action => {
+                that.$router.push({path:'/userCenter/memberInfo'});
+              });
             }
           })
         }

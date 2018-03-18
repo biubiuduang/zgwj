@@ -202,7 +202,6 @@
           this.bottomStatus = status;
         },
         loadBottom: function(){
-          console.log(1);
           if(this.buyList.length < this.page.count){
             this.handleLoadList();
           }else {

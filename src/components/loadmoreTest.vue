@@ -1,6 +1,10 @@
 <template>
   <div class="page-loadmore">
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="page-loadmore-list">
           <template v-for="item in goodsList">
@@ -47,7 +51,6 @@
           number:'30',
         },
         listCount: 0,
-        list: [],
         allLoaded: false,
         bottomStatus: '',
         wrapperHeight: 0
@@ -68,6 +71,7 @@
         var that = this;
         this.search.start = 0;
         this.goodsList = [];
+        this.search.start = 0;
         this.newAjax({
           url: 'goods/get_goodes',
           data: that.search,
