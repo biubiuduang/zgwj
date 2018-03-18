@@ -86,12 +86,6 @@
         })
       },
       handleMore: function(){
-//        let lastValue = this.list[this.list.length - 1];
-//        setTimeout(() => {
-//          for (let i = 1; i <= 10; i++) {
-//            this.list.push(lastValue + i);
-//          }
-//        },3000);
         var that = this;
 
         this.search.start = this.goodsList.length;

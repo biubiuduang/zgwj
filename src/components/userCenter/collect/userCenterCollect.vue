@@ -1,15 +1,15 @@
 <template>
   <div class="userCenter">
-    <p class="backNav">
-      <i class="el-icon-arrow-left" @click="$router.back()"></i>
-      {{$store.state.title}}
-    </p>
-    <div v-if="collectNormal" class="order-normal flex-center">
-      <router-link tag="p" to="/list">去挑选玩具 >></router-link>
-    </div>
-    <div v-else class="page-infinite-wrapper" ref="wrapper">
-      <p class="count">已收藏{{collectCount}}个玩具</p>
-      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+    <div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
+      <div v-if="collectNormal" class="order-normal flex-center">
+        <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+      </div>
+      <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+        <p class="count">已收藏{{collectCount}}个玩具</p>
         <ul class="order-list">
           <template v-for="item in collectList">
             <router-link tag="li"  :to="'/detail/'+item.goods_id">
@@ -33,12 +33,12 @@
           </template>
         </ul>
         <div slot="bottom" class="mint-loadmore-bottom">
-          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
+          <span v-if="allLoaded== false" v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑加载更多</span>
           <span v-show="bottomStatus === 'loading'">
-                  <mt-spinner type="snake"></mt-spinner>
-                </span>
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+          <span v-if="allLoaded">没有更多数据了!</span>
         </div>
-        <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
       </mt-loadmore>
     </div>
   </div>
@@ -56,7 +56,8 @@
           start: 0,
           count: 0
         },
-        bottomStatus: ''
+        bottomStatus: '',
+        wrapperHeight: 0
       }
     },
     activated() {
@@ -71,10 +72,6 @@
           start:0,
           count:0
         };
-        that.handleCollectList();
-      },
-      handleCollectList: function(){
-        var that = this;
         this.newAjax({
           url:"user/get_collects",
           header: {
@@ -82,28 +79,61 @@
             token: localStorage.getItem("token")
           },
           data: {
-            start: that.page.start
+            start: that.page.start,
+            number:10
           },
           success: function(data){
             console.log(data);
             if(data.status == 200){
-              if(data.data.items == undefined){
-                that.collectList = [];
-                that.collectNormal = true;
-              }else{
+              if(data.data.items != undefined){
                 that.collectNormal = false;
-                that.collectList = that.collectList.concat(data.data.items);
+                var len = data.data.items.length;
+                for(var i = 0; i< len; i++){
+                  that.collectList.push(data.data.items[i]);
+                }
+                that.page.count = data.data.page.count;
+                that.allLoaded = false;
                 if(data.data.page.count > 99){
                   that.collectCount = '99+';
                 }else{
                   that.collectCount = data.data.page.count;
                 }
-                if(that.collectList.length >= data.data.page.count){
-                  that.allLoaded = true;
-                }else{
-                  that.page.start = that.collectList.length;
-                  that.allLoaded = false;
+              }else{
+                that.collectList = [];
+                that.collectNormal = true;
+              }
+            }else{
+              that.allLoaded = true;
+              that.collectNormal = true;
+              MessageBox('提示', data.message);
+            }
+          }
+        })
+      },
+      handleCollectList: function(){
+        var that = this;
+        this.page.start = this.collectList.length;
+        this.newAjax({
+          url:"user/get_collects",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          data: {
+            start: that.page.start,
+            number: 10
+          },
+          success: function(data){
+            console.log(data);
+            if(data.status == 200){
+              if(data.data.items != undefined){
+                var len = data.data.items.length;
+                for(var i = 0; i< len; i++){
+                  that.collectList.push(data.data.items[i]);
                 }
+              }else{
+                that.collectList = [];
+                that.collectNormal = true;
               }
             }else{
               that.allLoaded = true;
@@ -114,8 +144,11 @@
         })
       },
       loadBottom: function(){
-        if(this.allLoaded == false){
+        if (this.collectList.length < this.page.count) {
           this.handleCollectList();
+
+        } else {
+          this.allLoaded = true;
         }
         this.$refs.loadmore.onBottomLoaded();
       },
@@ -153,6 +186,9 @@
           }
         })
       }
+    },
+    mounted() {
+      this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
     }
   }
 </script>
