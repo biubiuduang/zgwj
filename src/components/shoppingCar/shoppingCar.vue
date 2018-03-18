@@ -1,73 +1,77 @@
 <template>
     <div class="padding-box padding-top">
-      <p class="backNav">
-        <i class="el-icon-arrow-left" @click="$router.back()"></i>
-        {{$store.state.title}}
-      </p>
-      <div class="give-back list-box" v-if="returnShow">
-        <p class="title">待归还的玩具</p>
-        <ul class="give-list wait-give-back">
-          <li v-for="item in returnList">
-            <div class="wait-checkbox">
-              <el-checkbox-group v-model="toyCount.returnData" @change="handleCheck" >
-                <el-checkbox :label="item.order_id+'-'+item.goods_id" :checked="true"></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div class="pv-img flex-center">
-              <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
-            </div>
-            <div class="pv-info">
-              <p class="p-title">{{item.goods_name}}</p>
-              <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
-              <p class="is-stars" v-else>非星标玩具</p>
-              <p class="is-state" v-if="item.goods_status == 1">租借中</p>
-              <p class="is-state" v-if="item.goods_status == 2">归还中</p>
-              <p class="is-state" v-if="item.goods_status == 3">已归还</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="borrow list-box" v-if="borrowShow">
-        <p class="title">期望租借的玩具</p>
-        <p class="tip">温馨提示:<br/>
-          <span v-if="isVIP" >您的会员权限一次可以租借{{toyCount.star}}件星标玩具 或 {{toyCount.normal}}件常规玩具。</span>
-          <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
+      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+        <p class="backNav">
+          <i class="el-icon-arrow-left" @click="$router.back()"></i>
+          {{$store.state.title}}
         </p>
-        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-        <ul class="give-list wait-give-back">
-          <li v-for="item in buyList">
-            <div class="wait-checkbox">
-              <el-checkbox-group v-model="toyCount.buyData" @change="handleCheck" :max="toyCount.max" >
-                <el-checkbox :label="item.goods_id"></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div class="pv-img flex-center">
-              <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
-            </div>
-            <div class="pv-info">
-              <p class="p-title">{{item.goods_name}}</p>
-              <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
-              <p class="is-stars" v-else>非星标玩具</p>
-              <p class="is-stockout is-stockout-have" v-if="item.goods_number > 0">有库存</p>
-              <p class="is-stockout" v-else>暂时无货</p>
-              <a class="delete" href="javascript:void(0);" @click="handleDelete(item.carts_id)">
-                <i class="iconfont icon-delete"></i>
-              </a>
-            </div>
-          </li>
-        </ul>
-        <div slot="bottom" class="mint-loadmore-bottom" :class="allLoaded == true?'mint-loadmore-bottom-to':''">
-            <span class="load-icon" v-if="allLoaded == false">
-              <mt-spinner type="fading-circle"></mt-spinner>
-            </span>
-          <span v-else>没有更多数据了</span>
+
+        <div class="normal" v-if="borrowShow == false">
+          <img src="../../assets/img/Logo.jpg" alt="">
+          <p>您还没有选购任何玩具,快去选购吧</p>
+          <router-link tag="a" to="/list">去挑选</router-link>
         </div>
+        <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+          <div class="give-back list-box" v-if="returnShow">
+            <p class="title">待归还的玩具</p>
+            <ul class="give-list wait-give-back">
+              <li v-for="item in returnList">
+                <div class="wait-checkbox">
+                  <el-checkbox-group v-model="toyCount.returnData" @change="handleCheck" >
+                    <el-checkbox :label="item.order_id+'-'+item.goods_id" :checked="true"></el-checkbox>
+                  </el-checkbox-group>
+                </div>
+                <div class="pv-img flex-center">
+                  <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
+                </div>
+                <div class="pv-info">
+                  <p class="p-title">{{item.goods_name}}</p>
+                  <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
+                  <p class="is-stars" v-else>非星标玩具</p>
+                  <p class="is-state" v-if="item.goods_status == 1">租借中</p>
+                  <p class="is-state" v-if="item.goods_status == 2">归还中</p>
+                  <p class="is-state" v-if="item.goods_status == 3">已归还</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="borrow list-box">
+          <p class="title">期望租借的玩具</p>
+          <p class="tip">温馨提示:<br/>
+            <span v-if="isVIP" >您的会员权限一次可以租借{{toyCount.star}}件星标玩具 或 {{toyCount.normal}}件常规玩具。</span>
+            <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
+          </p>
+          <ul class="give-list wait-give-back">
+            <li v-for="item in buyList">
+              <div class="wait-checkbox">
+                <el-checkbox-group v-model="toyCount.buyData" @change="handleCheck" :max="toyCount.max" >
+                  <el-checkbox :label="item.goods_id"></el-checkbox>
+                </el-checkbox-group>
+              </div>
+              <div class="pv-img flex-center">
+                <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
+              </div>
+              <div class="pv-info">
+                <p class="p-title">{{item.goods_name}}</p>
+                <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
+                <p class="is-stars" v-else>非星标玩具</p>
+                <p class="is-stockout is-stockout-have" v-if="item.goods_number > 0">有库存</p>
+                <p class="is-stockout" v-else>暂时无货</p>
+                <a class="delete" href="javascript:void(0);" @click="handleDelete(item.carts_id)">
+                  <i class="iconfont icon-delete"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+          <div slot="bottom" class="mint-loadmore-bottom">
+            <span v-if="allLoaded== false" v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑加载更多</span>
+            <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+            <span v-if="allLoaded">没有更多数据了!</span>
+          </div>
         </mt-loadmore>
-      </div>
-      <div class="normal" v-if="borrowShow == false">
-        <img src="../../assets/img/Logo.jpg" alt="">
-        <p>您还没有选购任何玩具,快去选购吧</p>
-        <router-link tag="a" to="/list">去挑选</router-link>
       </div>
       <div class="bottom-count">
         <p class="count">新租{{toyCount.buyToy}}件,归还{{toyCount.returnToy}}件</p>
@@ -98,7 +102,9 @@
           page:{
             start: 0,
             count: 0
-          }
+          },
+          bottomStatus: '',
+          wrapperHeight: 0
         }
       },
       activated() {
@@ -106,27 +112,13 @@
         this.handleUserInfo();
       },
       methods: {
-        handleSubmit: function(){
-          var that = this;
-          var buyStr = this.toyCount.buyData.join(",");
-          var returnStr = this.toyCount.returnData.join(",");
-          if(this.toyCount.buyData.length == 0 && this.toyCount.returnData.length == 0){
-            MessageBox('提示', '请选择退换的玩具.');
-          }else{
-            that.$router.push({path:'/enterOrder',query:{buy:buyStr,return:returnStr}});
-          }
-        },
         handleInitList: function(){
+          var that = this;
           this.buyList= [];
-          this.allLoaded = true;
           this.page = {
             start: 0,
             count: 0
           };
-          this.handleLoadList();
-        },
-        handleLoadList: function(){
-          var that = this;
           this.newAjax({
             url: "order/get_carts",
             header: {
@@ -134,34 +126,30 @@
               token: localStorage.getItem("token")
             },
             data: {
-              start : that.page.start
+              start : that.page.start,
             },
             success: function(data){
               console.log(data);
               if(data.status == 200){
                 if('page' in data.data){
-                  if(data.data.returnning_items == undefined){
+                  if(data.data.returnning_items.length == 0 || data.data.returnning_items == undefined){
                     that.returnShow = false;
                     that.returnList = [];
                   }else{
                     that.returnShow = true;
                     that.returnList = data.data.returnning_items;
                   }
-
-                  if(data.data.items == undefined){
+                  if(data.data.items != undefined){
+                    var len = data.data.items.length;
+                    for (var i = 0; i < len; i++) {
+                      that.buyList.push(data.data.items[i]);
+                    }
+                    that.page.count = data.data.page.count;
+                    that.allLoaded = false;
+                    that.borrowShow = true;
+                  }else{
                     that.buyList = [];
                     that.borrowShow = false;
-                  }else{
-                    that.borrowShow = true;
-                    that.buyList = that.buyList.concat(data.data.items);
-                    that.page.count = data.data.page.count;
-                  }
-
-                  if(that.buyList.length == that.page.count){
-                    that.allLoaded = true;// 若数据已全部获取完毕
-                  }else{
-                    that.page.start = that.goodsList.length;
-                    that.allLoaded = false;
                   }
                 }else{
                   that.buyList = [];
@@ -174,9 +162,62 @@
             }
           })
         },
+        handleLoadList: function(){
+          var that = this;
+          this.page.start = this.buyList.length;
+          this.newAjax({
+            url: "order/get_carts",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              start : that.page.start,
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                if('page' in data.data){
+                  if(data.data.items != undefined){
+                    var len = data.data.items.length;
+                    for(var i = 0; i < len; i ++){
+                      that.buyList.push(data.data.items[i]);
+                    }
+                  }else {
+                    that.buyList = [];
+                    that.allLoaded = true;
+                  }
+                }else{
+                  that.buyList = [];
+                  that.allLoaded = true;
+                }
+              }else{
+                that.allLoaded = true;
+              }
+
+            }
+          })
+        },
+        handleBottomChange(status) {
+          this.bottomStatus = status;
+        },
         loadBottom: function(){
-          if(this.allLoaded == false){
+          console.log(1);
+          if(this.buyList.length < this.page.count){
             this.handleLoadList();
+          }else {
+            this.allLoaded = true;
+          }
+          this.$refs.loadmore.onBottomLoaded();
+        },
+        handleSubmit: function(){
+          var that = this;
+          var buyStr = this.toyCount.buyData.join(",");
+          var returnStr = this.toyCount.returnData.join(",");
+          if(this.toyCount.buyData.length == 0 && this.toyCount.returnData.length == 0){
+            MessageBox('提示', '请选择退换的玩具.');
+          }else{
+            that.$router.push({path:'/enterOrder',query:{buy:buyStr,return:returnStr}});
           }
         },
         handleDelete: function(id){
@@ -223,6 +264,9 @@
           this.toyCount.returnToy = this.toyCount.returnData.length;
           this.toyCount.buyToy = this.toyCount.buyData.length;
         }
+      },
+      mounted() {
+        this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       }
     }
 </script>
@@ -320,6 +364,7 @@
   }
   .normal{
     padding: 0 0.7rem;
+    margin-top:4rem;
     text-align:center;
     img{
       width: 5rem;
