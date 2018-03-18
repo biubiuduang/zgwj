@@ -58,20 +58,10 @@
     },
 
     methods: {
-      handleBottomChange(status) {
-        this.bottomStatus = status;
-      },
       handleInit: function(){
-//        setTimeout(() => {
-//          for (let i = 1; i <= 20; i++) {
-//            this.list.push(i);
-//          }
-//          this.allLoaded = false;
-//        }, 3000);
         var that = this;
         this.search.start = 0;
         this.goodsList = [];
-        this.search.start = 0;
         this.newAjax({
           url: 'goods/get_goodes',
           data: that.search,
@@ -136,7 +126,10 @@
         }
           this.$refs.loadmore.onBottomLoaded();
 
-      }
+      },
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
     },
 
     created() {

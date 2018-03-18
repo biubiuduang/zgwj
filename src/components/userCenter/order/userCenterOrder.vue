@@ -1,14 +1,14 @@
 <template>
     <div class="padding-top">
-      <p class="backNav">
-        <i class="el-icon-arrow-left" @click="$router.back()"></i>
-        {{$store.state.title}}
-      </p>
-      <div v-if="orderNormal" class="order-normal flex-center">
-        <router-link tag="p" to="/list">去挑选玩具 >></router-link>
-      </div>
-      <div v-else class="page-infinite-wrapper" ref="wrapper">
-        <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+        <p class="backNav">
+          <i class="el-icon-arrow-left" @click="$router.back()"></i>
+          {{$store.state.title}}
+        </p>
+        <div v-if="orderNormal" class="order-normal flex-center">
+          <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+        </div>
+        <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list">
             <li v-for="item in orderList">
               <p class="order-number">订单号:{{item.order_no}} <span>{{item.order_status_name}}</span></p>
@@ -29,12 +29,12 @@
             </li>
           </ul>
           <div slot="bottom" class="mint-loadmore-bottom">
-            <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑上拉加载更多</span>
+            <span v-if="allLoaded== false" v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑加载更多</span>
             <span v-show="bottomStatus === 'loading'">
-                  <mt-spinner type="snake"></mt-spinner>
-                </span>
+              <mt-spinner type="snake"></mt-spinner>
+            </span>
+            <span v-if="allLoaded">没有更多数据了!</span>
           </div>
-          <p class="loading-bottom" v-if="allLoaded">没有更多数据了.</p>
         </mt-loadmore>
       </div>
     </div>
@@ -48,6 +48,7 @@
           orderList: [],
           allLoaded : false,
           bottomStatus: '',
+          wrapperHeight: 0,
           page:{
             start: 0,
             count: 0
@@ -61,16 +62,10 @@
         handleInit: function(){
           var that = this;
           this.orderList=[];
-          this.allLoaded = false;
           this.page = {
             start: 0,
             count: 0
           };
-          that.handleOrderList();
-        },
-        handleOrderList: function(){
-          var that = this;
-
           this.newAjax({
             url:"order/get_orders",
             header: {
@@ -81,18 +76,16 @@
               start : that.page.start
             },
             success: function(data){
-              console.log(data);
               if(data.status == 200){
                 if(data.data.items != undefined){
+                  console.log(data);
                   that.orderNormal = false;
-                  that.orderList = that.orderList.concat(data.data.items);
-                  that.page.count = data.data.page.count;
-                  if(that.orderList.length == that.page.count){
-                    that.allLoaded = true;// 若数据已全部获取完毕
-                  }else{
-                    that.page.start = that.orderList.length;
-                    that.allLoaded = false;
+                  var len = data.data.items.length;
+                  for(var i = 0; i< len; i++){
+                    that.orderList.push(data.data.items[i]);
                   }
+                  that.page.count = data.data.page.count;
+                  that.allLoaded = false;
                 }else{
                   that.orderList=[];
                   that.orderNormal = true;
@@ -105,15 +98,50 @@
             }
           })
         },
+        handleOrderList: function(){
+          var that = this;
+          this.page.start = this.orderList.length;
+          this.newAjax({
+            url:"order/get_orders",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              start : that.page.start
+            },
+            success: function(data){
+              if(data.status == 200){
+                if(data.data.items != undefined){
+                  console.log(data);
+                  var len = data.data.items.length;
+                  for(var i = 0; i< len; i++){
+                    that.orderList.push(data.data.items[i]);
+                  }
+                }
+              }else{
+                that.allLoaded = true;
+                that.orderNormal = true;
+                MessageBox('提示', data.message);
+              }
+            }
+          })
+        },
         loadBottom: function(){
-          if(this.allLoaded == false){
+          if (this.orderList.length < this.page.count) {
             this.handleOrderList();
+
+          } else {
+            this.allLoaded = true;
           }
           this.$refs.loadmore.onBottomLoaded();
         },
         handleBottomChange(status) {
           this.bottomStatus = status;
         },
+      },
+      mounted() {
+        this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       }
     }
 </script>
