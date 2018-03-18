@@ -79,8 +79,7 @@
             token: localStorage.getItem("token")
           },
           data: {
-            start: that.page.start,
-            number:10
+            start: that.page.start
           },
           success: function(data){
             console.log(data);
@@ -120,8 +119,7 @@
             token: localStorage.getItem("token")
           },
           data: {
-            start: that.page.start,
-            number: 10
+            start: that.page.start
           },
           success: function(data){
             console.log(data);
