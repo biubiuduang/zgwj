@@ -82,7 +82,6 @@
             start: that.page.start
           },
           success: function(data){
-            console.log(data);
             if(data.status == 200){
               if(data.data.items != undefined){
                 that.collectNormal = false;
@@ -122,7 +121,6 @@
             start: that.page.start
           },
           success: function(data){
-            console.log(data);
             if(data.status == 200){
               if(data.data.items != undefined){
                 var len = data.data.items.length;

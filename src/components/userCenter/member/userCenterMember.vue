@@ -27,7 +27,13 @@
         this.newAjax({
           url: "user/get_gradecards",
           success: function(data){
-            that.memberList = data.data.items
+            console.log(data);
+            var len = data.data.items.length;
+            for(var i =0; i<len;i++){
+              if(data.data.items[i].card_type == 1){
+                that.memberList.push(data.data.items[i]);
+              }
+            }
           }
         })
       }
