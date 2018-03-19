@@ -1,6 +1,6 @@
 <template>
   <div class="userCenter">
-    <div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+    <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
         {{$store.state.title}}
@@ -188,7 +188,7 @@
     }
   }
 </script>
-<style scoped lang="less">
+<style lang="less">
   .page-infinite-wrapper{
     background-color: #ffffff;
   }

@@ -5,14 +5,14 @@
       </div>
       <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
         <el-form-item  prop="tel">
-          <el-input prefix-icon="mintui mintui-phone" v-model.number="loginForm.tel"  clearable></el-input>
+          <el-input prefix-icon="mintui mintui-phone" placeholder="请输入11位手机号" v-model.number="loginForm.tel"  clearable></el-input>
         </el-form-item>
         <el-form-item prop="key">
-          <el-input class="code" prefix-icon="mintui mintui-code" type="text" v-model="loginForm.key"></el-input>
+          <el-input class="code" placeholder="请输入图形验证码" prefix-icon="mintui mintui-code" type="text" v-model="loginForm.key"></el-input>
           <img class="imgCode" :src="captcha.img" alt="" @click="handleGetImgCode">
         </el-form-item>
         <el-form-item prop="psw">
-          <el-input prefix-icon="mintui mintui-tel-msg" type="text" v-model="loginForm.psw"></el-input>
+          <el-input prefix-icon="mintui mintui-tel-msg" placeholder="请输入短信验证码" type="text" v-model="loginForm.psw"></el-input>
           <el-button class="getCode" type="primary" :disabled="telCodeStatus" @click="handleTelCode">{{countBtn}}</el-button>
         </el-form-item>
         <el-form-item class="login-btn">
@@ -98,9 +98,11 @@
                 captcha_value: that.loginForm.key
               },
               success: function(data){
+                console.log(data);
                 if(data.status == 200){
                   that.countDown(that.timeCount);
                 }else{
+                  that.telCodeStatus = false;
                   that.loginForm.key = '';
                   MessageBox('提示', '获取短信失败,请重新获取.');
                 }
