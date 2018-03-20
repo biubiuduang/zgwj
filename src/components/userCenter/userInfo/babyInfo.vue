@@ -1,6 +1,5 @@
 <template>
-    <div class="address">
-      <p class="title"></p>
+    <div class="address babyInfo">
       <el-form label-width="100px" class="demo-ruleForm">
         <el-form-item label="宝宝姓名:">
           <el-input type="text" placeholder="宝宝姓名" v-model="info.baby_name" auto-complete="off"></el-input>
@@ -70,15 +69,8 @@
     }
 </script>
 <style lang="less">
-  .address{
-    .title{
-      line-height: 50px;
-      text-indent:2rem;
-      font-size: 0.8rem;
-      text-align: left;
-      border-bottom: 1px solid #e1e1e1;
-      margin-bottom: 22px;
-    }
+  .babyInfo{
+    margin-top:20px;
     .el-input__inner{
       border:none;
       border-bottom: 1px solid #dcdcdc;
