@@ -19,6 +19,9 @@
         <mt-cell title="会员购买记录" icon="viporder" is-link to="/userCenter/memberOrder">
           <span></span>
         </mt-cell>
+        <mt-cell title="我的交易记录" icon="viporder" is-link to="/userCenter/payment">
+          <span></span>
+        </mt-cell>
       </div>
       <div class="user-expense">
         <mt-cell title="我的订单" icon="order" is-link to="/order">

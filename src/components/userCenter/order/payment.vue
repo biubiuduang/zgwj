@@ -1,22 +1,30 @@
 <template>
-  <div class="page-loadmore">
+  <div class="page-loadmore payment">
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
         {{$store.state.title}}
       </p>
-      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
-        <ul class="page-loadmore-list">
-          <template v-for="item in goodsList">
+      <div class="normal flex-center" v-if="listShow == false">
+        <p>没有购买记录,
+        <router-link to="/member">购买会员 ></router-link></p>
+      </div>
+      <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+        <ul class="page-loadmore-list payment-list">
+          <template v-for="item in payList">
             <router-link tag="li" class="page-loadmore-listitem" :to="'/detail/'+item.goods_id">
-              <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
-              <div class="pv-info">
-                <p class="p-title">{{item.goods_name}}</p>
-                <div class="info-msg">
-                  <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
-                  <p class="is-stars" v-else>非星标玩具</p>
-                  <p class="is-ages">{{item.age_name}}</p>
-                </div>
+              <div class="title">
+                <p>交易流水号:{{item.trade_no}}</p>
+                <p class="status" v-if="item.is_paid == 1">已支付</p>
+                <p class="status" v-if="item.is_paid == 0">未支付</p>
+                <p class="status" v-if="item.is_paid == 2">支付关闭</p>
+              </div>
+              <div class="info">
+                <p><span>物品名称 ：</span>{{item.card_name}}</p>
+                <p><span>物品金额 ：</span>{{item.need_money}}</p>
+                <p><span>购买时间 ：</span>{{item.created_at}}</p>
+                <p><span>支付时间 ：</span>{{item.paid_at}}</p>
+                <input v-if="item.is_paid == 0" type="button" value="支付" />
               </div>
             </router-link>
           </template>
@@ -37,20 +45,13 @@
   export default {
     data() {
       return {
-        goodsList: [],
-        search: {
-          keywords:'',
-          age_id: this.$route.query.ages,
-          brand_id: this.$route.query.brand,
-          is_star: '2',
-          has_stock: '1',
-          type_id: this.$route.query.type,
-          ability_id: this.$route.query.ability,
-          order_str: 'default',
-          start: '0',
-          number:'30',
+        payList: [],
+        page:{
+          start: 0,
+          count: 0,
         },
         listCount: 0,
+        listShow: false,
         allLoaded: false,
         bottomStatus: '',
         wrapperHeight: 0
@@ -60,23 +61,32 @@
     methods: {
       handleInit: function(){
         var that = this;
-        this.search.start = 0;
-        this.goodsList = [];
+        this.page.start = 0;
+        this.payList = [];
         this.newAjax({
-          url: 'goods/get_goodes',
-          data: that.search,
+          url: 'user/get_payhistories',
+          data: {
+            start: that.page.start
+          },
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
           success: function (data) {
             if (data.status == 200) {
               if (data.data.items != undefined) {
+
                 console.log(data);
+
+                that.listShow = true;
                 var len = data.data.items.length;
                 for (var i = 0; i < len; i++) {
-                  that.goodsList.push(data.data.items[i]);
+                  that.payList.push(data.data.items[i]);
                 }
-                that.listCount = data.data.page.count;
+                that.page.count = data.data.page.count;
                 that.allLoaded = false;
               } else {
-                that.goodsList = [];
+                that.payList = [];
                 that.allLoaded = true;
               }
             } else {
@@ -88,20 +98,26 @@
       handleMore: function(){
         var that = this;
 
-        this.search.start = this.goodsList.length;
+        this.page.start = this.payList.length;
         this.newAjax({
-          url: 'goods/get_goodes',
-          data: that.search,
+          url: 'user/get_payhistories',
+          data: {
+            start: that.page.start
+          },
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
           success: function (data) {
             if (data.status == 200) {
               if (data.data.items != undefined) {
                 console.log(data);
                 var len = data.data.items.length;
                 for (var i = 0; i < len; i++) {
-                  that.goodsList.push(data.data.items[i]);
+                  that.payList.push(data.data.items[i]);
                 }
               } else {
-                that.goodsList = [];
+                that.payList = [];
                 that.allLoaded = true;
               }
             } else {
@@ -112,7 +128,7 @@
 
       },
       loadBottom() {
-        if (this.goodsList.length < this.listCount) {
+        if (this.payList.length < this.page.count) {
           this.handleMore();
 
         } else {
@@ -136,8 +152,55 @@
   };
 </script>
 
-<style scoped>
-  .page-loadmore-listitem{
-    height: 100px;
+<style lang="less">
+  .payment{
+    .page-loadmore-wrapper{
+      padding-top: 2rem;
+    }
+    .normal{
+      height: 100%;
+      line-height: 100%;
+      font-size: 1rem;
+      a{
+        color:#2e6da4;
+      }
+    }
+    .payment-list{
+      li{
+        text-align: left;
+        .title{
+          background-color: #f5f5f5;
+          overflow: hidden;
+          padding:0 0.7rem;
+          font-size:0.7rem;
+          p{
+            height: 1.5rem;
+            line-height: 1.5rem;
+            float: left;
+            &.status{
+              float:right;
+             }
+          }
+        }
+        .info{
+          padding:0.7rem;
+          position:relative;
+          font-size:0.7rem;
+          p{
+            line-height: 1rem;
+          }
+          input{
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #2e6da4;
+            color:#ffffff;
+            border-radius: 5px;
+            position:absolute;
+            right: 0.7rem;
+            bottom: 0.7rem;
+          }
+        }
+      }
+    }
   }
 </style>

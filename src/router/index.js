@@ -190,7 +190,7 @@ let router =  new Router({
       component: resolve => require(['../components/userCenter/order/userCenterOrder.vue'], resolve)
     },
     {
-      path: '/payment',
+      path: '/userCenter/payment',
       meta: {
         title: '支付记录',
         requireAuth: true
