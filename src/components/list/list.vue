@@ -1,6 +1,6 @@
 <template>
 
-  <div class="page-loadmore">
+  <div class="page-loadmore list">
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <div class="choice-box">
           <mt-search
@@ -259,9 +259,10 @@
       }
     }
 </script>
-<style scoped lang="less">
+<style lang="less">
+.list{
   .mint-loadmore{
-    padding: 90px 0 2.5rem 0;
+    padding: 110px 0 2.9rem 0;
   }
   .mint-search{
     height: auto;
@@ -287,7 +288,7 @@
     .list-popup{
       position: fixed;
       left:0;
-      top:86px;
+      top:110px;
       z-index: 4;
       background-color:rgba(0,0,0,0.4);
       width: 100%;
@@ -346,6 +347,7 @@
       font-size: 14px;
       .p-title{
         color: #252525;
+        font-weight: 800;
         white-space: normal;
         height: 36px;
         -webkit-line-clamp: 2;
@@ -362,6 +364,7 @@
       .info-msg{
         overflow:hidden;
         margin-top:8px;
+        font-size:12px;
         p{
           line-height: 16px;
           &.is-stars{
@@ -374,4 +377,5 @@
       }
     }
   }
+}
 </style>

@@ -100,6 +100,8 @@
                 for (var i = 0; i < len; i++) {
                   that.goodsList.push(data.data.items[i]);
                 }
+                that.listCount = data.data.page.count;
+                that.allLoaded = false;
               } else {
                 that.goodsList = [];
                 that.allLoaded = true;

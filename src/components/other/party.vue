@@ -6,7 +6,6 @@
     </p>
     <h2 class="title">派对服务</h2>
     <div class="article-content">
-      {{content.article_content}}
     </div>
   </div>
 </template>
@@ -31,6 +30,7 @@
           success: function(data){
             if(data.status == 200){
               that.content = data.data;
+              $(".article-content").html(data.data.article_content);
             }
           }
         })

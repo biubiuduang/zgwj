@@ -8,7 +8,7 @@ import store from '../store'
 Vue.use(Router)
 
 let router =  new Router({
-  mode: 'history',
+  //mode: 'history',
   routes: [
     {
       path: '*',//页面初始路由重定向,防止页面初始化时空白现象
@@ -188,7 +188,17 @@ let router =  new Router({
       },
       name: 'userCenterOrder',
       component: resolve => require(['../components/userCenter/order/userCenterOrder.vue'], resolve)
-    },{
+    },
+    {
+      path: '/payment',
+      meta: {
+        title: '支付记录',
+        requireAuth: true
+      },
+      name: 'payment',
+      component: resolve => require(['../components/userCenter/order/payment.vue'], resolve)
+    },
+    {
       path: '/collect',
       meta: {
         title: '我的收藏',

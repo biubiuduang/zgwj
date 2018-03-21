@@ -16,13 +16,13 @@
         <div class="filterKindBox">
           <p class="kindName">玩具类型</p><p @click="handleKindMore" class="group-more kind-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-3">
-            <li v-for="(item,index) in type" @click="handleList($event)" :data-label="item.category_id" class="col-xs-3" :class="index > 7 ? 'kindHide' : 'kindShow'"><span>{{item.category_name}}</span></li>
+            <li v-for="(item,index) in type" @click="handleArray($event,array.type)" :data-label="item.category_id" class="col-xs-3" :class="index > 7 ? 'kindHide' : 'kindShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">锻炼能力</p><p @click="handlePowerMore" class="group-more power-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-4">
-            <li v-for="(item,index) in ability" @click="handleList($event)" :data-label="item.category_id" class="col-xs-3"  :class="index > 7 ? 'powerHide' : 'powerShow'"><span>{{item.category_name}}</span></li>
+            <li v-for="(item,index) in ability" @click="handleArray($event,array.ability)" :data-label="item.category_id" class="col-xs-3"  :class="index > 7 ? 'powerHide' : 'powerShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
       </div>
@@ -46,6 +46,10 @@
             {category_name:'非星标',category_id:'0'},
           ],
           storeType: [{category_name:'近看有货',category_id:'1'}],
+          array: {
+            type: [],
+            ability: [],
+          },
           typeData: {
             stars : '',
             store : '',
@@ -62,6 +66,18 @@
             $(e.target).parent().addClass("active").siblings("li").removeClass("active");
           }
         },
+        handleArray: function(e,a){
+          var id = $(e.target).parent().attr("data-label");
+          if($(e.target).parent().hasClass("active")){
+            a.splice($.inArray(id,a),1);
+            console.log(a);
+            $(e.target).parent().removeClass("active");
+          }else{
+            $(e.target).parent().addClass("active");
+            a.push(id);
+            console.log(a);
+          }
+        },
         handleKindMore: function(){
           $(".kind-more .icon-up").toggleClass("icon-down");
           $(".kindHide").toggleClass("kindShow");
@@ -72,12 +88,14 @@
         },
         handleReset: function(){
           $(".active").removeClass("active");
+          this.array.type = [];
+          this.array.ability = [];
         },
         handleFinish: function(){
           this.typeData.stars = $(".list-1 .active").attr("data-label");
           this.typeData.store = $(".list-2 .active").attr("data-label");
-          this.typeData.type = $(".list-3 .active").attr("data-label");
-          this.typeData.ability = $(".list-4 .active").attr("data-label");
+          this.typeData.type = this.array.type.join(",");
+          this.typeData.ability = this.array.ability.join(",");
           this.$emit('handleType',this.typeData);
         }
       }
@@ -162,7 +180,7 @@
       display: inline-block;
       padding: .24rem 1rem;
       border-radius: 8px;
-      font-size: .37rem;
+      font-size: .6rem;
       margin-right: .46rem;
       border:1px #d8d8d8 solid;
       height: 1.8rem;
