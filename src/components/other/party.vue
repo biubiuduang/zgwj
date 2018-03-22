@@ -25,7 +25,7 @@
         this.newAjax({
           url: 'article/get_article',
           data:{
-            article_id: '1'
+            article_id: '2'
           },
           success: function(data){
             if(data.status == 200){
