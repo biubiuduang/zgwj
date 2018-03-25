@@ -131,7 +131,7 @@
       }
     }
 </script>
-<style lang="less">
+<style scoped lang="less">
   .swipe{
     height: 7.92rem;
     width: 100%;
