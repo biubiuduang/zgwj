@@ -141,11 +141,11 @@
     }
   }
   .nav-global{
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 0 0.7rem 0.5rem 0.7rem;
     .nav-index{
       padding: 0.2rem 0;
       background-color: #FFFFFF;
-      box-shadow: 0.5rem 0.5rem 0.3rem #E4E9F1;
+      box-shadow: 0 4px 15px #E4E9F1;
       margin:-0.3rem 0 0 0;
     }
     li{
@@ -155,7 +155,7 @@
         margin-top:0.7rem;
       }
       img{
-        width: 100%;
+        width: 80%;
       }
     }
   }

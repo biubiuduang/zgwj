@@ -191,7 +191,7 @@
       .collect{
         float: right;
         width: 2.6rem;
-        text-align: center;
+        text-align: right;
         color:#979797;
         font-size: 0.6rem;
         i{
