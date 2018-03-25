@@ -131,7 +131,7 @@
       }
     }
 </script>
-<style scoped lang="less">
+<style lang="less">
   .swipe{
     height: 7.92rem;
     width: 100%;
@@ -141,12 +141,15 @@
     }
   }
   .nav-global{
-    padding: 1rem 0 0.5rem 0;
+    padding: 0 1rem 0.5rem 1rem;
     .nav-index{
-      margin:0;
+      padding: 0.2rem 0;
+      background-color: #FFFFFF;
+      box-shadow: 0.5rem 0.5rem 0.3rem #E4E9F1;
+      margin:-0.3rem 0 0 0;
     }
     li{
-      padding:0 0.7rem;
+      padding:0 0.5rem;
       p{
         font-size: 0.7rem;
         margin-top:0.7rem;
