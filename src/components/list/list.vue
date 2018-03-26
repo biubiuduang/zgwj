@@ -1,24 +1,24 @@
 <template>
 
   <div class="page-loadmore list">
-      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <div class="choice-box">
-          <mt-search
-            v-model="value"
-            placeholder="搜索">
-          </mt-search>
-          <ul class="choice-list">
-            <template v-for="(item, index) in list.data">
-              <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
-            </template>
-          </ul>
-          <div class="list-popup" v-show="list.isShow">
-            <Ages :ages="searchList.ages" @handleAges="handleAges"></Ages>
-            <Brand :brand="searchList.brand" @handleBrand="handleBrand"></Brand>
-            <Type :type="searchList.type" :ability="searchList.ability" @handleType="handleType"></Type>
-            <Auto @handleAuto="handleAuto"></Auto>
-          </div>
-        </div>
+    <mt-search
+      v-model="value"
+      placeholder="搜索">
+    </mt-search>
+    <ul class="choice-list">
+      <template v-for="(item, index) in list.data">
+        <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
+      </template>
+    </ul>
+    <div class="list-popup" v-show="list.isShow">
+      <Ages :ages="searchList.ages" @handleAges="handleAges"></Ages>
+      <Brand :brand="searchList.brand" @handleBrand="handleBrand"></Brand>
+      <Type :type="searchList.type" :ability="searchList.ability" @handleType="handleType"></Type>
+      <Auto @handleAuto="handleAuto"></Auto>
+    </div>
+  </div>
+      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="page-loadmore-list">
           <template v-for="item in goodsList">
@@ -113,18 +113,17 @@
                   }
                 } else {
                   that.goodsList = [];
-                  that.allLoaded = true;
                 }
               } else {
-                that.allLoaded = true;
+                that.goodsList = [];
               }
             }
           })
         },
         handleInitList: function () {
           var that = this;
-          this.search.start = 0;
           this.goodsList = [];
+          this.search.start = 0;
           this.newAjax({
             url: 'goods/get_goodes',
             data: that.search,
@@ -140,10 +139,9 @@
                   that.allLoaded = false;
                 } else {
                   that.goodsList = [];
-                  that.allLoaded = true;
                 }
               } else {
-                that.allLoaded = true;
+                that.goodsList = [];
               }
 
             }

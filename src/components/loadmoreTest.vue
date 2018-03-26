@@ -87,7 +87,6 @@
       },
       handleMore: function(){
         var that = this;
-
         this.search.start = this.goodsList.length;
         this.newAjax({
           url: 'goods/get_goodes',
@@ -116,7 +115,6 @@
       loadBottom() {
         if (this.goodsList.length < this.listCount) {
           this.handleMore();
-
         } else {
           this.allLoaded = true;
         }
