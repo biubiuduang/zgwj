@@ -65,6 +65,13 @@ let router =  new Router({
         name: 'help',
         component: resolve => require(['../components/other/help.vue'], resolve)
       },{
+        path: '/recycle',
+        meta: {
+          title: '玩具回收'
+        },
+        name: 'recycle',
+        component: resolve => require(['../components/other/recycle.vue'], resolve)
+      },{
         path: '/party',
         meta: {
           title: '派对服务'

@@ -16,10 +16,13 @@
         <mt-cell v-else :title="userLV" icon="vip" is-link to="/userCenter/memberInfo">
           <span>查看会员权利</span>
         </mt-cell>
+        <mt-cell title="新手指南" icon="new" is-link to="/help">
+          <span></span>
+        </mt-cell>
         <mt-cell title="会员购买记录" icon="viporder" is-link to="/userCenter/memberOrder">
           <span></span>
         </mt-cell>
-        <mt-cell title="我的交易记录" icon="viporder" is-link to="/userCenter/payment">
+        <mt-cell title="我的交易记录" icon="order" is-link to="/userCenter/payment">
           <span></span>
         </mt-cell>
       </div>

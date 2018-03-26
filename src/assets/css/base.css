@@ -74,8 +74,8 @@ body {
 @font-face {
   font-family: 'iconfont';
   /* project id 525334 */
-  src: url('//at.alicdn.com/t/font_525334_t76tnzsxy31k0529.eot');
-  src: url('//at.alicdn.com/t/font_525334_t76tnzsxy31k0529.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_t76tnzsxy31k0529.woff') format('woff'), url('//at.alicdn.com/t/font_525334_t76tnzsxy31k0529.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_t76tnzsxy31k0529.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_525334_0vqz2ab0pj2x1or.eot');
+  src: url('//at.alicdn.com/t/font_525334_0vqz2ab0pj2x1or.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_525334_0vqz2ab0pj2x1or.woff') format('woff'), url('//at.alicdn.com/t/font_525334_0vqz2ab0pj2x1or.ttf') format('truetype'), url('//at.alicdn.com/t/font_525334_0vqz2ab0pj2x1or.svg#iconfont') format('svg');
 }
 .iconfont,
 .mintui {
@@ -101,6 +101,10 @@ body {
 .iconfont.mintui-viporder:before,
 .mintui.mintui-viporder:before {
   content: '\e60b';
+}
+.iconfont.mintui-new:before,
+.mintui.mintui-new:before {
+  content: '\e64b';
 }
 .iconfont.mintui-search:before,
 .mintui.mintui-search:before {

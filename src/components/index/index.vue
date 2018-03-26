@@ -17,9 +17,9 @@
             <img src="../../assets/img/index/2.png" alt="">
             <p>派对服务</p>
           </router-link>
-          <router-link to="help" tag="li" class="col-xs-3">
+          <router-link to="recycle" tag="li" class="col-xs-3">
             <img src="../../assets/img/index/3.png" alt="">
-            <p>新手指南</p>
+            <p>玩具回收</p>
           </router-link>
           <router-link to="member" tag="li" class="col-xs-3">
             <img src="../../assets/img/index/4.png" alt="">
