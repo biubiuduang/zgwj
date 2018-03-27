@@ -260,7 +260,7 @@
 <style lang="less">
 .list{
   .mint-loadmore{
-    padding: 110px 0 2.9rem 0;
+    padding: 110px 0 70px 0;
   }
   .mint-search{
     height: auto;
@@ -275,6 +275,7 @@
     height: 1.73rem;
     line-height: 1.73rem;
     border-radius: 0.25rem;
+    padding: 0 0.7rem;
   }
   .choice-box{
     width: 100%;
