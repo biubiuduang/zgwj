@@ -260,7 +260,7 @@
 <style lang="less">
 .list{
   .mint-loadmore{
-    padding: 110px 0 70px 0;
+    padding: 110px 0 62px 0;
   }
   .mint-search{
     height: auto;
