@@ -1,11 +1,10 @@
 <template>
     <div class="padding-box padding-top">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="$router.back()"></i>
+        {{$store.state.title}}
+      </p>
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-        <p class="backNav">
-          <i class="el-icon-arrow-left" @click="$router.back()"></i>
-          {{$store.state.title}}
-        </p>
-
         <div class="normal" v-if="borrowShow == false">
           <img src="../../assets/img/Logo.jpg" alt="">
           <p>您还没有选购任何玩具,快去选购吧</p>
