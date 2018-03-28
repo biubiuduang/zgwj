@@ -74,7 +74,7 @@
             age_id: this.$route.query.ages,
             brand_id: this.$route.query.brand,
             is_star: '2',
-            has_stock: '1',
+            has_stock: '2',
             type_id: this.$route.query.type,
             ability_id: this.$route.query.ability,
             order_str: 'default',
