@@ -2,9 +2,11 @@
     <div class="padding-box">
       <div class="swipe">
         <mt-swipe :auto="4000">
-          <mt-swipe-item>1</mt-swipe-item>
-          <mt-swipe-item>2</mt-swipe-item>
-          <mt-swipe-item>3</mt-swipe-item>
+          <template v-for="item in bannerList">
+            <mt-swipe-item :style="{ backgroundImage: 'url(' + item.cover + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center'}">
+              <a :href="item.location"></a>
+            </mt-swipe-item>
+          </template>
         </mt-swipe>
       </div>
       <div class="container nav-global">
@@ -67,6 +69,7 @@
     export default {
       data() {
         return {
+          bannerList: [],
           //推荐玩具列表
           recommendShow: true,
           recommendList:[],
@@ -76,10 +79,28 @@
         }
       },
       activated() {
+        this.handleBannerList();
         this.handleRecommendList();
         this.handleNewList();
       },
       methods: {
+        handleBannerList: function(){
+          var that = this;
+          this.newAjax({
+            url: "banner/get_banners",
+            data: {
+              position_no: 'index_1',
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                that.bannerList = data.data.items;
+              }else{
+
+              }
+            }
+          })
+        },
         handleRecommendList: function(){
           var that = this;
           this.newAjax({
@@ -138,6 +159,11 @@
     background-color: #d8d8d8;
     .mint-swipe-item{
       height: 7.92rem;
+      a{
+        display: block;
+        width: 100%;
+        height: 7.92rem;
+      }
     }
   }
   .nav-global{

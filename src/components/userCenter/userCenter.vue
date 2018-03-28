@@ -30,6 +30,9 @@
         <mt-cell title="我的订单" icon="order" is-link to="/order">
           <span>订单状态</span>
         </mt-cell>
+        <!--<mt-cell title="我的预约" icon="appointment" is-link to="/appointment">-->
+          <!--<span></span>-->
+        <!--</mt-cell>-->
         <mt-cell title="我的收藏" icon="collect" is-link to="/collect">
           <span>已收藏{{collectCount}}个</span>
         </mt-cell>

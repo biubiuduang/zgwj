@@ -1,5 +1,5 @@
 <template>
-    <div class="padding-box">
+    <div class="padding-box detail">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
         {{$store.state.title}}
@@ -31,7 +31,8 @@
         </div>
       </div>
       <div class="handle">
-        <input type="button" :disable="details.on_sale == 0 ? 'true' : 'false'" @click="handleAddCar(details.goods_id)" value="加入购物车" />
+        <input type="button" v-if="details.goods_number == 0" class="appointment"  @click="handleAppointment(details.goods_id)" value="预约玩具" />
+        <input type="button" v-else  @click="handleAddCar(details.goods_id)" value="加入购物车" />
       </div>
     </div>
 </template>
@@ -111,6 +112,36 @@
             })
           }
         },
+        //预约
+        handleAppointment: function(id){
+          var that = this;
+          that.newAjax({
+            url: "user/bookin_goods",
+            method: "POST",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            data: {
+              goods_id: id
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                Toast({
+                  message: '预约成功',
+                  iconClass: 'mintui mintui-success',
+                  duration: 2000
+                });
+              }else{
+                Toast({
+                  message: '预约失败',
+                  duration: 2000
+                });
+              }
+            }
+          })
+        },
         handleCollect: function(id){
           var that = this;
           if(this.collectStatus == false){
@@ -146,8 +177,10 @@
       }
     }
 </script>
-<style scoped lang="less">
+<style lang="less">
+  .detail{
   .swipe{
+    margin-top:2rem;
     height: 18rem;
     width: 100%;
     background-color: #d8d8d8;
@@ -162,10 +195,10 @@
   }
   .detail-info{
     width: 100%;
-    padding:0 0.7rem;
     margin:0.5rem auto;
     text-align: left;
     .title-info{
+      padding:0 0.7rem;
       height: 2.4rem;
       overflow: hidden;
       .title{
@@ -206,6 +239,7 @@
       width: 100%;
       overflow: hidden;
       font-size: 0.6rem;
+      padding: 0 0.7rem;
       margin:0.2rem 0 1rem 0;
       color:#3e3e3e;
       span{
@@ -234,6 +268,19 @@
       line-height:2.5rem;
       font-size: 0.8rem;
       display:block;
+      &.appointment{
+        background-color: #FF8938;
+       }
     }
+  }
+  .info-img{
+    width:100%;
+    p{
+      width: 100%;
+    }
+    img{
+      width: 100%;
+    }
+  }
   }
 </style>
