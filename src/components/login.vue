@@ -36,7 +36,7 @@
               <el-input prefix-icon="mintui mintui-tel-msg" placeholder="请输入密码" type="password" v-model="loginForm2.psw"></el-input>
             </el-form-item>
             <el-form-item class="login-btn">
-              <el-button type="primary" @click="submitForm('loginForm2')">登录</el-button>
+              <el-button type="primary" @click="submitPwd('loginForm2')">登录</el-button>
             </el-form-item>
           </el-form>
         </mt-tab-container-item>
@@ -187,8 +187,43 @@
                   if(data.status == 200){
                     localStorage.setItem("token",data.data.token);
                     that.$store.commit('setLogin',true);
-                    //that.$router.go(-1);
-                    window.open("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
+                    if(data.data.has_weixin_grant == 0){
+                      window.open("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
+                    }else{
+                      that.$router.go(-1);
+                    }
+                  }else{
+                    MessageBox('提示', data.message);
+                  }
+                }
+              })
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+        submitPwd: function(formName) {
+          var that = this;
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              that.newAjax({
+                url: "user/login",
+                method: "POST",
+                data: {
+                  account: that.loginForm2.tel,
+                  password: that.loginForm2.psw
+                },
+                success: function(data){
+                  console.log(data);
+                  if(data.status == 200){
+                    localStorage.setItem("token",data.data.token);
+                    that.$store.commit('setLogin',true);
+                    if(data.data.has_weixin_grant == 0){
+                      window.open("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
+                    }else{
+                      that.$router.go(-1);
+                    }
                   }else{
                     MessageBox('提示', data.message);
                   }
@@ -206,20 +241,13 @@
 </script>
 <style lang="less">
   .mint-navbar{
-    padding: 0 0.7rem;
+    padding: 0 1.92rem;
     .mint-tab-item{
       padding:0.5rem 0;
       .mint-tab-item-label{
         font-size: 0.8rem;
       }
     }
-  }
-  .item-left{
-    border-right: 1px solid #666666;
-  }
-  .mint-navbar .mint-tab-item.is-selected{
-    border-bottom: none;
-    margin-bottom: 0;
   }
   .mint-tab-container{
     margin-top:15px;

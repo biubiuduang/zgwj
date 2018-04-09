@@ -74,35 +74,10 @@
       handleSetPwd: function(){
         var that = this;
         this.newAjax({
-          url: "user/get_addresses",
-          header: {
-            Accept: "application/json; charset=utf-8",
-            token: localStorage.getItem("token")
-          },
-          success: function(data){
-            console.log(data);
-            if(data.status == 200){
-
-            }else{
-              Toast({
-                message: '修改失败',
-                duration: 2000
-              });
-            }
-          }
-        })
-      },
-      handleAddAddr: function(){
-        var that = this;
-        this.newAjax({
-          url: "user/add_address",
+          url: "user/update_profile",
           method: "POST",
           data: {
-            consignee:that.ruleForm2.addUser,
-            mobile: that.ruleForm2.tel,
-            area_id:that.selectedOptions.join("-"),
-            address:that.ruleForm2.addr,
-            is_default: 1
+            user_pass: that.ruleForm2.pwd
           },
           header: {
             Accept: "application/json; charset=utf-8",
@@ -111,39 +86,6 @@
           success: function(data){
             if(data.status == 200){
               that.addrId = data.data.address_id;
-              Toast({
-                message: '修改成功',
-                iconClass: 'mintui mintui-success',
-                duration: 2000
-              });
-            }else{
-              Toast({
-                message: '修改失败',
-                duration: 2000
-              });
-            }
-          }
-        })
-      },
-      handleResetAddr: function(){
-        var that = this;
-        this.newAjax({
-          url: "user/edit_address",
-          method: "POST",
-          data: {
-            address_id:that.addrId,
-            consignee:that.ruleForm2.addUser,
-            mobile: that.ruleForm2.tel,
-            area_id:that.selectedOptions.join("-"),
-            address:that.ruleForm2.addr,
-            is_default: 1
-          },
-          header: {
-            Accept: "application/json; charset=utf-8",
-            token: localStorage.getItem("token")
-          },
-          success: function(data){
-            if(data.status == 200){
               Toast({
                 message: '修改成功',
                 iconClass: 'mintui mintui-success',
