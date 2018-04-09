@@ -24,6 +24,7 @@
     methods: {
       handleGetList: function(){
         var that = this;
+        this.memberList= [];
         this.newAjax({
           url: "user/get_gradecards",
           success: function(data){

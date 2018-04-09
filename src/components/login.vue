@@ -3,22 +3,45 @@
       <div class="logo">
         <img src="../assets/img/Logo.jpg" alt="">
       </div>
-      <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
-        <el-form-item  prop="tel">
-          <el-input prefix-icon="mintui mintui-phone" placeholder="请输入11位手机号" v-model.number="loginForm.tel"  clearable></el-input>
-        </el-form-item>
-        <el-form-item prop="key">
-          <el-input class="code" placeholder="请输入图形验证码" prefix-icon="mintui mintui-code" type="text" v-model="loginForm.key"></el-input>
-          <img class="imgCode" :src="captcha.img" alt="" @click="handleGetImgCode">
-        </el-form-item>
-        <el-form-item prop="psw">
-          <el-input prefix-icon="mintui mintui-tel-msg" placeholder="请输入短信验证码" type="text" v-model="loginForm.psw"></el-input>
-          <el-button class="getCode" type="primary" :disabled="telCodeStatus" @click="handleTelCode">{{countBtn}}</el-button>
-        </el-form-item>
-        <el-form-item class="login-btn">
-          <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-        </el-form-item>
-      </el-form>
+      <mt-navbar v-model="selected">
+        <mt-tab-item id="1" class="item-left">短信登录</mt-tab-item>
+        <mt-tab-item id="2">密码登录</mt-tab-item>
+      </mt-navbar>
+
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+          <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
+            <el-form-item  prop="tel">
+              <el-input prefix-icon="mintui mintui-phone" placeholder="请输入11位手机号" v-model.number="loginForm.tel"  clearable></el-input>
+            </el-form-item>
+            <el-form-item prop="key">
+              <el-input class="code" placeholder="请输入图形验证码" prefix-icon="mintui mintui-code" type="text" v-model="loginForm.key"></el-input>
+              <img class="imgCode" :src="captcha.img" alt="" @click="handleGetImgCode">
+            </el-form-item>
+            <el-form-item prop="psw">
+              <el-input prefix-icon="mintui mintui-tel-msg" placeholder="请输入短信验证码" type="text" v-model="loginForm.psw"></el-input>
+              <el-button class="getCode" type="primary" :disabled="telCodeStatus" @click="handleTelCode">{{countBtn}}</el-button>
+            </el-form-item>
+            <el-form-item class="login-btn">
+              <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+          <el-form :model="loginForm2" status-icon :rules="rules2" ref="loginForm2" class="login-form">
+            <el-form-item  prop="tel">
+              <el-input prefix-icon="mintui mintui-phone" placeholder="请输入11位手机号" v-model.number="loginForm2.tel"  clearable></el-input>
+            </el-form-item>
+            <el-form-item prop="psw">
+              <el-input prefix-icon="mintui mintui-tel-msg" placeholder="请输入密码" type="password" v-model="loginForm2.psw"></el-input>
+            </el-form-item>
+            <el-form-item class="login-btn">
+              <el-button type="primary" @click="submitForm('loginForm2')">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </mt-tab-container-item>
+
+      </mt-tab-container>
     </div>
 </template>
 <script>
@@ -40,13 +63,25 @@
             callback();
           }
         };
+        var psw = (rule, value, callback) => {
+          if (value === '') {
+            return callback(new Error('请输入登录密码.'));
+          }else{
+            callback();
+          }
+        };
         return {
+          selected: '1',
           telCodeStatus: false,
           timeCount: 60,
           countBtn: '获取验证码',
           loginForm: {
             tel: '',
             key:'',
+            psw: ''
+          },
+          loginForm2: {
+            tel: '',
             psw: ''
           },
           captcha: {
@@ -62,6 +97,14 @@
             ],
             psw: [
               { validator: checkPsw, trigger: 'blur' }
+            ]
+          },
+          rules2: {
+            tel: [
+              { validator: checkTel, trigger: 'blur' }
+            ],
+            psw: [
+              { validator: psw, trigger: 'blur' }
             ]
           }
         }
@@ -144,7 +187,8 @@
                   if(data.status == 200){
                     localStorage.setItem("token",data.data.token);
                     that.$store.commit('setLogin',true);
-                    that.$router.go(-1);
+                    //that.$router.go(-1);
+                    window.open("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
                   }else{
                     MessageBox('提示', data.message);
                   }
@@ -161,6 +205,25 @@
     }
 </script>
 <style lang="less">
+  .mint-navbar{
+    padding: 0 0.7rem;
+    .mint-tab-item{
+      padding:0.5rem 0;
+      .mint-tab-item-label{
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .item-left{
+    border-right: 1px solid #666666;
+  }
+  .mint-navbar .mint-tab-item.is-selected{
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .mint-tab-container{
+    margin-top:15px;
+  }
   .logo{
     width: 100%;
     overflow:hidden;

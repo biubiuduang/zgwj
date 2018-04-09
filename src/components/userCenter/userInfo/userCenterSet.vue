@@ -14,6 +14,9 @@
       <mt-cell title="绑定手机" icon="phone">
         <span>{{info.user_mobile}}</span>
       </mt-cell>
+      <mt-cell title="设置密码" icon="tel-msg" is-link to="/setPassword">
+        <span></span>
+      </mt-cell>
       <input class="exit" type="button" value="退出登录" @click="handleLogOut" />
     </div>
 </template>

@@ -53,7 +53,8 @@ let router =  new Router({
         path: '/userCenter',
         meta: {
           title: '个人中心',
-          requireAuth: true
+          requireAuth: true,
+          userAuth: true,
         },
         name: 'userCenter',
         component: resolve => require(['../components/userCenter/userCenter.vue'], resolve)
@@ -88,7 +89,8 @@ let router =  new Router({
           path: '/userCenter/info',
           meta: {
             title: '用户信息',
-            requireAuth: true
+            requireAuth: true,
+            userAuth: true,
           },
           name: 'userCenterSet',
           component: resolve => require(['../components/userCenter/userInfo/userCenterSet.vue'], resolve)
@@ -97,7 +99,8 @@ let router =  new Router({
           path: '/userCenter/babyInfo',
           meta: {
             title: '宝宝信息',
-            requireAuth: true
+            requireAuth: true,
+            userAuth: true,
           },
           name: 'babyInfo',
           component: resolve => require(['../components/userCenter/userInfo/babyInfo.vue'], resolve)
@@ -141,6 +144,15 @@ let router =  new Router({
       },
       name: 'userAddress',
       component: resolve => require(['../components/userCenter/userInfo/userAddress.vue'], resolve)
+    },
+    {
+      path: '/setPassword',
+      meta: {
+        title: '设置登录密码',
+        requireAuth: true
+      },
+      name: 'setPassword',
+      component: resolve => require(['../components/userCenter/userInfo/setPassword.vue'], resolve)
     },
     //会员卡
     {

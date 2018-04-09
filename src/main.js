@@ -40,7 +40,7 @@ Vue.config.productionTip = false;
 //面向对象 ajax请求封装
 Vue.prototype.newAjax = function(params){
   var that = this;
-  var url ="http://netdisk.3vlogic.com:50081/"+params.url;
+  var url ="http://toysbox-api.3vlogic.com/"+params.url;
   var method = params.method || "GET";
   var data = params.data || {};
   var dataType = params.dataType || "json";
