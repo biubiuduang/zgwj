@@ -7,10 +7,10 @@
     <p class="title"></p>
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="address-form">
       <el-form-item label="登录密码:" prop="pwd">
-        <el-input type="password" v-model="ruleForm2.pwd" auto-complete="off"></el-input>
+        <el-input type="password" v-model="ruleForm2.pwd" auto-complete="off" placeholder="请输入8-16位密码"></el-input>
       </el-form-item>
       <el-form-item label="密码确认:" prop="pwd2">
-        <el-input type="password" v-model="ruleForm2.pwd2" auto-complete="off"></el-input>
+        <el-input type="password" v-model="ruleForm2.pwd2" auto-complete="off" placeholder="请再输入一次密码"></el-input>
       </el-form-item>
       <el-form-item class="enter-box">
         <el-button type="primary" @click="submitForm('ruleForm2')">确 认</el-button>
@@ -25,8 +25,8 @@
     data() {
       var password = (rule, value, callback) => {
         var len = value.length;
-        if (len < 6 ) {
-          callback(new Error('请输入六位以上密码.'));
+        if (len < 8 ) {
+          callback(new Error('请输入8位以上密码.'));
         }else{
           callback();
         }
@@ -93,7 +93,7 @@
               });
             }else{
               Toast({
-                message: '修改失败',
+                message: 'data.message',
                 duration: 2000
               });
             }

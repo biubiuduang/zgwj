@@ -200,6 +200,24 @@ let router =  new Router({
       component: resolve => require(['../components/userCenter/memberInfo/memberOrder.vue'], resolve)
     },
     {
+      path: '/userCenter/insureForm',
+      meta: {
+        title: '赠送保险',
+        requireAuth: true
+      },
+      name: 'insureForm',
+      component: resolve => require(['../components/userCenter/memberInfo/memberInsureForm.vue'], resolve)
+    },
+    {
+      path: '/userCenter/insureAgument',
+      meta: {
+        title: '投保协议',
+        requireAuth: true
+      },
+      name: 'insureAgument',
+      component: resolve => require(['../components/userCenter/memberInfo/insureAgument.vue'], resolve)
+    },
+    {
       path: '/order',
       meta: {
         title: '我的订单',

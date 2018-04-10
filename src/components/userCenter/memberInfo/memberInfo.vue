@@ -10,6 +10,7 @@
       <mt-cell title="会员权限" :value="'星标'+remainRules.star_toys_count_pertime+'件,常规'+remainRules.normal_toys_count_pertime+'件'"></mt-cell>
       <mt-cell v-if="remainStatus == true" title="会员状态" is-link value="暂停" to="/userCenter/memberState"></mt-cell>
       <mt-cell v-else title="会员状态" is-link value="开启" to="/userCenter/memberState"></mt-cell>
+      <mt-cell title="赠送保险" is-link value="查看" to="/userCenter/insureForm"></mt-cell>
     </div>
 </template>
 <script>

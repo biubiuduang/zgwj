@@ -2,7 +2,7 @@
     <div class="userCenter">
       <mt-cell title="" class="user-header">
         <span>{{info.user_nickname}}</span>
-        <img slot="icon" :src="info.user_avatar" width="60" height="60">
+        <img slot="icon" :src="info.user_avatar" class="user-avatar" width="60" height="60">
       </mt-cell>
       <mt-cell title="宝宝信息" icon="nav" is-link to="/userCenter/babyInfo">
         <span v-if="info.baby_name == ''">未设置</span>
