@@ -13,14 +13,14 @@
       <el-form-item label="性别:" prop="pSex">
         <el-select v-model="ruleForm.pSex" placeholder="性别">
           <el-option label="男" value="1"></el-option>
-          <el-option label="女" value="0"></el-option>
+          <el-option label="女" value="2"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="联系电话:" prop="pMobile">
-        <el-input type="text" v-model="ruleForm.pMobile" auto-complete="off" clearable placeholder="请输入11位手机号"></el-input>
+      <el-form-item label="联系电话:" prop="pMobile" >
+        <el-input type="text" v-model="ruleForm.pMobile" auto-complete="off" clearable placeholder="请输入11位手机号" :maxlength="11"></el-input>
       </el-form-item>
       <el-form-item label="身份证号:" prop="pCode">
-        <el-input type="text" v-model="ruleForm.pCode" auto-complete="off" clearable placeholder="请输入18位身份证号"></el-input>
+        <el-input type="text" v-model="ruleForm.pCode" auto-complete="off" clearable placeholder="请输入18位身份证号" :maxlength="18"></el-input>
       </el-form-item>
       <el-form-item label="家庭住址:" prop="pAddr">
         <el-input type="text" v-model="ruleForm.pAddr" auto-complete="off" clearable placeholder="请输入详细的家庭住址"></el-input>
@@ -32,11 +32,11 @@
       <el-form-item label="性别:" prop="cSex">
         <el-select v-model="ruleForm.cSex" placeholder="子女性别">
           <el-option label="男" value="1"></el-option>
-          <el-option label="女" value="0"></el-option>
+          <el-option label="女" value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="身份证号:" prop="cCode">
-        <el-input type="text" v-model="ruleForm.cCode" auto-complete="off" clearable placeholder="请输入子女18位身份证号"></el-input>
+        <el-input type="text" v-model="ruleForm.cCode" auto-complete="off" clearable placeholder="请输入子女18位身份证号" :maxlength="18"></el-input>
       </el-form-item>
       <el-form-item label="" prop="type" class="argument">
         <el-checkbox-group v-model="ruleForm.type" class="argumentCheckbox" >
@@ -101,6 +101,7 @@
         }
       };
       return {
+        userCardId: 0,
         ruleForm: {
           pName: '',
           pSex: '',
@@ -144,36 +145,86 @@
       };
     },
     activated(){
-
+      this.handleGetInfo();
     },
     methods: {
+      handleGetForm: function(d){
+
+        var that = this;
+        this.newAjax({
+          url: "user/get_policy",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          data: {
+            user_card_id: d
+          },
+          success: function(data){
+            if(data.status == 200){
+              if(data.data.status != 0){
+                that.$router.push("/userCenter/memberInfo");
+              }
+            }
+          }
+        })
+      },
+      handleGetInfo: function(){
+        var that = this;
+        this.newAjax({
+          url: "user/get_profile",
+          header: {
+            Accept: "application/json; charset=utf-8",
+            token: localStorage.getItem("token")
+          },
+          success: function(data){
+            if(data.status == 200){
+              if(data.data.gradecard != undefined){
+                that.userCardId = data.data.gradecard.user_card_id;
+                that.handleGetForm(that.userCardId);
+              }else{
+                that.$router.push("userCenter")
+              }
+            }
+          }
+        })
+      },
       submitForm: function(formName) {
         var that = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            that.handleSetPwd();
+            that.handleSubmit();
           } else {
             Toast({
-              message: '修改失败',
+              message: '提交失败,请重新提交',
               duration: 2000
             });
             return false;
           }
         });
       },
-      handleSetPwd: function(){
+      handleSubmit: function(){
         var that = this;
         this.newAjax({
-          url: "user/update_profile",
+          url: "user/add_policy",
           method: "POST",
           data: {
-            user_pass: that.ruleForm.pwd
+            user_card_id: that.userCardId,
+            truename: that.ruleForm.pName,
+            sex: that.ruleForm.pSex,
+            identitycard_no: that.ruleForm.pCode,
+            address: that.ruleForm.pAddr,
+            mobile: that.ruleForm.pMobile,
+            baby_name: that.ruleForm.cName,
+            baby_sex: that.ruleForm.cSex,
+            baby_identitycard_no: that.ruleForm.cCode
           },
           header: {
             Accept: "application/json; charset=utf-8",
             token: localStorage.getItem("token")
           },
           success: function(data){
+            console.log(that.ruleForm);
             if(data.status == 200){
               that.addrId = data.data.address_id;
               Toast({
@@ -181,9 +232,10 @@
                 iconClass: 'mintui mintui-success',
                 duration: 2000
               });
+              that.$router.push("/userCenter/memberInfo");
             }else{
               Toast({
-                message: 'data.message',
+                message: data.message,
                 duration: 2000
               });
             }

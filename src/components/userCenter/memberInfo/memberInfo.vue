@@ -10,7 +10,11 @@
       <mt-cell title="会员权限" :value="'星标'+remainRules.star_toys_count_pertime+'件,常规'+remainRules.normal_toys_count_pertime+'件'"></mt-cell>
       <mt-cell v-if="remainStatus == true" title="会员状态" is-link value="暂停" to="/userCenter/memberState"></mt-cell>
       <mt-cell v-else title="会员状态" is-link value="开启" to="/userCenter/memberState"></mt-cell>
-      <mt-cell title="赠送保险" is-link value="查看" to="/userCenter/insureForm"></mt-cell>
+      <template v-if="canAddPolicy == 1">
+        <mt-cell title="赠送保险" v-if="insureStatus == 0" is-link value="查看" to="/userCenter/insureForm"></mt-cell>
+        <mt-cell title="赠送保险" v-else-if="insureStatus == 1" value="已投保" ></mt-cell>
+        <mt-cell title="赠送保险" v-if="insureStatus == 2"  value="投保成功"></mt-cell>
+      </template>
     </div>
 </template>
 <script>
@@ -19,7 +23,9 @@
         return{
           userInfo :{},
           remainRules: {},
-          remainStatus: false
+          remainStatus: false,
+          insureStatus: 0,
+          canAddPolicy: 0,
         }
       },
       activated() {
@@ -36,16 +42,38 @@
             },
             success: function(data){
               if(data.status == 200){
-                if(data.data.gradecard == undefined){
-
-                }else{
+                console.log(data);
+                if(data.data.gradecard != undefined){
+                  that.handleInsureStatus(data.data.gradecard.user_card_id);
                   that.userInfo = data.data.gradecard;
+                  that.canAddPolicy = data.data.gradecard.remain_rules.can_add_policy;
                   that.remainRules = data.data.gradecard.remain_rules;
                   if(data.data.gradecard.paused_at != 0 && data.data.gradecard.unpaused_at == 0){
                     that.remainStatus = true;
                   }
                 }
 
+              }
+            }
+          })
+        },
+        handleInsureStatus: function(val){
+          var that = this;
+          this.newAjax({
+            url: "user/get_policy",
+            data: {
+              user_card_id: val
+            },
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            success: function(data){
+              if(data.status == 200){
+                console.log(data);
+                that.insureStatus = data.data.status
+              }else{
+                alert(data.message)
               }
             }
           })
