@@ -13,7 +13,7 @@
           <li v-for="item in gradecardList">
             <p class="title"><span>会员类型 ：</span>{{item.card_name}}</p>
             <p class="type"><span>订单状态 ：</span>{{item.card_status}}</p>
-            <p class="date"><span>购买时间 ：</span>{{item.started_at}}</p>
+            <p class="date"><span>购买时间 ：</span>{{item.created_at}}</p>
           </li>
         </ul>
         <div slot="bottom" class="mint-loadmore-bottom">
