@@ -12,7 +12,7 @@
       <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="page-loadmore-list payment-list">
           <template v-for="item in payList">
-            <router-link tag="li" class="page-loadmore-listitem" :to="'/detail/'+item.goods_id">
+            <li class="page-loadmore-listitem">
               <div class="title">
                 <p>交易流水号:{{item.trade_no}}</p>
                 <p class="status" v-if="item.is_paid == 1">已支付</p>
@@ -24,9 +24,9 @@
                 <p><span>物品金额 ：</span>{{item.need_money}}</p>
                 <p><span>购买时间 ：</span>{{item.created_at}}</p>
                 <p><span>支付时间 ：</span>{{item.paid_at}}</p>
-                <input v-if="item.is_paid == 0" type="button" value="支付" />
+                <input v-if="item.is_paid == 0" type="button" @click="btnPay(item.card_id)"  value="支付" />
               </div>
-            </router-link>
+            </li>
           </template>
         </ul>
         <div slot="bottom" class="mint-loadmore-bottom">
@@ -59,6 +59,9 @@
     },
 
     methods: {
+      btnPay: function(id){
+        window.location.href = "http://toysbox-api.3vlogic.com/order/buy_card?card_id="+id+"&token="+localStorage.getItem("token");
+      },
       handleInit: function(){
         var that = this;
         this.page.start = 0;
