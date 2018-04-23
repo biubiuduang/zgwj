@@ -1,39 +1,40 @@
 <template>
     <div class="padding-box index">
-      <div class="container nav-global">
-        <mt-search
-          v-model="searchValue"
-          cancel-text=""
-          placeholder="搜索玩具">
-        </mt-search>
-        <ul class="nav-index row">
-          <router-link to="list" tag="li" class="col-xs-3">
-            <p class="img-box">
-             <img src="../../assets/img/index/1.png" alt="">
-            </p>
-            <p>成为会员</p>
-          </router-link>
-          <router-link to="party" tag="li" class="col-xs-3">
-            <p class="img-box">
-              <img src="../../assets/img/index/2.png" alt="">
-            </p>
-            <p>派对服务</p>
-          </router-link>
-          <router-link to="recycle" tag="li" class="col-xs-3">
-            <p class="img-box">
-              <img src="../../assets/img/index/3.png" alt="">
-            </p>
-            <p>玩具回收</p>
-          </router-link>
-          <router-link to="member" tag="li" class="col-xs-3">
-            <p class="img-box">
-              <img src="../../assets/img/index/4.png" alt="">
-            </p>
-            <p>成为会员</p>
-          </router-link>
-        </ul>
-      </div>
-      <div class="swipe">
+      <div class="white-bg">
+        <div class="container nav-global">
+          <mt-search
+            v-model="searchValue"
+            cancel-text=""
+            placeholder="搜索玩具">
+          </mt-search>
+          <ul class="nav-index row">
+            <router-link to="list" tag="li" class="col-xs-3">
+              <p class="img-box">
+               <img src="../../assets/img/index/1.png" alt="">
+              </p>
+              <p>成为会员</p>
+            </router-link>
+            <router-link to="party" tag="li" class="col-xs-3">
+              <p class="img-box">
+                <img src="../../assets/img/index/2.png" alt="">
+              </p>
+              <p>派对服务</p>
+            </router-link>
+            <router-link to="recycle" tag="li" class="col-xs-3">
+              <p class="img-box">
+                <img src="../../assets/img/index/3.png" alt="">
+              </p>
+              <p>玩具回收</p>
+            </router-link>
+            <router-link to="member" tag="li" class="col-xs-3">
+              <p class="img-box">
+                <img src="../../assets/img/index/4.png" alt="">
+              </p>
+              <p>成为会员</p>
+            </router-link>
+          </ul>
+        </div>
+        <div class="swipe">
         <mt-swipe :auto="4000">
           <template v-for="item in bannerList">
             <mt-swipe-item :style="{ backgroundImage: 'url(' + item.cover + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center'}">
@@ -42,38 +43,66 @@
           </template>
         </mt-swipe>
       </div>
+      </div>
       <template v-if="recommendShow == true">
-      <h2 >玩具推荐</h2>
-      <div class="container best-list">
+      <h2 class="recommend">**玩具推荐**</h2>
+      <div class="container best-list white-bg">
         <ul class="row">
           <template v-for="item in recommendList">
             <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
               <div class="list-box">
                 <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                 <p>{{item.goods_name}}</p>
+                <p class="age-name">{{item.age_name}}</p>
               </div>
             </router-link>
           </template>
         </ul>
+        <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+          查看更多
+        </router-link>
       </div>
       </template>
       <template v-if="newShow == true">
-        <h2>新品玩具
-          <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
-            更多>>
-          </router-link>
-        </h2>
-        <div class="container best-list">
+        <h2 class="news">**新品玩具**</h2>
+        <div class="container best-list white-bg">
           <ul class="row">
-            <template v-for="item in newList">
-              <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-6">
+            <template v-for="(item, index) in newList">
+              <router-link :to="'/detail/'+item.goods_id" tag="li" :class="index == 2 ? 'col-xs-12' : 'col-xs-6'">
                 <div class="list-box">
+                  <p v-if="index==2" class="oneLine">{{item.goods_name}}</p>
                   <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
-                  <p>{{item.goods_name}}</p>
+                  <p v-if="index!=2">{{item.goods_name}}</p>
                 </div>
               </router-link>
             </template>
           </ul>
+
+          <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+            查看更多
+          </router-link>
+        </div>
+      </template>
+      <template v-if="brandShow == true">
+        <h2 class="news">**玩具品牌**</h2>
+        <div class="container best-list white-bg container-brand">
+          <ul class="row">
+            <template v-for="(item, index) in brandList">
+              <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-4" :class="index > 5 ? 'brandHide' : 'brandShow'">
+                <div class="list-box">
+                  <div class="pv-img" :style="{ backgroundImage: 'url(' + item.image_url + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
+                  <p>{{item.category_name}}</p>
+                </div>
+              </router-link>
+            </template>
+          </ul>
+
+          <a v-if="listMore" @click="handleStateBrand" href="javascript:void(0);" class="link-more">
+            查看更多
+          </a>
+          <a v-else @click="handleStateBrand" href="javascript:void(0);" class="link-more">
+            收起更多
+          </a>
         </div>
       </template>
     </div>
@@ -90,12 +119,17 @@
           //新品玩具列表
           newShow: true,
           newList:[],
+          //品牌列表
+          brandShow: true,
+          brandList: [],
+          listMore: true
         }
       },
       activated() {
         this.handleBannerList();
         this.handleRecommendList();
         this.handleNewList();
+        this.handleBrandList();
       },
       methods: {
         handleBannerList: function(){
@@ -124,6 +158,7 @@
             },
             success: function(data){
               if(data.status == 200){
+                console.log(data);
                 if(data.data.items.length > 4){
                   var item = [];
                   for(var i = 0; i < 4; i++){
@@ -150,7 +185,7 @@
               if(data.status == 200){
                 if(data.data.items.length > 4){
                   var item = [];
-                  for(var i = 0; i < 4; i++){
+                  for(var i = 0; i < 3; i++){
                     item.push(data.data.items[i]);
                   }
                   that.newList = item;
@@ -162,6 +197,25 @@
               }
             }
           })
+        },
+        //获取玩具分类
+        handleBrandList: function () {
+          var that = this;
+          this.newAjax({
+            url: "goods/get_categories",
+            success: function (data) {
+              that.brandList = data.data.items[1].child[0];
+              console.log(that.brandList);
+            }
+          })
+        },
+        handleStateBrand: function(){
+          if(this.listMore == true){
+            this.listMore = false;
+          }else{
+            this.listMore = true;
+          }
+          $(".brandHide").toggleClass("brandShow");
         }
       }
     }
@@ -170,6 +224,15 @@
   @import "../../assets/css/parameters.less";
 
   .index{
+    background-color:@bg-color;
+    .container{
+      padding:1rem 0.3rem 0 0.3rem;
+      margin-bottom: 16px;
+    }
+    .row{
+      margin-left:0;
+      margin-right:0;
+    }
     .swipe{
       height: 7.92rem;
       width: 16.7rem;
@@ -241,54 +304,100 @@
     }
   }
   h2{
-    height: 1rem;
-    line-height: 1rem;
-    font-size: 0.7rem;
-    text-align: left;
-    padding:0 0.7rem;
-    margin: 0.5rem 0;
-  a{
-    font-size: 0.6rem;
-    color:#979797;
-    float: right;
-  }
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 0.9rem;
+    text-align: center;
+    padding:0.5rem 0.7rem;
+    margin-bottom: 2px;
+    background-color: #ffffff;
+    &.recommend{
+      margin-top:-1.5rem;
+      color:@assist-color;
+     }
+    &.news{
+       color:@primary-color;
+     }
   }
   .best-list{
-  li{
-    padding:0 0.7rem;
-    margin-bottom:0.5rem;
-  .list-box{
-  .pv-img{
-    width: 100%;
-    background-color: #d8d8d8;
-    border-radius:5px;
-    height: 6.817rem;
-  img{
-    width: 100%;
+    li{
+      padding:0 3px;
+      margin-bottom:6px;
+      .list-box{
+        border-radius: 5px;
+        padding: 13px;
+        background-color: @bg-color;
+      .pv-img{
+        width: 100%;
+        background-color: #d8d8d8;
+        border-radius:5px;
+        height: 6.817rem;
+        img{
+          width: 100%;
+        }
+        }
+        p{
+          text-align: left;
+          font-size: 0.8rem;
+          color: #666666;
+          padding: 0 .13rem;
+          margin:0.5rem 0 0 0;
+          white-space: normal;
+          height: 3rem;
+          -webkit-line-clamp: 2;
+          line-height: 1.5rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-box-flex: 1;
+          -moz-box-flex: 1;
+          -ms-box-flex: 1;
+          box-flex: 1;
+          &.oneLine{
+              margin:0 0 0.5rem 0;
+             height: 1.5rem;
+             -webkit-line-clamp: 1;
+             line-height: 1.5rem;
+           }
+           &.age-name{
+              text-align: right;
+              font-size: 14px;
+              height: 1.5rem;
+              margin:0;
+            }
+        }
+
+      }
+    }
+    &.container-brand{
+      li{
+        .list-box{
+          p{
+            margin:0;
+            text-align: center;
+            height: 1.5rem;
+            -webkit-line-clamp: 1;
+            line-height: 1.5rem;
+          }
+          .pv-img{
+            height: 2.45rem;
+          }
+        }
+      }
+     }
   }
-  }
-  p{
-    text-align: left;
-    font-size: 0.7rem;
-    color: #3e3e3e;
-    padding: 0 .13rem;
-    margin:0.5rem 0 0.5rem 0;
-    white-space: normal;
-    height: 2.4rem;
-    -webkit-line-clamp: 2;
-    line-height: 1.2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
-    box-flex: 1;
-  }
-  }
-  }
-  }
+    a.link-more{
+      font-size: 16px;
+      line-height: 3rem;
+      color:#666666;
+    }
+    .brandHide{
+      display: none;
+    }
+    .brandShow{
+      display: block;
+    }
   }
 
 </style>

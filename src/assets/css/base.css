@@ -198,6 +198,9 @@ body {
   line-height: 2rem;
   font-size: 0.8rem;
 }
+.white-bg {
+  background-color: #ffffff;
+}
 .container {
   margin: 0 auto;
   position: relative;
