@@ -2,10 +2,13 @@
 
   <div class="page-loadmore list">
       <div class="choice-box">
-    <mt-search
-      v-model="value"
-      placeholder="搜索">
-    </mt-search>
+        <div class="search-box">
+          <mt-search
+            v-model="value"
+            cancel-text=""
+            placeholder="搜索玩具">
+          </mt-search>
+        </div>
     <ul class="choice-list">
       <template v-for="(item, index) in list.data">
         <li class="col-xs-3" @click="handleTabs(index)">{{item}}<i class="iconfont icon-up"></i></li>
@@ -18,11 +21,11 @@
       <Auto @handleAuto="handleAuto"></Auto>
     </div>
   </div>
-      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <div class="page-loadmore-wrapper container" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
-        <ul class="page-loadmore-list">
+        <ul class="page-loadmore-list row">
           <template v-for="item in goodsList">
-            <router-link tag="li" class="page-loadmore-listitem goods-list" :to="'/detail/'+item.goods_id">
+            <router-link tag="li" class="page-loadmore-listitem goods-list col-xs-6" :to="'/detail/'+item.goods_id">
               <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
               <div class="pv-info">
                 <p class="p-title">{{item.goods_name}}</p>
@@ -258,24 +261,37 @@
     }
 </script>
 <style lang="less">
+
+  @import "../../assets/css/parameters.less";
 .list{
+.search-box{
+  background-color: @primary-color;
+  padding: 10px;
+}
+.mint-search{
+  height:36px;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 0.864rem;
+}
+.mint-searchbar{
+  height:36px;
+  padding: 0;
+  border-radius: 18px;
+  background:none;
+input{
+  border-radius: 18px;
+}
+}
+.mint-searchbar-inner{
+  background: none;
+.mintui-search,.mint-searchbar-core{
+  padding-left: 10px;
+  font-size: 14px;
+  color:#ffffff;
+}
+}
   .mint-loadmore{
-    padding: 110px 0 62px 0;
-  }
-  .mint-search{
-    height: auto;
-    position: relative;
-    z-index: 3;
-  }
-  .mint-searchbar {
-    background-color: #000000;
-    padding: 0.665rem 0.5rem;
-  }
-  .mint-searchbar-inner{
-    height: 1.73rem;
-    line-height: 1.73rem;
-    border-radius: 0.25rem;
-    padding: 0 0.7rem;
+    padding: 112px 0 62px 0;
   }
   .choice-box{
     width: 100%;
@@ -287,7 +303,7 @@
     .list-popup{
       position: fixed;
       left:0;
-      top:110px;
+      top:102px;
       z-index: 4;
       background-color:rgba(0,0,0,0.4);
       width: 100%;
@@ -310,7 +326,7 @@
       padding: 0 5px;
       font-size: 14px;
       border-right: 1px solid #333;
-      color:#3e3e3e;
+      color:#666666;
       &:last-child{
         border-right: none;
        }
@@ -324,16 +340,16 @@
        }
     }
   }
+  .row{
+    padding: 0 3px;
+  }
   .goods-list{
-    width: 100%;
-    padding: 15px;
-    height: 90px;
+    padding: 10px 3px;
     .pv-img{
-      width: 60px;
-      height: 60px;
+      width: 100%;
+      height: 160px;
       background-color: #d8d8d8;
       border-radius: 5px;
-      float: left;
       img{
         width: 100%;
       }
@@ -341,14 +357,16 @@
     .pv-info{
       text-align: left;
       width: 100%;
-      padding-left: 75px;
       position: relative;
       font-size: 14px;
+      padding:0 8px;
       .p-title{
-        color: #252525;
+        color: #666666;
         font-weight: 800;
         white-space: normal;
         height: 36px;
+        margin: 5px 0;
+        font-size: 16px;
         -webkit-line-clamp: 2;
         line-height: 18px;
         overflow: hidden;
@@ -362,8 +380,8 @@
       }
       .info-msg{
         overflow:hidden;
-        margin-top:8px;
-        font-size:12px;
+        margin:10px 0;
+        font-size:14px;
         p{
           line-height: 16px;
           &.is-stars{

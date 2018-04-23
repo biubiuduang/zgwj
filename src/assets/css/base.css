@@ -205,6 +205,10 @@ body {
   margin: 0 auto;
   position: relative;
 }
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
 .main-box {
   width: 100%;
   min-height: 100%;

@@ -268,7 +268,7 @@
       padding: 0 0.7rem 0.5rem 0.7rem;
     .mint-search{
       height:1.728rem;
-      background-color: rgba(255,255,255,0.5);
+      background-color: rgba(0,0,0,0.2);
       border-radius: 0.864rem;
       margin:0.5rem auto 0.2rem auto;
     }
