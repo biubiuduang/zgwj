@@ -30,7 +30,7 @@
               <p class="img-box">
                 <img src="../../assets/img/index/4.png" alt="">
               </p>
-              <p>成为会员</p>
+              <p>联盟商户</p>
             </router-link>
           </ul>
         </div>
@@ -58,7 +58,7 @@
             </router-link>
           </template>
         </ul>
-        <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+        <router-link :to="{path:'/list',query:{order_str:'hot'}}" tag="a" class="link-more">
           查看更多
         </router-link>
       </div>
@@ -78,7 +78,7 @@
             </template>
           </ul>
 
-          <router-link :to="{path:'/list',query:{type:'1'}}" tag="a" class="link-more">
+          <router-link :to="{path:'/list',query:{order_str:'new'}}" tag="a" class="link-more">
             查看更多
           </router-link>
         </div>
@@ -88,7 +88,7 @@
         <div class="container best-list white-bg container-brand">
           <ul class="row">
             <template v-for="(item, index) in brandList">
-              <router-link :to="'/detail/'+item.goods_id" tag="li" class="col-xs-4" :class="index > 5 ? 'brandHide' : 'brandShow'">
+              <router-link :to="{path:'/list',query:{brand:item.category_id}}" tag="li" class="col-xs-4" :class="index > 5 ? 'brandHide' : 'brandShow'">
                 <div class="list-box">
                   <div class="pv-img" :style="{ backgroundImage: 'url(' + item.image_url + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                   <p>{{item.category_name}}</p>
@@ -130,6 +130,7 @@
         this.handleRecommendList();
         this.handleNewList();
         this.handleBrandList();
+        this.handleEnter();
       },
       methods: {
         handleBannerList: function(){
@@ -216,7 +217,16 @@
             this.listMore = true;
           }
           $(".brandHide").toggleClass("brandShow");
-        }
+        },
+        handleEnter: function () {
+          var that = this;
+          $('.mint-searchbar-core').bind('keyup', function (event) {
+            if (event.keyCode == "13") {
+              //回车执行查询
+              that.$router.push({ name: 'list', query: { keywords: that.searchValue }})
+            }
+          });
+        },
       }
     }
 </script>
