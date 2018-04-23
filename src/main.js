@@ -8,6 +8,19 @@ import { Cascader, Form, FormItem, Input, Button, DatePicker, Select, Option, Ch
 import Mint from 'mint-ui'
 import moment from 'moment'
 import { MessageBox } from 'mint-ui';
+Vue.use(Mint);
+Vue.use(Cascader);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Button);
+Vue.use(DatePicker);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(CheckboxGroup);
+Vue.use(Checkbox);
+
+import "./assets/css/parameters.less"
 
 import "./assets/css/bootstrap.css"
 import "mint-ui/lib/style.css"
@@ -20,17 +33,6 @@ import "./assets/js/common"
 
 import { baseJs } from "./assets/js/common"
 
-Vue.use(Mint);
-Vue.use(Cascader);
-Vue.use(Form);
-Vue.use(FormItem);
-Vue.use(Input);
-Vue.use(Button);
-Vue.use(DatePicker);
-Vue.use(Select);
-Vue.use(Option);
-Vue.use(CheckboxGroup);
-Vue.use(Checkbox);
 
 
 Vue.prototype.$moment = moment;

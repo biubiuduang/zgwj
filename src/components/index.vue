@@ -3,29 +3,30 @@
       <keep-alive>
       <router-view></router-view>
       </keep-alive>
-      <ul class="global-nav">
-
-        <router-link to="/index" tag="li" class="col-xs-3">
-          <p class="img"><img src="../assets/img/index/icon-1.png" alt=""></p>
-          <p class="img-active"><img src="../assets/img/index/icon-1-active.png" alt=""></p>
-          <p>首页</p>
-        </router-link>
-        <router-link to="/list" tag="li" class="col-xs-3">
-          <p class="img"><img src="../assets/img/index/icon-2.png" alt=""></p>
-          <p class="img-active"><img src="../assets/img/index/icon-2-active.png" alt=""></p>
-          <p>全部玩具</p>
-        </router-link>
-        <router-link to="/shoppingCar" tag="li" class="col-xs-3">
-          <p class="img"><img src="../assets/img/index/icon-3.png" alt=""></p>
-          <p class="img-active"><img src="../assets/img/index/icon-3-active.png" alt=""></p>
-          <p>购物车</p>
-        </router-link>
-        <router-link to="/userCenter" tag="li" class="col-xs-3">
-          <p class="img"><img src="../assets/img/index/icon-4.png" alt=""></p>
-          <p class="img-active"><img src="../assets/img/index/icon-4-active.png" alt=""></p>
-          <p>我的</p>
-        </router-link>
-      </ul>
+      <div>
+        <ul class="global-nav">
+          <router-link to="/index" tag="li" class="col-xs-3">
+            <p class="img"><img src="../assets/img/index/icon-1.png" alt=""></p>
+            <p class="img-active"><img src="../assets/img/index/icon-1-active.png" alt=""></p>
+            <p>首页</p>
+          </router-link>
+          <router-link to="/list" tag="li" class="col-xs-3">
+            <p class="img"><img src="../assets/img/index/icon-2.png" alt=""></p>
+            <p class="img-active"><img src="../assets/img/index/icon-2-active.png" alt=""></p>
+            <p>全部玩具</p>
+          </router-link>
+          <router-link to="/shoppingCar" tag="li" class="col-xs-3">
+            <p class="img"><img src="../assets/img/index/icon-3.png" alt=""></p>
+            <p class="img-active"><img src="../assets/img/index/icon-3-active.png" alt=""></p>
+            <p>购物车</p>
+          </router-link>
+          <router-link to="/userCenter" tag="li" class="col-xs-3">
+            <p class="img"><img src="../assets/img/index/icon-4.png" alt=""></p>
+            <p class="img-active"><img src="../assets/img/index/icon-4-active.png" alt=""></p>
+            <p>我的</p>
+          </router-link>
+        </ul>
+      </div>
     </div>
 </template>
 <script>
