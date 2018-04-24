@@ -24,9 +24,27 @@
           <span class="age">{{details.age_name}}</span>
         </p>
       </div>
-      <div class="info-img">
 
-      </div>
+      <mt-navbar v-model="selected" class="detail-navbar">
+        <mt-tab-item id="1">
+          <p>玩具详情</p>
+        </mt-tab-item>
+        <mt-tab-item id="2">
+          <p>评价(0)</p>
+        </mt-tab-item>
+      </mt-navbar>
+
+      <!-- tab-container -->
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+          <div class="info-img">
+
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2" class="evaluate">
+          <p></p>
+        </mt-tab-container-item>
+      </mt-tab-container>
 
       <div class="handle">
         <div class="function col-xs-4">
@@ -57,6 +75,7 @@
     export default {
       data() {
         return {
+          selected: "1",
           details: {},
           collectStatus: false
         }
@@ -380,6 +399,35 @@
         border-bottom-right-radius: 1rem;
         background-color: @assist-color;
       }
+    }
+  }
+  .detail-navbar{
+    margin-bottom: 5px;
+    p{
+      font-size: 0.8rem;
+    }
+  }
+  .mint-navbar .mint-tab-item.is-selected{
+    border-bottom: none;
+    color:@blue;
+
+      &:after{
+          content: " ";
+          display: block;
+          border-radius: 2px;
+          height: 4px;
+          background-color: @blue;
+          width: 2rem;
+          margin:6px auto 0 auto;
+       }
+  }
+  .evaluate{
+    width: 100%;
+    p{
+      width: 100%;
+      height: 18rem;
+      background: url("../../assets/img/icon/null.png") center no-repeat #ffffff;
+      background-size: 18rem 18rem;
     }
   }
   .info-img{
