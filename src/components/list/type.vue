@@ -4,25 +4,25 @@
         <div class="filterKindBox">
           <p class="kindName">默认排序</p>
           <ul class="kindFloat list-1">
-            <li v-for="item in defaultType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
+            <li class="col-xs-4" v-for="item in defaultType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">库存</p>
           <ul class="kindFloat list-2">
-            <li v-for="item in storeType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
+            <li class="col-xs-4" v-for="item in storeType" :data-label="item.category_id" @click="handleList($event)"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">玩具类型</p><p @click="handleKindMore" class="group-more kind-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-3">
-            <li v-for="(item,index) in type" @click="handleArray($event,array.type)" :data-label="item.category_id" class="col-xs-3" :class="index > 7 ? 'kindHide' : 'kindShow'"><span>{{item.category_name}}</span></li>
+            <li v-for="(item,index) in type" @click="handleArray($event,array.type)" :data-label="item.category_id" class="col-xs-4" :class="index > 5 ? 'kindHide' : 'kindShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
         <div class="filterKindBox">
           <p class="kindName">锻炼能力</p><p @click="handlePowerMore" class="group-more power-more">更多 <i class="iconfont icon-up"></i></p>
           <ul class="ulBox list-4">
-            <li v-for="(item,index) in ability" @click="handleArray($event,array.ability)" :data-label="item.category_id" class="col-xs-3"  :class="index > 7 ? 'powerHide' : 'powerShow'"><span>{{item.category_name}}</span></li>
+            <li v-for="(item,index) in ability" @click="handleArray($event,array.ability)" :data-label="item.category_id" class="col-xs-4"  :class="index > 5 ? 'powerHide' : 'powerShow'"><span>{{item.category_name}}</span></li>
           </ul>
         </div>
       </div>
@@ -102,15 +102,16 @@
     }
 </script>
 <style scoped lang="less">
+
+  @import "../../assets/css/parameters.less";
   .filterKindBox{
     overflow: hidden;
-    border-bottom: 1px solid #d6d6d6;
-    padding:0.7rem 0.7rem;
+    padding:0.7rem;
     p{
       line-height: 32px;
       font-size:0.7rem;
       width:3.5rem;
-      color:#3d3d3d;
+      color:#999999;
       &.kindName{
         float: left;
         margin-right: 0.4rem;
@@ -125,6 +126,7 @@
     ul{
       width:100%;
       overflow:hidden;
+      padding-top:1rem;
       li{
         float: left;
         margin-bottom: 10px;
@@ -132,16 +134,16 @@
         span{
           display: block;
           width: 100%;
-          border:1px solid #d6d6d6;
+          color:#666666;
+          background-color: #e3e3e3;
           font-size: 14px;
           line-height: 32px;
-          border-radius: 5px;
+          border-radius: 16px;
         }
         &.active{
           span{
-            background-color: #f26257;
+            background-color: @blue;
             color: #fff;
-            border-color: #f15144;
           }
         }
         &.kindHide,&.powerHide{
@@ -152,8 +154,6 @@
         }
       }
       &.kindFloat{
-       width: auto;
-       float: left;
        li{
          margin-bottom:0;
          span{
@@ -172,24 +172,19 @@
     overflow: scroll;
   }
   .filterOperate{
-    padding: 0.26rem 0;
     height: 2.5rem;
     text-align: right;
-    border-top:1px #d8d8d8 solid;
     span{
       display: inline-block;
-      padding: .24rem 1rem;
-      border-radius: 8px;
-      font-size: .6rem;
-      margin-right: .46rem;
-      border:1px #d8d8d8 solid;
-      height: 1.8rem;
-      line-height: 1.32rem;
-      box-sizing: border-box;
+      width: 50%;
+      float: left;
+      text-align: center;
+      font-size: .8rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
       &.finishBtn{
-         border: 1px #2396FF solid;
          color: #fff;
-         background-color: #2396FF;
+         background-color: @blue;
        }
     }
   }

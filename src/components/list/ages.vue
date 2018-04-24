@@ -1,8 +1,8 @@
 <template>
-    <div class="item item-0">
-        <ul class="ages-list">
-          <li v-for="(item, index) in ages" @click="handleList(item.category_name,index,item.category_id)">
-            {{item.category_name}}
+    <div class="item item-0 container">
+        <ul class="ages-list row">
+          <li v-for="(item, index) in ages" class="col-xs-4" @click="handleList(item.category_name,index,item.category_id)">
+            <p>{{item.category_name}}</p>
           </li>
         </ul>
     </div>
@@ -21,15 +21,24 @@
     }
 </script>
 <style scoped lang="less">
+  @import "../../assets/css/parameters.less";
   ul{
+    margin:1rem auto;
     li{
-      text-align: left;
-      line-height: 1.92rem;
-      font-size: 0.7rem;
-      color:#3e3e3e;
-      padding: 0 0.7rem;
+      text-align: center;
+      line-height: 1.5rem;
+      font-size: 0.8rem;
+      color:#666666;
+      padding:0.3rem;
+      p{
+        background-color: #e3e3e3;
+        border-radius: 0.75rem;
+      }
       &.active{
-        color:#2396FF;
+        p{
+          color:#ffffff;
+          background-color: @blue;
+        }
       }
     }
   }

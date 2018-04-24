@@ -59,6 +59,7 @@
     }
 </script>
 <style scoped lang="less">
+  @import "../../assets/css/parameters.less";
 .brand-list{
   overflow: hidden;
   li{
@@ -86,7 +87,7 @@
       line-height: 20px;
     }
     &.active{
-      color:#2e6da4;
+      color:@blue;
     }
   }
 }

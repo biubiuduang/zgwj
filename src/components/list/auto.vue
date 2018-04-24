@@ -1,8 +1,8 @@
 <template>
   <div class="item item-3">
     <ul class="auto-list">
-      <li v-for="(item, index) in list" @click="handleList(item.category_id,index)">
-        {{item.category_name}}
+      <li v-for="(item, index) in list" class="col-xs-4" @click="handleList(item.category_id,index)">
+        <p>{{item.category_name}}</p>
       </li>
     </ul>
   </div>
@@ -28,15 +28,26 @@
   }
 </script>
 <style scoped lang="less">
+  @import "../../assets/css/parameters.less";
   ul{
+    overflow: hidden;
+    margin:1rem 0;
     li{
-      text-align: left;
-      line-height: 1.92rem;
+      line-height: 2rem;
       font-size: 0.7rem;
-      color:#3e3e3e;
-      padding:0 0.7rem;
+      color:#666666;
+      text-align: center;
+      padding:0.3rem;
+      p{
+        background-color: #e3e3e3;
+        border-radius: 1rem;
+      }
     &.active{
        color:#2396FF;
+      p{
+        color:#ffffff;
+        background-color: @blue;
+      }
      }
     }
   }
