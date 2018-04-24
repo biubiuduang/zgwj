@@ -1,18 +1,18 @@
 <template>
-    <div class="padding-box padding-top">
+    <div class="padding-box padding-top shopping-car">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
         {{$store.state.title}}
       </p>
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
         <div class="normal" v-if="borrowShow == false">
-          <img src="../../assets/img/Logo.jpg" alt="">
+          <img src="../../assets/img/icon/null.png" alt="">
           <p>您还没有选购任何玩具,快去选购吧</p>
           <router-link tag="a" to="/list">去挑选</router-link>
         </div>
         <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
           <div class="give-back list-box" v-if="returnShow">
-            <p class="title">待归还的玩具</p>
+            <p class="title title-back">**待归还的玩具**</p>
             <ul class="give-list wait-give-back">
               <li v-for="item in returnList">
                 <div class="wait-checkbox">
@@ -35,8 +35,8 @@
             </ul>
           </div>
           <div class="borrow list-box">
-          <p class="title">期望租借的玩具</p>
-          <p class="tip">温馨提示:<br/>
+          <p class="title">**期望租借的玩具**</p>
+          <p class="tip">温馨提示:
             <span v-if="isVIP" >您的会员权限一次可以租借{{toyCount.star}}件星标玩具 或 {{toyCount.normal}}件常规玩具。</span>
             <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
           </p>
@@ -72,7 +72,7 @@
           </div>
         </mt-loadmore>
       </div>
-      <div class="bottom-count">
+      <div class="bottom-count" v-if="borrowShow == true">
         <p class="count">新租{{toyCount.buyToy}}件,归还{{toyCount.returnToy}}件</p>
         <a class="btn-submit" href="javascript:void(0);" @click="handleSubmit">提交订单</a>
       </div>
@@ -268,25 +268,40 @@
       }
     }
 </script>
-<style scoped lang="less">
+<style lang="less">
+
+  @import "../../assets/css/parameters.less";
+  .shopping-car{
+  background-color:@bg-color;
+  .el-checkbox__inner{
+    border-radius: 50% !important;
+  }
+  .give-back{
+    margin-bottom: 0.8rem;
+  }
   .list-box{
+    background-color: #ffffff;
     text-align:left;
     p{
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       &.title{
-        color:#3e3e3e;
+        padding-top:0.5rem;
+        text-align: center;
+        color:@assist-color;
         line-height: 2rem;
         text-indent:0.7rem;
       }
-      &.tip{
-        padding: 0.7rem;
-        border-bottom: 1px solid #e1e1e1;
-        line-height: 0.8rem;
-        span{
-          color:#FF0000;
+       &.title-back{
+          color:@blue;
         }
+      &.tip{
+        font-size: 0.7rem;
+        line-height: 1rem;
+        padding: 0.7rem;
+        color:#bbbbbb;
+        border-bottom: 1px solid #e1e1e1;
         a{
-          color:#2396FF;
+          color:@blue;
         }
       }
     }
@@ -294,7 +309,7 @@
       li{
         overflow:hidden;
         border-bottom: 1px solid #e1e1e1;
-        padding-left: 0.7rem;
+        margin-left: 0.7rem;
         height:6.4rem;
         div{
           float: left;
@@ -343,7 +358,7 @@
                 color:#ac2925;
                 }
                 &.is-stockout-have{
-                  color:#2396FF;
+                  color:@blue;
                  }
                &.is-stars{
                  font-size: 0.8rem;
@@ -365,7 +380,7 @@
     margin-top:4rem;
     text-align:center;
     img{
-      width: 5rem;
+      width: 10rem;
       margin: 1rem auto;
     }
     p{
@@ -401,12 +416,15 @@
     }
     a{
       float: right;
-      width: 5.76rem;
-      height: 2.5rem;
-      line-height: 2.5rem;
+      width: 6rem;
+      height: 2rem;
+      line-height: 2rem;
       font-size: 0.8rem;
+      margin:0.25rem 0.7rem 0 0;
       color:#ffffff;
-      background-color: #2396FF;
+      border-radius: 1rem;
+      background-color: @blue;
     }
   }
+}
 </style>
