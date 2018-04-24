@@ -8,25 +8,25 @@
             placeholder="搜索玩具">
           </mt-search>
           <ul class="nav-index row">
-            <router-link to="list" tag="li" class="col-xs-3">
+            <router-link to="member" tag="li" class="col-xs-3">
               <p class="img-box">
-               <img src="../../assets/img/index/1.png" alt="">
+               <img src="../../assets/img/index/3.png" alt="">
               </p>
               <p>成为会员</p>
             </router-link>
             <router-link to="party" tag="li" class="col-xs-3">
               <p class="img-box">
-                <img src="../../assets/img/index/2.png" alt="">
+                <img src="../../assets/img/index/1.png" alt="">
               </p>
               <p>派对服务</p>
             </router-link>
             <router-link to="recycle" tag="li" class="col-xs-3">
               <p class="img-box">
-                <img src="../../assets/img/index/3.png" alt="">
+                <img src="../../assets/img/index/2.png" alt="">
               </p>
               <p>玩具回收</p>
             </router-link>
-            <router-link to="member" tag="li" class="col-xs-3">
+            <router-link to="recycle" tag="li" class="col-xs-3">
               <p class="img-box">
                 <img src="../../assets/img/index/4.png" alt="">
               </p>
@@ -232,8 +232,13 @@
 </script>
 <style lang="less">
   @import "../../assets/css/parameters.less";
-
   .index{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
     background-color:@bg-color;
     .container{
       padding:1rem 0.3rem 0 0.3rem;
@@ -303,7 +308,7 @@
           width: 2.304rem;
           height: 2.304rem;
           margin:0 auto;
-          padding: 0.3rem;
+          padding: 0.1rem;
           border-radius: 10px;
           background-color: #ffffff;
           img{

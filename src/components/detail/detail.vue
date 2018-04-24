@@ -14,10 +14,7 @@
       <div class="detail-info">
         <div class="title-info">
           <p class="title">{{details.goods_name}}</p>
-          <div class="collect" @click="handleCollect(details.goods_id)">
-            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
-            <p>收藏</p>
-          </div>
+          <p class="money">吊牌价:{{details.goods_price}}</p>
         </div>
         <p class="age-info">
           <span class="is-stars">
@@ -26,13 +23,29 @@
           </span>
           <span class="age">{{details.age_name}}</span>
         </p>
-        <div class="info-img">
-
-        </div>
       </div>
+      <div class="info-img">
+
+      </div>
+
       <div class="handle">
-        <input type="button" v-if="details.goods_number == 0" class="appointment"  @click="handleAppointment(details.goods_id)" value="预约玩具" />
-        <input type="button" v-else  @click="handleAddCar(details.goods_id)" value="加入购物车" />
+        <div class="function col-xs-4">
+          <div class="collect col-xs-6" @click="handleCollect(details.goods_id)">
+            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
+            <p>收藏</p>
+          </div>
+          <div class="collect col-xs-6" @click="handleCollect(details.goods_id)">
+            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
+            <p>客服</p>
+          </div>
+        </div>
+        <div class="btn-box col-xs-8">
+          <input type="button" v-if="details.goods_number == 0" class="appointment"  @click="handleAppointment(details.goods_id)" value="预约玩具" />
+          <div class="buy" v-else>
+            <input type="button" class="col-xs-6 btn-left"  @click="handleGoCar(details.goods_id)" value="加入购物车" />
+            <input type="button" class="col-xs-6 btn-right"   @click="handleAddCar(details.goods_id)" value="立即租凭" />
+          </div>
+        </div>
       </div>
     </div>
 </template>
@@ -82,6 +95,25 @@
         },
         //加入购物车
         handleAddCar: function(id){
+          var that = this;
+          if(this.details.on_sale == 1){
+            that.newAjax({
+              url: "order/add_carts",
+              method: "POST",
+              header: {
+                Accept: "application/json; charset=utf-8",
+                token: localStorage.getItem("token")
+              },
+              data: {
+                goods_id: id
+              },
+              success: function(data){
+                that.$router.push("/shoppingCar");
+              }
+            })
+          }
+        },
+        handleGoCar: function(id){
           var that = this;
           if(this.details.on_sale == 1){
             that.newAjax({
@@ -178,12 +210,15 @@
     }
 </script>
 <style lang="less">
+
+  @import "../../assets/css/parameters.less";
   .detail{
+  background-color:@bg-color;
   .swipe{
     margin-top:2rem;
     height: 18rem;
     width: 100%;
-    background-color: #d8d8d8;
+    background-color: #ffffff;
     .mint-swipe-item{
       width: 100%;
       height:18rem;
@@ -195,19 +230,20 @@
   }
   .detail-info{
     width: 100%;
-    margin:0.5rem auto;
+    margin:0 auto 0.7rem auto;
+    padding:1rem 0;
+    background-color: #ffffff;
     text-align: left;
     .title-info{
       padding:0 0.7rem;
-      height: 2.4rem;
       overflow: hidden;
       .title{
         float:left;
         height: 2.4rem;
         font-size: 0.8rem;
-        width: 14rem;
+        width: 100%;
         line-height: 1.2rem;
-        color:#3e3e3e;
+        color:#666666;
         white-space: normal;
         height: 2.4rem;
         -webkit-line-clamp: 2;
@@ -221,12 +257,18 @@
         -ms-box-flex: 1;
         box-flex: 1;
       }
+      .money{
+        font-size: 0.9rem;
+        margin-top:0.8rem;
+        font-weight: 800;
+        color:@primary-color;
+      }
       .collect{
         float: right;
         width: 2.6rem;
         text-align: right;
         color:#979797;
-        font-size: 0.6rem;
+        font-size: 0.8rem;
         i{
           font-size: 1rem;
           &.red{
@@ -238,10 +280,10 @@
     .age-info{
       width: 100%;
       overflow: hidden;
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       padding: 0 0.7rem;
-      margin:0.2rem 0 1rem 0;
-      color:#3e3e3e;
+      margin:0.5rem 0 0 0;
+      color:#999999;
       span{
         display: block;
         float: left;
@@ -257,20 +299,46 @@
     bottom: 0;
     left:0;
     width: 100%;
+    overflow: hidden;
+    background-color: #ffffff;
     height: 2.5rem;
-    input{
-      background-color: #2396FF;
-      color:#ffffff;
-      box-sizing: border-box;
-      float:left;
-      height:2.5rem;
-      width: 100%;
-      line-height:2.5rem;
-      font-size: 0.8rem;
-      display:block;
+    .function{
+      padding:0 10px;
+      .col-xs-6{
+        padding:0 0;
+        p{
+          font-size: 12px;
+        }
+      }
+    }
+    .btn-box{
+      input{
+        background-color: #2396FF;
+        color:#ffffff;
+        box-sizing: border-box;
+        float:left;
+        height:2rem;
+        line-height:2rem;
+        margin-top:0.25rem;
+        font-weight: 800;
+        font-size: 0.7rem;
+        display:block;
       &.appointment{
-        background-color: #FF8938;
+         background-color: @blue;
+         width: 100%;
+         border-radius: 1rem;
        }
+      }
+      .btn-left{
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+        background-color: @blue;
+      }
+      .btn-right{
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        background-color: @assist-color;
+      }
     }
   }
   .info-img{

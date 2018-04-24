@@ -16,7 +16,7 @@
       <mt-cell title="免费配送" :value="cardRules.express_times+'次'"></mt-cell>
       <mt-cell title="更换次数" :value="cardRules.toys_total_count+'次'"></mt-cell>
       <div class="pay">
-        <label for="btnPay">￥{{memberInfo.card_price}}</label>
+        <p>乐享价:￥{{memberInfo.card_price}}</p>
         <input id="btnPay" type="button" @click="handleHref" value="购买">
       </div>
     </div>
@@ -126,15 +126,18 @@
     }
 </script>
 <style lang="less">
+
+  @import "../../../assets/css/parameters.less";
 .member-class{
   .title{
     width: 100%;
     height: 8rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 8rem;
     background-color: #e1e1e1;
     margin-bottom: 30px;
     position: relative;
+    color:#ffffff;
     .triangle{
       width: 0;
       height: 0;
@@ -145,19 +148,28 @@
     }
   }
   .pay{
-    position: absolute;
-    bottom:0;
-    left: 0;
     width: 100%;
     height: 2rem;
-    padding-right: 1rem;
-    border-top:1px solid #e1e1e1;
+    padding: 0 1rem;
     line-height: 2rem;
-    text-align: right;
     font-size: 0.8rem;
-    color:#1b6d85;
+    margin-top:0.8rem;
+    p{
+      text-align: center;
+      font-size: 1rem;
+      color:@primary-color;
+      width: 100%;
+      font-weight: 800;
+    }
     #btnPay{
-      margin-left: 1rem;
+      width: 100%;
+      height: 2rem;
+      color:#ffffff;
+      font-size: 1rem;
+      line-height: 2rem;
+      background-color: @blue;
+      border-radius: 1rem;
+      margin-top:0.4rem;
     }
   }
 }
