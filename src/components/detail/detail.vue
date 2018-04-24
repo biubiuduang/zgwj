@@ -31,11 +31,14 @@
       <div class="handle">
         <div class="function col-xs-4">
           <div class="collect col-xs-6" @click="handleCollect(details.goods_id)">
-            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
+            <p class="icon-img">
+              <img v-if="collectStatus == true" src="../../assets/img/icon/heard.png" alt="">
+              <img v-else src="../../assets/img/icon/unheard.png" alt="">
+            </p>
             <p>收藏</p>
           </div>
           <div class="collect col-xs-6" @click="handleCollect(details.goods_id)">
-            <p><i class="iconfont icon-collect" :class="collectStatus == true?'red':''"></i></p>
+            <p class="icon-img"><img src="../../assets/img/icon/kefu.png" alt=""></p>
             <p>客服</p>
           </div>
         </div>
@@ -307,7 +310,13 @@
       .col-xs-6{
         padding:0 0;
         p{
-          font-size: 12px;
+          font-size: 0.6rem;
+          &.icon-img{
+           margin:0.3rem 0;
+            img{
+              width: 1.2rem;
+            }
+           }
         }
       }
     }
