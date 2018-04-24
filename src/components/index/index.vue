@@ -84,7 +84,7 @@
         </div>
       </template>
       <template v-if="brandShow == true">
-        <h2 class="news">**玩具品牌**</h2>
+        <h2 class="brand">**玩具品牌**</h2>
         <div class="container best-list white-bg container-brand">
           <ul class="row">
             <template v-for="(item, index) in brandList">
@@ -328,6 +328,9 @@
     &.news{
        color:@primary-color;
      }
+     &.brand{
+        color:@green;
+      }
   }
   .best-list{
     li{
