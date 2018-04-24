@@ -4,17 +4,17 @@
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
         {{$store.state.title}}
       </p>
-      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="address-form">
-        <el-form-item label="收货人:" prop="addUser">
+      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="80px" class="address-form">
+        <el-form-item class="address-item" label="收货人:" prop="addUser">
           <el-input type="text" v-model="ruleForm2.addUser" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="城市:">
+        <el-form-item class="address-item" label="城市:">
           <el-cascader :options="options" v-model="selectedOptions"></el-cascader>
         </el-form-item>
-        <el-form-item label="地址:" prop="addr">
+        <el-form-item class="address-item" label="地址:" prop="addr">
           <el-input type="text" v-model="ruleForm2.addr" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="手机号:" prop="tel">
+        <el-form-item class="address-item" label="手机号:" prop="tel">
           <el-input v-model.number="ruleForm2.tel" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="enter-box">
@@ -243,11 +243,33 @@
   }
 </script>
 <style lang="less">
+  @import "../../assets/css/parameters.less";
   .address-form{
-    padding-right: 2rem;
+    padding-left: 15px;
+    padding-top: 30px;
+    background-color: #ffffff;
+    position: relative;
   }
   .address{
-    padding-top: 3rem;
+    background-color:@bg-color;
+    .address-form{
+      font-size:0.7rem;
+      input{
+        border:none;
+      }
+      .el-form-item__content{
+        height: 50px;
+        line-height: 50px;
+      }
+      .el-form-item__label{
+        line-height: 50px;
+        text-align: left;
+      }
+      .address-item{
+        line-height: 50px;
+        border-bottom: 1px solid #E0E0E0;
+      }
+    }
     .title{
       line-height: 50px;
       text-indent:2rem;
@@ -261,6 +283,9 @@
     border:none;
     border-bottom: 1px solid #dcdcdc;
   }
+  .el-form-item{
+    margin-bottom: 0;
+  }
   .el-form-item__content{
     text-align: left;
   }
@@ -270,13 +295,14 @@
   }
   .enter-box .el-form-item__content{
     position: absolute;
-    bottom: 1rem;
+    bottom: -80px;
     left:0;
     width: 100%;
     text-align: center;
     margin-left:0 !important;
     .el-button{
-      width: 80%;
+      width: 90%;
+      border-radius: 25px;
     }
   }
 </style>
