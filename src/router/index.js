@@ -79,6 +79,13 @@ let router =  new Router({
         },
         name: 'party',
         component: resolve => require(['../components/other/party.vue'], resolve)
+      },{
+        path: '/disinfection',
+        meta: {
+          title: '消毒流程'
+        },
+        name: 'party',
+        component: resolve => require(['../components/other/disinfection.vue'], resolve)
       }]
     },
     {
