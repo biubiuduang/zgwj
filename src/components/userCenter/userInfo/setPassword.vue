@@ -105,34 +105,47 @@
 </script>
 <style lang="less">
   .address-form{
-    padding-right: 2rem;
-  }
-  .userAddr{
-  .title{
-    line-height: 50px;
-    text-indent:2rem;
-    font-size: 0.8rem;
-    text-align: left;
-    border-bottom: 1px solid #e1e1e1;
-    margin-bottom: 22px;
-  }
-  }
+    background-color: #ffffff;
+    padding-top:20px;
   .el-input__inner{
     border:none;
-    border-bottom: 1px solid #dcdcdc;
+  }
+  .el-select{
+    width: 100%;
+  }
+  .el-form-item{
+    margin-bottom: 20px;
+    margin-left: 0.7rem;
+    border-bottom: 1px solid #e0e0e0;
+  .el-form-item{
+    border:none;
+  }
   }
   .el-form-item__content{
     text-align: left;
   }
-  .enter-box .el-form-item__content{
-    position: absolute;
-    bottom: 1rem;
-    left:0;
+  .el-input{
+    width: 80%;
+    margin-left:0;
+  }
+  .el-date-editor--date{
+    width: 80% !important;
+  }
+  .enter-box{
+    border:none;
+    height: 0;
+    margin:0;
+  .el-form-item__content{
+    position: relative;
+    bottom: -2rem;
     width: 100%;
     text-align: center;
     margin-left:0 !important;
   .el-button{
+    border-radius: 20px;
     width: 80%;
+  }
+  }
   }
   }
 </style>

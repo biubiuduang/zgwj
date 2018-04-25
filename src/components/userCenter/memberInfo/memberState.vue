@@ -12,7 +12,7 @@
         <p>1.年卡会员,有一次暂停会员权利,最长30天;</p>
         <p>2.年卡会员在归还所有玩具时暂停会员,您的会员时间会因此顺延;</p>
         <p>3.暂停后30内可以手动恢复;</p>
-        <p>3.暂停后30天会自动恢复.</p>
+        <p>4.暂停后30天会自动恢复.</p>
         <template>
           <input v-if="remainStatus == true" type="button" @click="handlePaused('pause')" value="暂停" />
           <input v-else type="button" value="恢复" @click="handlePaused('unpause')" />
@@ -88,6 +88,7 @@
 </script>
 <style scoped lang="less">
   .member-state{
+    background-color: #ffffff;
     text-align: left;
   }
   .state-pause{

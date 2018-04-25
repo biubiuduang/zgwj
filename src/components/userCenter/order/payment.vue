@@ -170,6 +170,7 @@
     }
     .payment-list{
       li{
+        background-color: #ffffff;
         text-align: left;
         .title{
           background-color: #f5f5f5;

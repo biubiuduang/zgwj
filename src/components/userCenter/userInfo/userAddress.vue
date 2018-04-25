@@ -263,7 +263,7 @@
   }
   .address-form{
     background-color: #ffffff;
-    padding-top:10px;
+    padding-top:20px;
   .el-input__inner{
     border:none;
   }
@@ -271,8 +271,7 @@
     width: 100%;
   }
   .el-form-item{
-    margin-top: 10px;
-    margin-bottom: 0;
+    margin-bottom: 20px;
     margin-left: 0.7rem;
     border-bottom: 1px solid #e0e0e0;
   .el-form-item{
