@@ -264,6 +264,7 @@
 
   @import "../../assets/css/parameters.less";
 .list{
+  background-color:#ffffff;
 .search-box{
   background-color: @primary-color;
   padding: 10px;

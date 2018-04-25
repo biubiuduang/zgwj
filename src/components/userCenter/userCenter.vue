@@ -53,10 +53,10 @@
           <span>订单状态</span>
           <img slot="icon" src="../../assets/img/userCenter/order.png"  width="18" height="18" />
         </mt-cell>
-        <mt-cell title="我的预约" is-link to="/appointment">
-          <img slot="icon" src="../../assets/img/userCenter/5.png"  width="18" height="18" />
-        <span></span>
-        </mt-cell>
+        <!--<mt-cell title="我的预约" is-link to="/appointment">-->
+          <!--<img slot="icon" src="../../assets/img/userCenter/5.png"  width="18" height="18" />-->
+        <!--<span></span>-->
+        <!--</mt-cell>-->
         <mt-cell title="我的收藏" is-link to="/collect">
           <span>已收藏{{collectCount}}个</span>
           <img slot="icon" src="../../assets/img/userCenter/7.png"  width="18" height="18" />

@@ -4,7 +4,6 @@
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}
     </p>
-    <p class="title"></p>
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="address-form">
       <el-form-item label="收货人:" prop="addUser">
         <el-input type="text" v-model="ruleForm2.addUser" auto-complete="off"></el-input>
@@ -237,9 +236,6 @@
   }
 </script>
 <style lang="less">
-  .address-form{
-    padding-right: 2rem;
-  }
   .userAddr{
   .title{
     line-height: 50px;
@@ -258,14 +254,56 @@
     text-align: left;
   }
   .enter-box .el-form-item__content{
-    position: absolute;
-    bottom: 1rem;
-    left:0;
     width: 100%;
     text-align: center;
     margin-left:0 !important;
   .el-button{
     width: 80%;
+  }
+  }
+  .address-form{
+    background-color: #ffffff;
+    padding-top:10px;
+  .el-input__inner{
+    border:none;
+  }
+  .el-select{
+    width: 100%;
+  }
+  .el-form-item{
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-left: 0.7rem;
+    border-bottom: 1px solid #e0e0e0;
+  .el-form-item{
+    border:none;
+  }
+  }
+  .el-form-item__content{
+    text-align: left;
+  }
+  .el-input{
+    width: 80%;
+    margin-left:0;
+  }
+  .el-date-editor--date{
+    width: 80% !important;
+  }
+  .enter-box{
+    border:none;
+    height: 0;
+    margin:0;
+  .el-form-item__content{
+    position: relative;
+    bottom: -2rem;
+    width: 100%;
+    text-align: center;
+    margin-left:0 !important;
+  .el-button{
+    border-radius: 20px;
+    width: 80%;
+  }
+  }
   }
   }
 </style>
