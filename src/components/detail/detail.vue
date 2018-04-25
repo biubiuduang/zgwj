@@ -363,7 +363,7 @@
         p{
           font-size: 0.6rem;
           &.icon-img{
-           margin:0.3rem 0;
+           margin:0.2rem 0;
             img{
               width: 1.2rem;
             }

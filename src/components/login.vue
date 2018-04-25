@@ -257,8 +257,8 @@
     overflow:hidden;
     img {
       display: block;
-      margin:2rem auto;
-      width: 5rem;
+      margin:0 auto;
+      width: 12rem;
     }
   }
   .login-form{

@@ -1,5 +1,5 @@
 <template>
-  <div class="userCenter">
+  <div class="userCenter userCollect">
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
@@ -10,7 +10,7 @@
       </div>
       <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <p class="count">已收藏{{collectCount}}个玩具</p>
-        <ul class="order-list">
+        <ul class="order-list collect-list">
           <template v-for="item in collectList">
             <router-link tag="li"  :to="'/detail/'+item.goods_id">
               <div class="pv-img flex-center">
@@ -189,6 +189,9 @@
   }
 </script>
 <style lang="less">
+  .userCollect{
+    background-color: #ffffff;
+  }
   .page-infinite-wrapper{
     background-color: #ffffff;
   }
@@ -198,10 +201,12 @@
     text-align: left;
     line-height: 2.16rem;
   }
-  .order-list{
+  .collect-list{
   li{
     overflow: hidden;
-    padding:0 0.7rem;
+    padding:0 0.7rem 0 0;
+    border-bottom: 1px solid #e3e3e3;
+    margin-left:0.7rem;
   .order-goods-list{
     height:6.4rem;
     overflow: hidden;

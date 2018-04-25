@@ -1,10 +1,15 @@
 <template>
-    <div class="padding-top">
+    <div class="padding-top order">
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
         <p class="backNav">
           <i class="el-icon-arrow-left" @click="$router.back()"></i>
           {{$store.state.title}}
         </p>
+        <mt-navbar v-model="orderSelected" class="order-navbar">
+          <mt-tab-item id="1">待收货</mt-tab-item>
+          <mt-tab-item id="2">租凭中</mt-tab-item>
+          <mt-tab-item id="3">已归还</mt-tab-item>
+        </mt-navbar>
         <div v-if="orderNormal" class="order-normal flex-center">
           <router-link tag="p" to="/list">去挑选玩具 >></router-link>
         </div>
@@ -44,6 +49,7 @@
     export default {
       data() {
         return {
+          orderSelected: '1',
           orderNormal: true,
           orderList: [],
           allLoaded : false,
@@ -146,12 +152,49 @@
     }
 </script>
 <style lang="less">
+  @import "../../../assets/css/parameters.less";
+  .order{
+    background-color: @bg-color;
+    padding-top: 4rem;
+    .order-navbar{
+      height: 2rem;
+      line-height: 2rem;
+      top:2rem;
+      left:0;
+      position: fixed;
+      width: 100%;
+      color:#666666;
+      .mint-tab-item-label{
+        font-size: 0.7rem;
+      }
+      .mint-tab-item{
+        padding:0.6rem 0;
+        &.is-selected{
+          border:none;
+         .mint-tab-item-label{
+          color:@blue;
+          &:after{
+             content: " ";
+             display: block;
+             width: 1rem;
+             background-color: @blue;
+             height:4px;
+             margin:5px auto 0 auto;
+             border-radius: 2px;
+           }
+         }
+        }
+      }
+
+    }
+  }
   .order-list{
     .order-number{
       height: 2rem;
       line-height: 2rem;
-      background-color: #f5f5f5;
+      background-color: @bg-color;
       font-size: 0.7rem;
+      font-weight: 800;
       text-align: left;
       text-indent: 1rem;
       margin:0 -0.7rem;
@@ -161,6 +204,7 @@
       }
     }
     li{
+      background-color: #ffffff;
       overflow: hidden;
       padding:0 0.7rem;
       .order-goods-list{
