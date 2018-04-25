@@ -6,9 +6,9 @@
           {{$store.state.title}}
         </p>
         <mt-navbar v-model="orderSelected" class="order-navbar">
-          <mt-tab-item id="1">待收货</mt-tab-item>
-          <mt-tab-item id="2">租凭中</mt-tab-item>
-          <mt-tab-item id="3">已归还</mt-tab-item>
+          <mt-tab-item id="waitting">待收货</mt-tab-item>
+          <mt-tab-item id="received">租凭中</mt-tab-item>
+          <mt-tab-item id="returned">已归还</mt-tab-item>
         </mt-navbar>
         <div v-if="orderNormal" class="order-normal flex-center">
           <router-link tag="p" to="/list">去挑选玩具 >></router-link>
@@ -49,7 +49,7 @@
     export default {
       data() {
         return {
-          orderSelected: '1',
+          orderSelected: 'waitting',
           orderNormal: true,
           orderList: [],
           allLoaded : false,
@@ -70,7 +70,7 @@
           this.orderList=[];
           this.page = {
             start: 0,
-            count: 0
+            count: 0,
           };
           this.newAjax({
             url:"order/get_orders",

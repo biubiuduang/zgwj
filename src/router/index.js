@@ -84,7 +84,7 @@ let router =  new Router({
         meta: {
           title: '消毒流程'
         },
-        name: 'party',
+        name: 'disinfection',
         component: resolve => require(['../components/other/disinfection.vue'], resolve)
       }]
     },
