@@ -26,7 +26,7 @@
               </p>
               <p>玩具回收</p>
             </router-link>
-            <router-link to="recycle" tag="li" class="col-xs-3">
+            <router-link to="union" tag="li" class="col-xs-3">
               <p class="img-box">
                 <img src="../../assets/img/index/4.png" alt="">
               </p>
