@@ -1,5 +1,5 @@
 <template>
-    <div class="userCenter">
+    <div class="userCenter user-other-center">
       <mt-cell title="" class="user-header">
         <span>{{info.user_nickname}}</span>
         <img slot="icon" :src="info.user_avatar" class="user-avatar" width="60" height="60">
@@ -42,7 +42,7 @@
     }
 </script>
 <style>
-.exit{
+.user-other-center .exit{
   width: 80%;
   font-size: 14px;
   padding: 12px;

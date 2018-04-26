@@ -205,6 +205,7 @@
     line-height: 2.16rem;
   }
   .collect-list{
+    background-color: #ffffff;
   li{
     overflow: hidden;
     padding:0 0.7rem 0 0;
