@@ -1,5 +1,5 @@
 <template>
-    <div class="padding-top order">
+    <div class="padding-top order user-order-list">
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
         <p class="backNav">
           <i class="el-icon-arrow-left" @click="$router.back()"></i>
@@ -169,9 +169,11 @@
 </script>
 <style lang="less">
   @import "../../../assets/css/parameters.less";
-  .order{
+  .padding-top.user-order-list{
     background-color: @bg-color;
     padding-top: 4rem;
+  }
+  .order{
     .order-navbar{
       height: 2rem;
       line-height: 2rem;
