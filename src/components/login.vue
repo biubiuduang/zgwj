@@ -240,8 +240,29 @@
     }
 </script>
 <style lang="less">
+  @import "../assets/css/parameters.less";
   .login{
     background-color: #ffffff;
+    .mint-navbar .mint-tab-item.is-selected{
+      border-bottom: none;
+      color:@assist-color;
+      &:after{
+        content: " ";
+        display: block;
+        width: 2rem;
+        height: 4px;
+        border-radius: 2px;
+        margin:5px auto 0 auto;
+        background-color: @assist-color;
+       }
+    }
+    .el-button--primary{
+      background-color:@assist-color;
+      border-color:@assist-color;
+    }
+    .el-button.getCode{
+      padding: 0;
+    }
   }
   .mint-navbar{
     padding: 0 1.92rem;
@@ -266,15 +287,15 @@
   }
   .login-form{
     padding: 0 1.92rem;
-    color:#2396FF;
+    color:@assist-color;
     .el-input__inner{
       border-radius: 0;
       height: 2rem;
       border: none;
-      border-bottom: 1px solid #2396FF;
+      border-bottom: 1px solid @assist-color;
     }
     .el-input__prefix{
-      color:#2396FF;
+      color:@assist-color;
       font-size: 0.8rem;
     }
     .imgCode,.getCode{
