@@ -4,7 +4,6 @@
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}
     </p>
-    <p class="title"></p>
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="address-form">
       <el-form-item label="登录密码:" prop="pwd">
         <el-input type="password" v-model="ruleForm2.pwd" auto-complete="off" placeholder="请输入8-16位密码"></el-input>

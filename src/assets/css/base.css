@@ -248,7 +248,14 @@ image[lazy=loading] {
   left: 0;
   top: 0;
 }
+.order-normal img {
+  display: block;
+  margin: 0 auto;
+  width: 12rem;
+}
 .order-normal p {
+  width: 100%;
+  margin: 0 auto;
   font-size: 1rem;
   color: #1b6d85;
 }
@@ -260,7 +267,6 @@ image[lazy=loading] {
   height: 100%;
   padding-top: 2rem;
   background-color: #f5f5f5;
-  overflow-y: scroll;
 }
 .child-view {
   position: absolute;

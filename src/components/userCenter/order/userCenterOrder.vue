@@ -11,7 +11,10 @@
           <mt-tab-item id="returned">已归还</mt-tab-item>
         </mt-navbar>
         <div v-if="orderNormal" class="order-normal flex-center">
-          <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+          <div>
+            <img src="../../../assets/img/icon/null.png" alt="">
+            <router-link tag="p" to="/list">去挑选玩具 >></router-link>
+          </div>
         </div>
         <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list">

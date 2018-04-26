@@ -283,7 +283,8 @@
     border:none;
     border-bottom: 1px solid #dcdcdc;
   }
-  .el-form-item{
+
+  .address-form .el-form-item{
     margin-bottom: 0;
   }
   .el-form-item__content{

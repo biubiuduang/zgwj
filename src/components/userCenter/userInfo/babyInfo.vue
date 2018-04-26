@@ -1,5 +1,5 @@
 <template>
-    <div class="address babyInfo">
+    <div class="babyInfo">
       <el-form label-width="100px" class="demo-ruleForm">
         <el-form-item label="宝宝姓名:">
           <el-input type="text" placeholder="宝宝姓名" v-model="info.baby_name" auto-complete="off"></el-input>
