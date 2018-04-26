@@ -49,7 +49,7 @@
     export default {
       data() {
         return {
-          orderSelected: 'waitting',
+          orderSelected: this.$route.query.order_status? this.$route.query.order_status:"waitting",
           orderNormal: true,
           orderList: [],
           allLoaded : false,
@@ -65,7 +65,13 @@
         this.handleInit();
       },
       methods: {
+        handleOnload: function(){
+          if(this.$route.query.order_status){
+            this.orderSelected = this.$route.query.order_status;
+          }
+        },
         handleInit: function(){
+
           var that = this;
           this.orderList=[];
           this.page = {
@@ -79,7 +85,8 @@
               token: localStorage.getItem("token")
             },
             data: {
-              start : that.page.start
+              start : that.page.start,
+              order_status : that.orderSelected
             },
             success: function(data){
               if(data.status == 200){
@@ -148,6 +155,12 @@
       },
       mounted() {
         this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+      },
+      watch: {
+        orderSelected: function (val) {
+          // 这里就可以通过 val 的值变更来确定
+          this.handleInit();
+        }
       }
     }
 </script>
@@ -164,6 +177,7 @@
       position: fixed;
       width: 100%;
       color:#666666;
+      z-index: 2;
       .mint-tab-item-label{
         font-size: 0.7rem;
       }

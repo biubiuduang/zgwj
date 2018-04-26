@@ -19,18 +19,18 @@
           </div>
           <p class="name">{{userInfo.user_nickname}}</p>
           <ul class="user-navbar">
-            <li class="col-xs-4">
+            <router-link :to="{path:'/order',query:{order_status:'waitting'}}" tag="li" class="col-xs-4">
               <p class="icon-img"><img src="../../assets/img/userCenter/7.png" alt=""></p>
               <p class="icon-label">待收货</p>
-            </li>
-            <li class="col-xs-4">
+            </router-link>
+            <router-link :to="{path:'/order',query:{order_status:'received'}}" tag="li" class="col-xs-4">
               <p class="icon-img"><img src="../../assets/img/userCenter/5.png" alt=""></p>
               <p class="icon-label">租凭中</p>
-            </li>
-            <li class="col-xs-4">
+            </router-link>
+            <router-link :to="{path:'/order',query:{order_status:'returned'}}" tag="li" class="col-xs-4">
               <p class="icon-img"><img src="../../assets/img/userCenter/6.png" alt=""></p>
               <p class="icon-label">已归还</p>
-            </li>
+            </router-link>
           </ul>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="login">
       <div class="logo">
         <img src="../assets/img/Logo.jpg" alt="">
       </div>
@@ -240,6 +240,9 @@
     }
 </script>
 <style lang="less">
+  .login{
+    background-color: #ffffff;
+  }
   .mint-navbar{
     padding: 0 1.92rem;
     .mint-tab-item{
