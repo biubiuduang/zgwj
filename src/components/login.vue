@@ -260,6 +260,10 @@
       background-color:@assist-color;
       border-color:@assist-color;
     }
+    .el-button--primary[disabled]{
+       background-color:@assist-color;
+       border-color:@assist-color;
+     }
     .el-button.getCode{
       padding: 0;
     }
