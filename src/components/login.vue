@@ -188,7 +188,7 @@
                     localStorage.setItem("token",data.data.token);
                     that.$store.commit('setLogin',true);
                     if(data.data.has_weixin_grant == 0){
-                      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state="+ data.data.user_id +"#wechat_redirect";
+                      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://api.xwkj2018.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state="+ data.data.user_id +"#wechat_redirect";
                     }else{
                       that.$router.go(-1);
                     }
@@ -220,7 +220,7 @@
                     localStorage.setItem("token",data.data.token);
                     that.$store.commit('setLogin',true);
                     if(data.data.has_weixin_grant == 0){
-                      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://toysbox-api.3vlogic.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state="+ data.data.user_id +"#wechat_redirect";
+                      window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://api.xwkj2018.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state="+ data.data.user_id +"#wechat_redirect";
                     }else{
                       that.$router.go(-1);
                     }

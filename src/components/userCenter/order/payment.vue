@@ -60,7 +60,7 @@
 
     methods: {
       btnPay: function(id){
-        window.location.href = "http://toysbox-api.3vlogic.com/order/buy_card?card_id="+id+"&token="+localStorage.getItem("token");
+        window.location.href = "http://api.xwkj2018.com/order/buy_card?card_id="+id+"&token="+localStorage.getItem("token");
       },
       handleInit: function(){
         var that = this;

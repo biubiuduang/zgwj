@@ -18,6 +18,7 @@
       <div class="pay">
         <p>乐享价:￥{{memberInfo.card_price}}</p>
         <input id="btnPay" type="button" @click="handleHref" value="购买">
+        <!--<input id="btnPay" type="button" @click="handleBuy" value="购买">-->
       </div>
     </div>
 </template>
@@ -64,31 +65,28 @@
             },
             success: function(data){
               console.log(data);
-              //alert(data.data.jsApiParametersArray.appId);
-//              wx.config({
-//                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//                appId: data.data.jsApiParametersArray.appId, // 必填，公众号的唯一标识
-//                timestamp: data.data.jsApiParametersArray.timeStamp, // 必填，生成签名的时间戳
-//                nonceStr: data.data.jsApiParametersArray.nonceStr, // 必填，生成签名的随机串
-//                signature: data.data.jsApiParametersArray.paySign,// 必填，签名
-//                jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
-//              });
-//              alert('config end  ready start');
-//              wx.ready(function(){
-//                wx.chooseWXPay({
-//                  appId: data.data.jsApiParametersArray.appId,
-//                  timestamp: data.data.jsApiParametersArray.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-//                  nonceStr: data.data.jsApiParametersArray.nonceStr, // 支付签名随机串，不长于 32 位
-//                  package: data.data.jsApiParametersArray.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-//                  signType: data.data.jsApiParametersArray.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-//                  paySign: data.data.jsApiParametersArray.paySign, // 支付签名
-//                  success: function (res) {
-//// 支付成功后的回调函数
-//                    alert(res);
-//                    console.log(res);
-//                  }
-//                });
-//              });
+              wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: data.data.jsApiParametersArray.appId, // 必填，公众号的唯一标识
+                timestamp: data.data.jsApiParametersArray.timeStamp, // 必填，生成签名的时间戳
+                nonceStr: data.data.jsApiParametersArray.nonceStr, // 必填，生成签名的随机串
+                signature: data.data.jsApiParametersArray.paySign,// 必填，签名
+                jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+              });
+              wx.ready(function(){
+                wx.chooseWXPay({
+                  appId: data.data.jsApiParametersArray.appId,
+                  timestamp: data.data.jsApiParametersArray.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                  nonceStr: data.data.jsApiParametersArray.nonceStr, // 支付签名随机串，不长于 32 位
+                  package: data.data.jsApiParametersArray.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                  signType: data.data.jsApiParametersArray.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                  paySign: data.data.jsApiParametersArray.paySign, // 支付签名
+                  success: function (res) {
+// 支付成功后的回调函数
+                    console.log(res);
+                  }
+                });
+              });
               function onBridgeReady(){
                 WeixinJSBridge.invoke(
                   'getBrandWCPayRequest', {
@@ -101,7 +99,7 @@
                   },
                   function(res){
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                      alert(res)
+                      console.log(res);
                     }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                   }
                 );
@@ -120,7 +118,7 @@
           })
         },
         handleHref: function(){
-          window.location.href = "http://toysbox-api.3vlogic.com/order/buy_card?card_id="+this.$route.query.id+"&token="+localStorage.getItem("token");
+          window.location.href = "http://api.xwkj2018.com/order/buy_card?card_id="+this.$route.query.id+"&token="+localStorage.getItem("token");
         }
       }
     }
