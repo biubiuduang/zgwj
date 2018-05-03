@@ -64,7 +64,7 @@
           <input type="button" v-if="details.goods_number == 0" class="appointment"  @click="handleAppointment(details.goods_id)" value="预约玩具" />
           <div class="buy" v-else>
             <input type="button" class="col-xs-6 btn-left"  @click="handleGoCar(details.goods_id)" value="加入购物车" />
-            <input type="button" class="col-xs-6 btn-right"   @click="handleAddCar(details.goods_id)" value="立即租凭" />
+            <input type="button" class="col-xs-6 btn-right"   @click="handleAddCar(details.goods_id)" value="立即租赁" />
           </div>
         </div>
       </div>

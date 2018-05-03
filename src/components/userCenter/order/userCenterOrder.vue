@@ -7,7 +7,7 @@
         </p>
         <mt-navbar v-model="orderSelected" class="order-navbar">
           <mt-tab-item id="waitting">待收货</mt-tab-item>
-          <mt-tab-item id="received">租凭中</mt-tab-item>
+          <mt-tab-item id="received">租赁中</mt-tab-item>
           <mt-tab-item id="returned">已归还</mt-tab-item>
         </mt-navbar>
         <div v-if="orderNormal" class="order-normal flex-center">

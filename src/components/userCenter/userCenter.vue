@@ -30,7 +30,7 @@
             </router-link>
             <router-link :to="{path:'/order',query:{order_status:'received'}}" tag="li" class="col-xs-4">
               <p class="icon-img"><img src="../../assets/img/userCenter/5.png" alt=""></p>
-              <p class="icon-label">租凭中</p>
+              <p class="icon-label">租赁中</p>
             </router-link>
             <router-link :to="{path:'/order',query:{order_status:'returned'}}" tag="li" class="col-xs-4">
               <p class="icon-img"><img src="../../assets/img/userCenter/6.png" alt=""></p>
@@ -44,7 +44,7 @@
         <span>设置</span>
         <img slot="icon" src="../../assets/img/userCenter/baby.png"  width="18" height="18" />
         </mt-cell>
-        <mt-cell title="收获地址" is-link to="/userAddress">
+        <mt-cell title="收货地址" is-link to="/userAddress">
         <span>设置</span>
         <img slot="icon" src="../../assets/img/userCenter/addr.png"  width="18" height="18" />
         </mt-cell>
