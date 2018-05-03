@@ -231,34 +231,36 @@
         },
         handleCollectState: function(id){
           var that = this;
-          this.newAjax({
-            url:"user/get_collects",
-            header: {
-              Accept: "application/json; charset=utf-8",
-              token: localStorage.getItem("token")
-            },
-            data: {
-              start: 0,
-              number: 99999999,
-            },
-            success: function(data){
-              if(data.status == 200){
-                if(data.data.items != undefined){
-                  var len = data.data.items.length;
-                  for(var i = 0; i< len; i++){
-                    if(data.data.items[i].goods_id === id){
-                      that.collectStatus = true;
-                      break;
+          if(localStorage.getItem("login_status") == "true"){
+            this.newAjax({
+              url:"user/get_collects",
+              header: {
+                Accept: "application/json; charset=utf-8",
+                token: localStorage.getItem("token")
+              },
+              data: {
+                start: 0,
+                number: 99999999,
+              },
+              success: function(data){
+                if(data.status == 200){
+                  if(data.data.items != undefined){
+                    var len = data.data.items.length;
+                    for(var i = 0; i< len; i++){
+                      if(data.data.items[i].goods_id === id){
+                        that.collectStatus = true;
+                        break;
+                      }
                     }
+                  }else{
+                    that.collectStatus = false;
                   }
                 }else{
                   that.collectStatus = false;
                 }
-              }else{
-                that.collectStatus = false;
               }
-            }
-          })
+            })
+          }
         },
       }
     }

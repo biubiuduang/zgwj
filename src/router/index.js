@@ -280,14 +280,14 @@ let router =  new Router({
 
 router.beforeEach((to ,from ,next ) => {
   if(to.matched.some(record => record.meta.requireAuth)){
-    if(store.state.token == '' || store.state.token == null){
+    if(store.state.token){
+      next();
+      store.commit('setTitle',to.meta.title);
+    }else{
       next({
         path: '/login',
         query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
-    }else{
-      next();
-      store.commit('setTitle',to.meta.title);
     }
   }else{
     next();

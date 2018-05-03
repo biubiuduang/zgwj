@@ -192,6 +192,7 @@
                     }else{
                       that.$router.go(-1);
                     }
+                    localStorage.setItem("login_status","true");
                   }else{
                     MessageBox('提示', data.message);
                   }
@@ -224,6 +225,7 @@
                     }else{
                       that.$router.go(-1);
                     }
+                    localStorage.setItem("login_status","true");
                   }else{
                     MessageBox('提示', data.message);
                   }

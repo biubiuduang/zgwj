@@ -171,6 +171,7 @@
         },
         handleLogOut: function(){
           localStorage.setItem("token","");
+          localStorage.setItem("login_status","");
           this.$router.push("/index");
         }
       }
