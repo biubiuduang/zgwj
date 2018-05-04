@@ -68,13 +68,7 @@
         this.handleInit();
       },
       methods: {
-        handleOnload: function(){
-          if(this.$route.query.order_status){
-            this.orderSelected = this.$route.query.order_status;
-          }
-        },
         handleInit: function(){
-
           var that = this;
           this.orderList=[];
           this.page = {
@@ -160,9 +154,11 @@
         this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       },
       watch: {
-        orderSelected: function (val) {
-          // 这里就可以通过 val 的值变更来确定
-          this.handleInit();
+        '$route' (to, from) {
+          // data数据操作
+          if(this.$route.query.order_status){
+            this.orderSelected = this.$route.query.order_status;
+          }
         }
       }
     }

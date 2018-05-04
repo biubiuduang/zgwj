@@ -223,7 +223,7 @@
           $('.mint-searchbar-core').bind('keyup', function (event) {
             if (event.keyCode == "13") {
               //回车执行查询
-              that.$router.push({ name: 'list', query: { keywords: that.searchValue }})
+              that.$router.push({ path: '/list', query: { keywords: that.searchValue }})
             }
           });
         },

@@ -97,6 +97,7 @@
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
+        this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       },
       methods: {
         //获取玩具列表
@@ -254,6 +255,15 @@
 
           this.$refs.loadmore.onBottomLoaded();
         },
+      },
+      watch: {
+        '$route' (to, from) {
+          // data数据操作
+          if(this.$route.query.keywords){
+            this.search.keywords = this.$route.query.keywords;
+          }
+          this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+        }
       },
       mounted() {
         this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
