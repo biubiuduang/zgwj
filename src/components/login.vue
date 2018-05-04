@@ -1,5 +1,9 @@
 <template>
     <div class="login">
+      <p class="backNav">
+        <i class="el-icon-arrow-left" @click="handleBackIndex"></i>
+        返回首页
+      </p>
       <div class="logo">
         <img src="../assets/img/Logo.jpg" alt="">
       </div>
@@ -113,6 +117,9 @@
         this.handleGetImgCode();
       },
       methods: {
+        handleBackIndex: function () {
+          this.$router.push({ path: '/index'});
+        },
         handleGetImgCode: function () {
           var that = this;
           this.newAjax({
@@ -244,6 +251,7 @@
 <style lang="less">
   @import "../assets/css/parameters.less";
   .login{
+    padding-top: 40px;
     background-color: #ffffff;
     .mint-navbar .mint-tab-item.is-selected{
       border-bottom: none;

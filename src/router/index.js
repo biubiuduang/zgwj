@@ -8,7 +8,7 @@ import store from '../store'
 Vue.use(Router)
 
 let router =  new Router({
-  mode: 'history',
+  //mode: 'history',
   routes: [
     {
       path: '*',//页面初始路由重定向,防止页面初始化时空白现象

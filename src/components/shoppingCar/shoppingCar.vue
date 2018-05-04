@@ -131,9 +131,9 @@
               console.log(data);
               if(data.status == 200){
                 if('page' in data.data){
-                  if(data.data.returnning_items){
-                    that.returnShow = true;
-                    that.returnList = data.data.returnning_items;
+                  if(data.data.returnning_items && data.data.returnning_items.length > 0){
+                      that.returnShow = true;
+                      that.returnList = data.data.returnning_items;
                   }else{
                     that.returnShow = false;
                     that.returnList = [];

@@ -93,13 +93,24 @@
         }
       },
       activated() {
+        this.handleOnload();
         this.handleInitList();
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
-        this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       },
       methods: {
+        handleOnload: function () {
+          if(sessionStorage.getItem("refresh") === "yes"){
+            console.log(sessionStorage.getItem("refresh"));
+            sessionStorage.setItem("refresh","no");
+            window.location.reload();
+          }else{
+
+            console.log(sessionStorage.getItem("refresh"));
+            sessionStorage.setItem("refresh","no")
+          }
+        },
         //获取玩具列表
         handleGoodsList: function () {
           var that = this;

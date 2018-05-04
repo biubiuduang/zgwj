@@ -5,7 +5,8 @@
           <mt-search
             v-model="searchValue"
             cancel-text=""
-            placeholder="搜索玩具">
+            placeholder="搜索玩具"
+          >
           </mt-search>
           <ul class="nav-index row">
             <router-link to="member" tag="li" class="col-xs-3">
@@ -53,7 +54,7 @@
               <div class="list-box">
                 <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                 <p>{{item.goods_name}}</p>
-                <p class="age-name">{{item.age_name}}</p>
+                <p class="age-name goods-price">吊牌价:{{item.goods_price}}</p>
               </div>
             </router-link>
           </template>
@@ -222,6 +223,7 @@
           var that = this;
           $('.mint-searchbar-core').bind('keyup', function (event) {
             if (event.keyCode == "13") {
+              sessionStorage.setItem("refresh","yes");
               //回车执行查询
               that.$router.push({ path: '/list', query: { keywords: that.searchValue }})
             }
@@ -361,9 +363,9 @@
           padding: 0 .13rem;
           margin:0.5rem 0 0 0;
           white-space: normal;
-          height: 3rem;
+          height: 2.5rem;
           -webkit-line-clamp: 2;
-          line-height: 1.5rem;
+          line-height: 1.25rem;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -384,6 +386,10 @@
               height: 1.5rem;
               margin:0;
             }
+            &.goods-price{
+              font-size: 16px;
+               color: @assist-color;
+             }
         }
 
       }
