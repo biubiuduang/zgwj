@@ -131,12 +131,12 @@
               console.log(data);
               if(data.status == 200){
                 if('page' in data.data){
-                  if(data.data.returnning_items.length == 0 || data.data.returnning_items == undefined){
-                    that.returnShow = false;
-                    that.returnList = [];
-                  }else{
+                  if(data.data.returnning_items){
                     that.returnShow = true;
                     that.returnList = data.data.returnning_items;
+                  }else{
+                    that.returnShow = false;
+                    that.returnList = [];
                   }
                   if(data.data.items != undefined){
                     var len = data.data.items.length;

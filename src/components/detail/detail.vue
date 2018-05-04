@@ -55,7 +55,7 @@
             </p>
             <p>收藏</p>
           </div>
-          <div class="collect col-xs-6" @click="handleCollect(details.goods_id)">
+          <div class="collect col-xs-6" @click="handleKefu">
             <p class="icon-img"><img src="../../assets/img/icon/kefu.png" alt=""></p>
             <p>客服</p>
           </div>
@@ -77,7 +77,8 @@
         return {
           selected: "1",
           details: {},
-          collectStatus: false
+          collectStatus: false,
+          collectId: ''
         }
       },
       activated() {
@@ -219,6 +220,36 @@
                     iconClass: 'mintui mintui-success',
                     duration: 2000
                   });
+                 that.collectId = data.data.collect_id;
+                }else{
+                  Toast({
+                    message: '收藏失败',
+                    duration: 2000
+                  });
+                }
+              }
+            })
+          }else{
+            this.newAjax({
+              url: "user/delete_collect",
+              method: "POST",
+              header: {
+                Accept: "application/json; charset=utf-8",
+                token: localStorage.getItem("token")
+              },
+              data: {
+                collect_id: that.collectId
+              },
+              success: function(data){
+                console.log(data);
+                if(data.status == 200){
+                  that.collectStatus = true;
+                  Toast({
+                    message: '取消收藏',
+                    iconClass: 'mintui mintui-success',
+                    duration: 2000
+                  });
+                  that.collectStatus = false;
                 }else{
                   Toast({
                     message: '收藏失败',
@@ -228,6 +259,9 @@
               }
             })
           }
+        },
+        handleKefu: function(){
+          window.location.href = "https://h5.youzan.com/v2/im?c=wsc&v=2&kdt_id=40284577&from=groupmessage#talk!id=40284577&sf=wx_menu";
         },
         handleCollectState: function(id){
           var that = this;
@@ -249,6 +283,7 @@
                     for(var i = 0; i< len; i++){
                       if(data.data.items[i].goods_id === id){
                         that.collectStatus = true;
+                        that.collectId = data.data.items[i].collect_id;
                         break;
                       }
                     }
