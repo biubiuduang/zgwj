@@ -32,7 +32,7 @@
                 <div class="info-msg">
                   <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
                   <p class="is-stars" v-else>非星标玩具</p>
-                  <p class="is-ages">{{item.age_name}}</p>
+                  <p class="age-name goods-price">吊牌价:{{item.goods_price}}</p>
                 </div>
               </div>
             </router-link>
@@ -403,11 +403,9 @@ input{
         font-size:14px;
         p{
           line-height: 16px;
-          &.is-stars{
-            float: left;
-           }
-           &.is-ages{
-            float: right;
+           &.goods-price{
+            margin-top:5px;
+            color:@assist-color;
             }
         }
       }
