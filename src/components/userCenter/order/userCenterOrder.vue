@@ -89,6 +89,7 @@
             },
             success: function(data){
               if(data.status == 200){
+                that.orderList = [];
                 if(data.data.items != undefined){
                   console.log(data);
                   that.orderNormal = false;
