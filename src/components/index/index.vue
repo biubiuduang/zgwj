@@ -388,7 +388,7 @@
             }
             &.goods-price{
               font-size: 16px;
-               color: @assist-color;
+               color: @primary-color;
              }
         }
 

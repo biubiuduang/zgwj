@@ -405,7 +405,7 @@ input{
           line-height: 16px;
            &.goods-price{
             margin-top:5px;
-            color:@assist-color;
+            color:@primary-color;
             }
         }
       }
