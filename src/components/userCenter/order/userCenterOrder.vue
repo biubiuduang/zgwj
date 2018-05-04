@@ -21,6 +21,7 @@
             <li v-for="item in orderList">
               <p class="order-number">订单号:{{item.order_no}} <span>{{item.order_status_name}}</span></p>
               <div class="order-goods-list" v-for="goods in item.goods_items">
+                <router-link tag="a" :to="'/detail/'+goods.goods_id">
                 <div class="pv-img flex-center">
                   <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
                 </div>
@@ -33,6 +34,7 @@
                     <p class="is-ages">{{goods.goods_status_name}}</p>
                   </div>
                 </div>
+                </router-link>
               </div>
             </li>
           </ul>
@@ -154,7 +156,11 @@
         this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
       },
       watch: {
-        '$route' (to, from) {
+        orderSelected: function (val) {
+          // 这里就可以通过 val 的值变更来确定
+          this.handleInit();
+        },
+          '$route' (to, from) {
           // data数据操作
           if(this.$route.query.order_status){
             this.orderSelected = this.$route.query.order_status;

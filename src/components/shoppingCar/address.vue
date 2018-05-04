@@ -228,14 +228,44 @@
           },
           success: function(data){
             console.log(data);
-            MessageBox.confirm('',{
-              title: '提示',
-              message: data.message,
-              confirmButtonText: '查看订单',
-              cancelButtonText: '取消'
-            }).then(action => {
-              that.$router.push("/order");
-            });
+            if(data.status == 50005 || data.status == 50006){
+              MessageBox.confirm('',{
+                title: '提示',
+                message: data.message,
+                confirmButtonText: '购买物流卡',
+                cancelButtonText: '取消'
+              }).then(action => {
+                that.$router.push("/member");
+              });
+            }else if(data.status == 50003){
+              MessageBox.confirm('',{
+                title: '提示',
+                message: data.message,
+                confirmButtonText: '查看会员',
+                cancelButtonText: '取消'
+              }).then(action => {
+                that.$router.push("/userCenter/memberOrder");
+              });
+            }else if(data.status == 50007 || data.status == 50008){
+              MessageBox.confirm('',{
+                title: '提示',
+                message: data.message,
+                confirmButtonText: '查看订单',
+                cancelButtonText: '取消'
+              }).then(action => {
+                that.$router.push("/order");
+              });
+            }else{
+              MessageBox.confirm('',{
+                title: '提示',
+                message: data.message,
+                confirmButtonText: '查看订单',
+                cancelButtonText: '取消'
+              }).then(action => {
+                that.$router.push("/order");
+              });
+            }
+
           }
         })
       }

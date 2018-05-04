@@ -43,7 +43,7 @@
           <ul class="give-list wait-give-back">
             <li v-for="item in buyList">
               <div class="wait-checkbox">
-                <el-checkbox-group v-model="toyCount.buyData" @change="handleCheck" :max="toyCount.max" >
+                <el-checkbox-group v-model="toyCount.buyData" @change="handleCheck" @click="handleClick" :max="toyCount.max" >
                   <el-checkbox :label="item.goods_id"></el-checkbox>
                 </el-checkbox-group>
               </div>
@@ -260,7 +260,11 @@
         handleCheck: function(){
           this.toyCount.buyToy = this.toyCount.buyData.length;
           this.toyCount.returnToy = this.toyCount.returnData.length;
-          this.toyCount.buyToy = this.toyCount.buyData.length;
+          if(this.toyCount.buyToy >= this.toyCount.max){
+            MessageBox('提示', '您最多可租赁的玩具数量为:'+this.toyCount.max+"件,不能再选择了.");
+          }
+        },
+        handleClick: function(){
         }
       },
       mounted() {

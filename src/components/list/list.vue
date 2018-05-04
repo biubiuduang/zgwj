@@ -102,12 +102,9 @@
       methods: {
         handleOnload: function () {
           if(sessionStorage.getItem("refresh") === "yes"){
-            console.log(sessionStorage.getItem("refresh"));
             sessionStorage.setItem("refresh","no");
             window.location.reload();
           }else{
-
-            console.log(sessionStorage.getItem("refresh"));
             sessionStorage.setItem("refresh","no")
           }
         },
