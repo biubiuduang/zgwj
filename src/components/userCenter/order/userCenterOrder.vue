@@ -23,7 +23,7 @@
               <div class="order-goods-list" v-for="goods in item.goods_items">
                 <router-link tag="a" :to="'/detail/'+goods.goods_id">
                 <div class="pv-img flex-center">
-                  <p class="img-box" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
+                  <p class="img-box" :style="{ backgroundImage: 'url(' + goods.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></p>
                 </div>
                 <div class="pv-info">
                   <p class="p-title">{{goods.goods_name}}</p>
