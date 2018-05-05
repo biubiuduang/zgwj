@@ -13,14 +13,8 @@
         <div class="userAvatar">
           <div class="avatar">
             <img class="avatarImg" :src="userInfo.user_avatar"  width="72" height="72" alt="">
-            <template v-if="gradeCard == undefined">
 
-            </template>
-            <template v-else>
-              <img class="level" v-if="gradeCard['card_name'] == '体验卡'" src="../../assets/img/vip/experience.png" alt="">
-              <img class="level" v-else-if="gradeCard['card_name'] == 'VIP卡'" src="../../assets/img/vip/vip.png" alt="">
-              <img class="level" v-else-if="gradeCard['card_name'] == 'SVIP卡'" src="../../assets/img/vip/svip.png" alt="">
-            </template>
+            <img class="level" :src="gradeCard.card_icon" alt="">
           </div>
           <p class="name">{{userInfo.user_nickname}}</p>
           <ul class="user-navbar">
