@@ -5,12 +5,7 @@
         {{$store.state.title}}
       </p>
       <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-        <div class="normal" v-if="borrowShow == false">
-          <img src="../../assets/img/icon/null.png" alt="">
-          <p>您还没有选购任何玩具,快去选购吧</p>
-          <router-link tag="a" to="/list">去挑选</router-link>
-        </div>
-        <mt-loadmore v-else :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+        <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
           <div class="give-back list-box" v-if="returnShow">
             <p class="title title-back">**待归还的玩具**</p>
             <ul class="give-list wait-give-back">
@@ -40,6 +35,10 @@
             <span v-if="isVIP" >您的会员权限一次可以租借{{toyCount.star}}件星标玩具 或 {{toyCount.normal}}件常规玩具。</span>
             <router-link v-else tag="span" to="/member">您不是会员,没有权限租玩具. <span style="color:#2396FF;"> 成为会员 > </span></router-link>
           </p>
+          <div class="normal" v-if="borrowShow == false">
+            <!--<img src="../../assets/img/icon/null.png" alt="">-->
+            <p>您还没有选购任何玩具,<router-link tag="a" to="/list">去挑选>></router-link></p>
+          </div>
           <ul class="give-list wait-give-back">
             <li v-for="item in buyList">
               <div class="wait-checkbox">
@@ -72,7 +71,7 @@
           </div>
         </mt-loadmore>
       </div>
-      <div class="bottom-count" v-if="borrowShow == true">
+      <div class="bottom-count">
         <p class="count">新租{{toyCount.buyToy}}件,归还{{toyCount.returnToy}}件</p>
         <a class="btn-submit" href="javascript:void(0);" @click="handleSubmit">提交订单</a>
       </div>
@@ -94,7 +93,7 @@
           },
           isVIP: false,
           returnList: [],
-          returnShow: false,
+          returnShow: true,
           borrowShow: false,
           buyList: [],
           allLoaded: false,
@@ -130,29 +129,23 @@
             success: function(data){
               console.log(data);
               if(data.status == 200){
-                if('page' in data.data){
-                  if(data.data.returnning_items && data.data.returnning_items.length > 0){
-                      that.returnShow = true;
-                      that.returnList = data.data.returnning_items;
-                  }else{
-                    that.returnShow = false;
-                    that.returnList = [];
+                if(data.data.returnning_items && data.data.returnning_items.length > 0){
+                    that.returnList = data.data.returnning_items;
+                }else{
+                  that.returnShow = false;
+                  that.returnList = [];
+                }
+                if(data.data.items != undefined){
+                  var len = data.data.items.length;
+                  for (var i = 0; i < len; i++) {
+                    that.buyList.push(data.data.items[i]);
                   }
-                  if(data.data.items != undefined){
-                    var len = data.data.items.length;
-                    for (var i = 0; i < len; i++) {
-                      that.buyList.push(data.data.items[i]);
-                    }
-                    that.page.count = data.data.page.count;
-                    that.allLoaded = false;
-                    that.borrowShow = true;
-                  }else{
-                    that.buyList = [];
-                    that.borrowShow = false;
-                  }
+                  that.page.count = data.data.page.count;
+                  that.allLoaded = false;
+                  that.borrowShow = true;
                 }else{
                   that.buyList = [];
-                  that.allLoaded = true;
+                  that.borrowShow = false;
                 }
               }else{
                 that.allLoaded = true;
@@ -380,8 +373,7 @@
     }
   }
   .normal{
-    padding: 0 0.7rem;
-    margin-top:4rem;
+    padding: 1rem 0.7rem;
     text-align:center;
     img{
       width: 10rem;
@@ -392,12 +384,10 @@
       font-size: 1rem;
     }
     a{
-      display: block;
       font-size: 1rem;
-      color:#ffffff;
+      color:#E6B827;
       width: 100%;
       line-height: 2rem;
-      background-color: #2396FF;
       margin-top:2rem;
     }
   }
