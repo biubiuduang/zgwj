@@ -31,7 +31,8 @@
                   <p class="stars" v-else>非星标玩具</p>
                   <div class="info-msg">
                     <p class="is-stars">{{item.created_at}}</p>
-                    <p class="is-ages">{{goods.goods_status_name}}</p>
+                    <router-link v-if="item.order_status == 2" tag="a" to="/shoppingCar">归还>></router-link>
+                    <p v-else class="is-ages">{{goods.goods_status_name}}</p>
                   </div>
                 </div>
                 </router-link>
@@ -286,6 +287,12 @@
             &.is-ages{
                float:right;
              }
+          }
+          a{
+            float:right;
+            font-size: 0.8rem;
+            line-height: 1rem;
+            color:#3BACFF;
           }
         }
       }
