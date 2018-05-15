@@ -4,7 +4,6 @@
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}
     </p>
-    <h2 class="title">消毒流程</h2>
     <div class="article-content">
     </div>
   </div>
