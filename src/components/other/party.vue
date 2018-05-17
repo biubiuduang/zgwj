@@ -4,6 +4,10 @@
       <i class="el-icon-arrow-left" @click="$router.back()"></i>
       {{$store.state.title}}
     </p>
+    <video width="100%" x5-playsinline  playsinline  webkit-playsinline="true"  height="auto" autoplay="autoplay">
+      <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
     <div class="article-content">
     </div>
   </div>
