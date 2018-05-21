@@ -351,7 +351,7 @@
         width: 100%;
         background-color: #d8d8d8;
         border-radius:5px;
-        height: 6.817rem;
+        padding-top:100%;
         img{
           width: 100%;
         }
@@ -398,6 +398,7 @@
       li{
         .list-box{
           p{
+            display:block;
             margin:0;
             text-align: center;
             height: 1.5rem;
@@ -406,6 +407,7 @@
           }
           .pv-img{
             height: 2.45rem;
+            padding-top:0;
           }
         }
       }

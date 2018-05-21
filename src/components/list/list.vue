@@ -94,7 +94,7 @@
       },
       activated() {
         this.handleOnload();
-        this.handleInitList();
+        this.handleOnloadList();
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
@@ -131,6 +131,21 @@
               }
             }
           })
+        },
+        handleOnloadList: function(){
+          this.search = {
+            keywords:this.$route.query.keywords,
+            age_id: this.$route.query.ages,
+            brand_id: this.$route.query.brand,
+            is_star: '2',
+            has_stock: '2',
+            type_id: this.$route.query.type,
+            ability_id: this.$route.query.ability,
+            order_str: this.$route.query.order_str,
+            start: '0',
+            number:'30',
+          };
+          this.handleInitList();
         },
         handleInitList: function () {
           var that = this;
@@ -201,7 +216,11 @@
               //回车执行查询
               that.search.keywords = $(this).val();
               that.goodsList = [];
-              that.search.start = that.goodsList.length;
+              that.search = {
+                keywords:$(this).val(),
+                start: '0',
+                number:'30',
+              };
               that.handleInitList();
             }
           });
@@ -366,7 +385,7 @@ input{
     padding: 10px 3px;
     .pv-img{
       width: 100%;
-      height: 160px;
+      padding-top: 100%;
       background-color: #d8d8d8;
       border-radius: 5px;
       img{
