@@ -92,9 +92,11 @@
           wrapperHeight: 0
         }
       },
+      created() {
+        this.handleOnloadList();
+      },
       activated() {
         this.handleOnload();
-        this.handleOnloadList();
         this.handleClassList();
         this.handleDocument();
         this.handleEnter();
@@ -213,15 +215,15 @@
           var that = this;
           $('.mint-searchbar-core').bind('keyup', function (event) {
             if (event.keyCode == "13") {
+              console.log("keykeykey");
+              $(".page-loadmore-list").html("");
               //回车执行查询
-              that.search.keywords = $(this).val();
-              that.goodsList = [];
-              that.search = {
-                keywords:$(this).val(),
-                start: '0',
-                number:'30',
-              };
-              that.handleInitList();
+//              that.search.keywords = $(this).val();
+//              that.handleInitList();
+
+              that.$router.push({ path: '/list', query: { keywords: $(this).val()}});
+              sessionStorage.setItem("refresh","yes");
+              that.handleOnload();
             }
           });
         },
@@ -232,6 +234,8 @@
           } else {
             that.search.age_id = data;
           }
+
+          console.log("ages");
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
@@ -247,6 +251,7 @@
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
+          console.log("brand");
           that.handleInitList();
 
         },
@@ -260,6 +265,7 @@
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
+          console.log("type");
           that.handleInitList();
         },
         handleAuto: function (data) {
@@ -267,7 +273,7 @@
           that.search.order_str = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-
+          console.log("auto");
           that.handleInitList();
         },
         handleBottomChange(status) {
