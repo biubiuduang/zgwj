@@ -221,8 +221,8 @@
 //              that.search.keywords = $(this).val();
 //              that.handleInitList();
 
-              that.$router.push({ path: '/list', query: { keywords: $(this).val()}});
               sessionStorage.setItem("refresh","yes");
+              that.$router.push({ path: '/list', query: { keywords: $(this).val()}});
               that.handleOnload();
             }
           });
