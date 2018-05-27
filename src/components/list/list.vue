@@ -92,10 +92,8 @@
           wrapperHeight: 0
         }
       },
-      created() {
-        this.handleOnloadList();
-      },
       activated() {
+        this.handleOnloadList();
         this.handleOnload();
         this.handleClassList();
         this.handleDocument();
@@ -223,7 +221,7 @@
 
               sessionStorage.setItem("refresh","yes");
               that.$router.push({ path: '/list', query: { keywords: $(this).val()}});
-              that.handleOnload();
+              window.location.reload();
             }
           });
         },
@@ -235,7 +233,7 @@
             that.search.age_id = data;
           }
 
-          console.log("ages");
+          that.search.keywords = '';
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
@@ -248,6 +246,7 @@
           } else {
             that.search.brand_id = data;
           }
+          that.search.keywords = '';
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
@@ -265,7 +264,7 @@
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
 
-          console.log("type");
+          that.search.keywords = '';
           that.handleInitList();
         },
         handleAuto: function (data) {
@@ -273,7 +272,7 @@
           that.search.order_str = data;
           that.list.isShow = false;
           $(".choice-list li").removeClass("active");
-          console.log("auto");
+          that.search.keywords = '';
           that.handleInitList();
         },
         handleBottomChange(status) {
