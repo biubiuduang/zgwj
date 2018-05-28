@@ -15,12 +15,18 @@
               </p>
               <p>成为会员</p>
             </router-link>
-            <li class="col-xs-3" @click="handleLink">
+            <!--<li class="col-xs-3" @click="handleLink">-->
+              <!--<p class="img-box">-->
+                <!--<img src="../../assets/img/index/1.png" alt="">-->
+              <!--</p>-->
+              <!--<p>派对服务</p>-->
+            <!--</li>-->
+            <router-link to="party" tag="li" class="col-xs-3">
               <p class="img-box">
                 <img src="../../assets/img/index/1.png" alt="">
               </p>
               <p>派对服务</p>
-            </li>
+            </router-link>
             <router-link to="recycle" tag="li" class="col-xs-3">
               <p class="img-box">
                 <img src="../../assets/img/index/2.png" alt="">
