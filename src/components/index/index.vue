@@ -15,12 +15,12 @@
               </p>
               <p>成为会员</p>
             </router-link>
-            <router-link to="party" tag="li" class="col-xs-3">
+            <li class="col-xs-3" @click="handleLink">
               <p class="img-box">
                 <img src="../../assets/img/index/1.png" alt="">
               </p>
               <p>派对服务</p>
-            </router-link>
+            </li>
             <router-link to="recycle" tag="li" class="col-xs-3">
               <p class="img-box">
                 <img src="../../assets/img/index/2.png" alt="">
@@ -134,6 +134,9 @@
         this.handleEnter();
       },
       methods: {
+        handleLink: function(){
+          window.open("https://h.eqxiu.com/s/VrfTtSfa?eqrcode=1&share_level=1&from_user=56c058e8-1c21-4a5b-9397-a9a0a05d53bd&from_id=9d7bc8d5-9c6e-4827-852a-1bcb298235a4&share_time=1527486201306");
+        },
         handleBannerList: function(){
           var that = this;
           this.newAjax({
