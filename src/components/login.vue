@@ -175,7 +175,6 @@
                 that.countDown(t)
               },
               1000)
-
           }
         },
         submitForm: function(formName) {

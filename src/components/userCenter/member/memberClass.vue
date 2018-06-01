@@ -118,7 +118,21 @@
           })
         },
         handleHref: function(){
-          window.location.href = "http://api.xwkj2018.com/order/buy_card?card_id="+this.$route.query.id+"&token="+localStorage.getItem("token");
+          var that = this;
+          var id = that.$route.query.id;
+          this.newAjax({
+            url: "user/get_profile",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            success: function(data){
+              console.log(data);
+              if(data.status == 200){
+                window.location.href = "http://api.xwkj2018.com/order/buy_card?card_id="+id+"&token="+localStorage.getItem("token");
+              }
+            }
+          })
         }
       }
     }
