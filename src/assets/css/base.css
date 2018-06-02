@@ -215,7 +215,7 @@ body {
   min-height: 100%;
 }
 .padding-box {
-  padding-bottom: 2.5rem;
+  padding-bottom: 3.5rem;
 }
 .padding-top {
   padding-top: 2rem;
@@ -322,6 +322,7 @@ image[lazy=loading] {
 }
 .article-content {
   width: 100%;
+  text-align: left;
 }
 .article-content img {
   width: 100%;
