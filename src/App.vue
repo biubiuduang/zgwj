@@ -25,7 +25,7 @@ export default {
   background-color: #F5F5F5;
   margin:0 auto;
   width: 100%;
-  height:100%;
+  min-height:100%;
 }
 .popup-loading{
   display: none;

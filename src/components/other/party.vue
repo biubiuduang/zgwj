@@ -49,6 +49,7 @@
     width: 18rem;
     height: 18rem;
     margin-bottom: 0.5rem;
+    background-color: #000000;
   }
   .title{
     font-size: 1rem;
