@@ -191,7 +191,7 @@
                 });
               }else{
                 Toast({
-                  message: '预约失败',
+                  message: data.message,
                   duration: 2000
                 });
               }
@@ -223,7 +223,7 @@
                  that.collectId = data.data.collect_id;
                 }else{
                   Toast({
-                    message: '收藏失败',
+                    message: data.message,
                     duration: 2000
                   });
                 }
