@@ -7,11 +7,13 @@
       <router-link tag="p" class="title" to="/member"
                    :style="{ backgroundImage: 'url(' + memberInfo.card_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"
       >
-        {{memberInfo.card_name}}
+        <!--{{memberInfo.card_name}}-->
         <!--<p class="triangle"></p>-->
       </router-link>
       <mt-cell title="价格" :value="'￥'+memberInfo.card_price"></mt-cell>
-      <mt-cell title="可选类型" :value="'星标'+cardRules.star_toys_count_pertime+'件，非星标'+cardRules.normal_toys_count_pertime+'件'"></mt-cell>
+      <mt-cell title="同时可租玩具" :value="cardRules.toys_count_pertime+'件'"></mt-cell>
+      <mt-cell title="可租星标玩具" :value="'最多'+cardRules.star_toys_count_pertime+'件'"></mt-cell>
+      <mt-cell title="可租非星标玩具" :value="'最多'+cardRules.normal_toys_count_pertime+'件'"></mt-cell>
       <mt-cell title="有效期" label="第一次收到玩具开始计时" :value="memberInfo.card_duration"></mt-cell>
       <mt-cell title="免费配送" :value="cardRules.express_times+'次'"></mt-cell>
       <mt-cell title="更换次数" :value="cardRules.toys_total_count+'次'"></mt-cell>
@@ -143,7 +145,7 @@
 .member-class{
   .title{
     width: 100%;
-    height: 8rem;
+    height: 7.426rem;
     font-size: 1rem;
     line-height: 8rem;
     background-color: #e1e1e1;

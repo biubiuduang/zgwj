@@ -12,7 +12,10 @@
         <!--</mt-cell>-->
         <div class="userAvatar">
           <div class="avatar">
-            <img class="avatarImg" :src="userInfo.user_avatar"  width="72" height="72" alt="">
+            <div class="avatar-box">
+
+              <img class="avatarImg" :src="userInfo.user_avatar"  width="72" height="72" alt="">
+            </div>
 
             <img class="level" :src="gradeCard.card_icon" alt="">
           </div>
@@ -192,6 +195,14 @@
     padding: 0.5rem 0;
     .avatar{
       position: relative;
+      .avatar-box{
+        width: 72px;
+        height: 72px;
+        margin:0 auto;
+        background: url("../../assets/img/Logo.jpg") center no-repeat;
+        background-size: cover;
+        border-radius: 36px;
+      }
       .avatarImg{
         border-radius: 36px;
       }

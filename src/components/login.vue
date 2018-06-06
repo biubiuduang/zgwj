@@ -132,7 +132,8 @@
         },
         handleTelCode: function() {
           var that = this;
-          if(this.loginForm.tel == ''){
+          var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+          if(!myreg.test(this.loginForm.tel)){
             MessageBox('提示', '请输入手机号!');
             return;
           }else if(this.loginForm.key == ''){

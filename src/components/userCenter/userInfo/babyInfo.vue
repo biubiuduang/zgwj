@@ -65,6 +65,11 @@
             }
           })
         },
+      },
+      beforeRouteLeave(to, from, next) {
+        // 设置下一个路由的 meta
+        $(".el-date-picker").hide();
+        next();
       }
     }
 </script>

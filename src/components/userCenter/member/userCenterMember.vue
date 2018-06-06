@@ -9,14 +9,14 @@
         <router-link tag="li" :to="{path:'/memberClass',query:{id: item.card_id} }"
                      :style="{ backgroundImage: 'url(' + item.card_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"
         >
-          <template v-if="item.card_type == 1">
-          <p class="card-name">{{item.card_name}}</p>
-          <p class="card-date">有效期:{{item.card_no}}</p>
-          </template>
-          <template v-else>
-            <p class="card-name">{{item.card_name}}</p>
-            <p class="card-date">物流次数:{{item.card_no}}</p>
-          </template>
+          <!--<template v-if="item.card_type == 1">-->
+          <!--<p class="card-name">{{item.card_name}}</p>-->
+          <!--<p class="card-date">有效期:{{item.card_no}}</p>-->
+          <!--</template>-->
+          <!--<template v-else>-->
+            <!--<p class="card-name">{{item.card_name}}</p>-->
+            <!--<p class="card-date">物流次数:{{item.card_no}}</p>-->
+          <!--</template>-->
 
         </router-link>
       </template>
@@ -59,7 +59,7 @@
   text-align: center;
   li{
     width: 15.12rem;
-    height: 5.04rem;
+    height: 6.23785rem;
     margin: 1rem auto;
     padding: 0 1rem;
     font-size: 0.8rem;
