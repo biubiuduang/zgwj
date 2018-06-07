@@ -21,7 +21,7 @@
       <Auto @handleAuto="handleAuto"></Auto>
     </div>
   </div>
-      <div class="page-loadmore-wrapper container" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <ul class="page-loadmore-list row">
           <template v-for="item in goodsList">
@@ -294,7 +294,6 @@
           if(this.$route.query.keywords){
             this.search.keywords = this.$route.query.keywords;
           }
-          this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
         }
       },
       mounted() {
@@ -333,7 +332,7 @@ input{
   color:#ffffff;
 }
 }
-  .mint-loadmore{
+  .page-loadmore-wrapper{
     padding: 112px 0 62px 0;
   }
   .choice-box{

@@ -73,18 +73,18 @@
   z-index: 10;
   border-top:1px solid #dfdfdf;
   li{
-    padding:0.25rem 0;
+    padding: 5px 0;
     color:#979797;
     p{
-      font-size: 0.6rem;
-      line-height: 1rem;
-      height: 1rem;
+      font-size: 12px;
+      line-height: 20px;
+      height: 20px;
       img{
-        height: 1.5rem;
+        height: 30px;
         width: auto;
       }
       &.img{
-        height:1.5rem;
+        height:30px;
       }
       &.img-active{
         display: none;
