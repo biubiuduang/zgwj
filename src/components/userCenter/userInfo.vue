@@ -5,8 +5,10 @@
         {{$store.state.title}}
       </p>
       <keep-alive>
-        <router-view :info="userInfo"></router-view>
+        <router-view :info="userInfo" v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
+
+      <router-view :info="userInfo" v-if="!$route.meta.keepAlive"></router-view>
     </div>
 </template>
 <script>

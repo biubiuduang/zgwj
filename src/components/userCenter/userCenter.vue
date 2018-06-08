@@ -13,11 +13,11 @@
         <div class="userAvatar">
           <div class="avatar">
             <div class="avatar-box">
-
               <img class="avatarImg" :src="userInfo.user_avatar"  width="72" height="72" alt="">
             </div>
-
-            <img class="level" :src="gradeCard.card_icon" alt="">
+            <template v-if="gradeCard.card_icon">
+              <img class="level" :src="gradeCard.card_icon" alt="">
+            </template>
           </div>
           <p class="name">{{userInfo.user_nickname}}</p>
           <ul class="user-navbar">

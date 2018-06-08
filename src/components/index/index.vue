@@ -238,18 +238,17 @@
             }
           });
         },
+      },
+      beforeRouteLeave(to, from, next) {
+        // 设置下一个路由的 meta
+        to.meta.keepAlive = true;
+        next();
       }
     }
 </script>
 <style lang="less">
   @import "../../assets/css/parameters.less";
   .index{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
     background-color:@bg-color;
     .container{
       padding:1rem 0.3rem 0 0.3rem;

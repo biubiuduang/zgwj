@@ -1,8 +1,9 @@
 <template>
   <div id="app" >
     <keep-alive>
-    <router-view class="main-box"></router-view>
+      <router-view class="main-box" v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
+    <router-view class="main-box" v-if="!$route.meta.keepAlive"></router-view>
     <div class="popup-loading">
       <mt-spinner class="loading-box" type="fading-circle" color="#26a2ff" :size="60"></mt-spinner>
     </div>

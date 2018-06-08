@@ -1,8 +1,9 @@
 <template>
     <div>
       <keep-alive>
-        <router-view></router-view>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
       <div>
         <ul class="global-nav">
           <router-link to="/index" tag="li" class="col-xs-3">
