@@ -49,7 +49,8 @@ let router =  new Router({
         path: '/list',
         meta: {
           title: '全部玩具',
-          keepAlive: true
+          keepAlive: true,
+          keepStatus: false,
         },
         name: 'list',
         component: resolve => require(['../components/list/list.vue'], resolve)

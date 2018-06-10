@@ -37,12 +37,8 @@
       </template>
     </ul>
     <div slot="bottom" class="mint-loadmore-bottom">
-      <span v-if="allLoaded== false" v-show="bottomStatus !== 'loading'"
-            :class="{ 'is-rotate': bottomStatus === 'drop' }">↑加载更多</span>
-      <span v-show="bottomStatus === 'loading'">
-        <mt-spinner type="snake"></mt-spinner>
-      </span>
-      <span v-if="allLoaded">没有更多数据了!</span>
+      <!--<span v-if="allLoaded">↑加载更多</span>-->
+      <span>没有更多数据了!</span>
     </div>
   </div>
 </template>
@@ -293,6 +289,9 @@
       },
     },
     activated() {
+      if(this.$route.meta.keepStatus){
+        this.handleOnloadList();
+      }
       this.handleOnload();
       this.handleClassList();
       this.handleDocument();
@@ -312,6 +311,7 @@
       if(to.meta.name =="index"){
         to.meta.keepAlive = false;
       }
+      from.meta.keepStatus = false;
       to.meta.keepAlive = true;
       next();
     }

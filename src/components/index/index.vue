@@ -242,10 +242,10 @@
       beforeRouteLeave(to, from, next) {
         // 设置下一个路由的 meta
         if(to.name == 'list'){
-          to.meta.keepAlive = false;
-        }else{
-          to.meta.keepAlive = true;
+          to.meta.keepStatus = true;
         }
+
+        to.meta.keepAlive = true;
         next();
       }
     }
