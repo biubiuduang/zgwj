@@ -309,6 +309,9 @@
     },
     beforeRouteLeave(to, from, next) {
       // 设置下一个路由的 meta
+      if(to.meta.name =="index"){
+        to.meta.keepAlive = false;
+      }
       to.meta.keepAlive = true;
       next();
     }
