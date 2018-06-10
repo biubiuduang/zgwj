@@ -242,6 +242,8 @@
 </script>
 <style lang="less">
   .userAddr{
+    min-height:32rem;
+  background-color:#ffffff;
   .title{
     line-height: 50px;
     text-indent:2rem;

@@ -12,8 +12,8 @@
       <mt-cell v-else title="会员状态" is-link value="开启" to="/userCenter/memberState"></mt-cell>
       <template v-if="canAddPolicy == 1">
         <mt-cell title="赠送保险" v-if="insureStatus == 0" is-link value="查看" to="/userCenter/insureForm"></mt-cell>
-        <mt-cell title="赠送保险" v-else-if="insureStatus == 1" value="已投保" ></mt-cell>
-        <mt-cell title="赠送保险" v-if="insureStatus == 2"  value="投保成功"></mt-cell>
+        <mt-cell title="赠送保险" v-else-if="insureStatus == 1" to="/userCenter/memberInfo" value="已投保" ></mt-cell>
+        <mt-cell title="赠送保险" v-else-if="insureStatus == 2" to="/userCenter/memberInfo"  value="投保成功"></mt-cell>
       </template>
     </div>
 </template>

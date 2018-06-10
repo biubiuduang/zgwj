@@ -276,6 +276,7 @@
   }
   }
   .insureForm{
+    background-color: #ffffff;
     padding: 60px 1.5rem 1rem 0;
     h3{
       text-align: left;

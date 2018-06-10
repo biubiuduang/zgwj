@@ -280,13 +280,12 @@
 <style lang="less">
   @import "../../assets/css/parameters.less";
   .address-form{
-    padding-left: 15px;
-    padding-top: 30px;
+    padding:30px 15px 0 15px;
     background-color: #ffffff;
     position: relative;
   }
   .address{
-    background-color:@bg-color;
+    background-color:#ffffff;
     .address-form{
       font-size:0.7rem;
       input{
@@ -330,12 +329,10 @@
     margin-left:0;
   }
   .enter-box .el-form-item__content{
-    position: absolute;
-    bottom: -80px;
-    left:0;
     width: 100%;
     text-align: center;
     margin-left:0 !important;
+    margin-top:50px;
     .el-button{
       width: 90%;
       border-radius: 25px;

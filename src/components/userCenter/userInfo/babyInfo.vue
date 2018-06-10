@@ -78,6 +78,7 @@
   .babyInfo{
     background-color: #ffffff;
     padding-top:20px;
+    height:30rem;
     .el-input__inner{
       border:none;
     }
@@ -105,11 +106,9 @@
     }
     .enter-box{
       border:none;
-      height: 0;
-      margin:0;
+      margin:50px 0 0 0;
       .el-form-item__content{
         position: relative;
-        bottom: -2rem;
         width: 100%;
         text-align: center;
         margin-left:0 !important;
