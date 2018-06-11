@@ -67,14 +67,14 @@
           ability: [],
         },
         search: {
-          keywords: this.$route.query.keywords,
-          age_id: this.$route.query.ages,
-          brand_id: this.$route.query.brand,
+          keywords: '',
+          age_id: '',
+          brand_id: '',
           is_star: '2',
           has_stock: '2',
-          type_id: this.$route.query.type,
-          ability_id: this.$route.query.ability,
-          order_str: this.$route.query.order_str,
+          type_id: '',
+          ability_id: '',
+          order_str: '',
           start: '0',
           number: '30',
         },
@@ -136,14 +136,14 @@
       },
       handleOnloadList: function () {
         this.search = {
-          keywords: this.$route.query.keywords,
-          age_id: this.$route.query.ages,
-          brand_id: this.$route.query.brand,
+          keywords: this.$route.query.keywords || '',
+          age_id: this.$route.query.ages || '',
+          brand_id: this.$route.query.brand || '',
           is_star: '2',
           has_stock: '2',
-          type_id: this.$route.query.type,
-          ability_id: this.$route.query.ability,
-          order_str: this.$route.query.order_str,
+          type_id: this.$route.query.type || '',
+          ability_id: this.$route.query.ability || '',
+          order_str: this.$route.query.order_str || '',
           start: '0',
           number: '30',
         };
@@ -151,19 +151,16 @@
       },
       handleInitList: function () {
         var that = this;
+        $("html,body").animate({scrollTop:0}, 500);
         this.goodsList = [];
-        this.search.start = 0;
+        this.search.start = '0';
         this.newAjax({
           url: 'goods/get_goodes',
           data: that.search,
           success: function (data) {
             if (data.status == 200) {
               if (data.data.items != undefined) {
-                console.log(data);
-                var len = data.data.items.length;
-                for (var i = 0; i < len; i++) {
-                  that.goodsList.push(data.data.items[i]);
-                }
+                that.goodsList = data.data.items;
                 that.listCount = data.data.page.count;
                 that.allLoaded = false;
               } else {
