@@ -82,7 +82,7 @@
         goodsList: [],
         listCount: 0,
         bottomStatus: '',
-        allLoaded: false,
+        allLoaded: true,
       }
     },
     created() {
@@ -98,7 +98,8 @@
           var windowHeight = $(this).height();
           if(!that.allLoaded && scrollTop + windowHeight == scrollHeight && that.$route.name == 'list') {
 // 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-            that.loadBottom();
+             that.loadBottom();
+
           }
         });
       },
@@ -124,6 +125,13 @@
                 var len = data.data.items.length;
                 for (var i = 0; i < len; i++) {
                   that.goodsList.push(data.data.items[i]);
+                }
+                console.log("len: "+that.goodsList.length);
+                console.log("count: "+data.data.page.count);
+                if(that.goodsList.length >= data.data.page.count){
+                  that.allLoaded = true;
+                }else{
+                  that.allLoaded = false;
                 }
               } else {
                 that.goodsList = [];
@@ -162,7 +170,13 @@
               if (data.data.items != undefined) {
                 that.goodsList = data.data.items;
                 that.listCount = data.data.page.count;
-                that.allLoaded = false;
+                console.log(data.data.items.length);
+                console.log(data.data.page.count);
+                if(data.data.items.length == data.data.page.count){
+                  that.allLoaded = true;
+                }else{
+                  that.allLoaded = false;
+                }
               } else {
                 that.goodsList = [];
               }
