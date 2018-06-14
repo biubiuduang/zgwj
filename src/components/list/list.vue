@@ -89,20 +89,7 @@
       this.handleOnloadList();
     },
     methods: {
-      //滚动条滚动到底部,加载下一页
-      listScroll: function(){
-        var that = this;
-        $(window).scroll(function() {
-          var scrollTop = $(this).scrollTop();
-          var scrollHeight = $(document).height();
-          var windowHeight = $(this).height();
-          if(!that.allLoaded && scrollTop + windowHeight == scrollHeight && that.$route.name == 'list') {
-// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-             that.loadBottom();
-
-          }
-        });
-      },
+      //初始化
       handleOnload: function () {
         if (sessionStorage.getItem("refresh") === "yes") {
           sessionStorage.setItem("refresh", "no");
@@ -110,37 +97,6 @@
         } else {
           sessionStorage.setItem("refresh", "no")
         }
-      },
-      //获取玩具列表
-      handleGoodsList: function () {
-        var that = this;
-        this.search.start = this.goodsList.length;
-        this.newAjax({
-          url: 'goods/get_goodes',
-          data: that.search,
-          success: function (data) {
-            if (data.status == 200) {
-              if (data.data.items != undefined) {
-                console.log(data);
-                var len = data.data.items.length;
-                for (var i = 0; i < len; i++) {
-                  that.goodsList.push(data.data.items[i]);
-                }
-                console.log("len: "+that.goodsList.length);
-                console.log("count: "+data.data.page.count);
-                if(that.goodsList.length >= data.data.page.count){
-                  that.allLoaded = true;
-                }else{
-                  that.allLoaded = false;
-                }
-              } else {
-                that.goodsList = [];
-              }
-            } else {
-              that.goodsList = [];
-            }
-          }
-        })
       },
       handleOnloadList: function () {
         this.search = {
@@ -157,9 +113,60 @@
         };
         this.handleInitList();
       },
+      //滚动条滚动到底部,加载下一页
+      listScroll: function(){
+        var that = this;
+        $(window).scroll(function() {
+          var scrollTop = $(this).scrollTop();
+          var scrollHeight = $(document).height();
+          var windowHeight = $(this).height();
+          if(!that.allLoaded && scrollTop + windowHeight == scrollHeight && that.$route.name == 'list') {
+// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+            that.handleGoodsList();
+          }
+        });
+      },
+      //获取玩具列表
+      handleGoodsList: function () {
+        var that = this;
+        this.search.start = this.goodsList.length;
+        if(!that.allLoaded){
+          that.allLoaded = true;
+          this.newAjax({
+            url: 'goods/get_goodes',
+            data: that.search,
+            success: function (data) {
+              if (data.status == 200) {
+                if (data.data.items != undefined) {
+                  console.log(data);
+                  var len = data.data.items.length;
+                  for (var i = 0; i < len; i++) {
+                    that.goodsList.push(data.data.items[i]);
+                  }
+                  // var goodsId = [];
+                  // for(var j = 0; j < that.goodsList.length ;j ++){
+                  //   goodsId.push(that.goodsList[j].goods_id);
+                  // }
+                  // console.log(goodsId);
+                  if(that.goodsList.length == data.data.page.count){
+                    that.allLoaded = true;
+                  }else{
+                    that.allLoaded = false;
+                  }
+                } else {
+                  that.goodsList = [];
+                }
+              } else {
+                that.goodsList = [];
+              }
+            }
+          })
+        }
+      },
       handleInitList: function () {
         var that = this;
         $("html,body").animate({scrollTop:0}, 500);
+        this.allLoaded = true;
         this.goodsList = [];
         this.search.start = '0';
         this.newAjax({
@@ -170,8 +177,11 @@
               if (data.data.items != undefined) {
                 that.goodsList = data.data.items;
                 that.listCount = data.data.page.count;
-                console.log(data.data.items.length);
-                console.log(data.data.page.count);
+                // var goodsId = [];
+                // for(var i = 0; i < that.goodsList.length ;i ++){
+                //   goodsId.push(that.goodsList[i].goods_id);
+                // }
+                // console.log(goodsId);
                 if(data.data.items.length == data.data.page.count){
                   that.allLoaded = true;
                 }else{
@@ -290,13 +300,6 @@
       },
       handleBottomChange(status) {
         this.bottomStatus = status;
-      },
-      loadBottom: function () {
-        if (this.goodsList.length < this.listCount) {
-          this.handleGoodsList();
-        } else {
-          this.allLoaded = true;
-        }
       },
     },
     activated() {

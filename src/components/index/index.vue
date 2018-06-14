@@ -151,7 +151,6 @@
               position_no: 'index_1',
             },
             success: function(data){
-              console.log(data);
               if(data.status == 200){
                 that.bannerList = data.data.items;
               }else{
@@ -169,7 +168,6 @@
             },
             success: function(data){
               if(data.status == 200){
-                console.log(data);
                 if(data.data.items.length > 4){
                   var item = [];
                   for(var i = 0; i < 4; i++){
@@ -216,7 +214,6 @@
             url: "goods/get_categories",
             success: function (data) {
               that.brandList = data.data.items[1].child[0];
-              console.log(that.brandList);
             }
           })
         },
