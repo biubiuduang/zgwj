@@ -7,6 +7,7 @@
       <p class="member-info"></p>
       <mt-cell title="会员类型" :value="userInfo.card_name"></mt-cell>
       <mt-cell title="剩余天数" :value="userInfo.remain_duration"></mt-cell>
+      <mt-cell title="物流次数" :value="userInfo.remain_rules.express_times"></mt-cell>
       <mt-cell title="会员权限" :value="'星标'+remainRules.star_toys_count_pertime+'件,常规'+remainRules.normal_toys_count_pertime+'件'"></mt-cell>
       <mt-cell v-if="remainStatus == true" title="会员状态" is-link value="暂停" to="/userCenter/memberState"></mt-cell>
       <mt-cell v-else title="会员状态" is-link value="开启" to="/userCenter/memberState"></mt-cell>
