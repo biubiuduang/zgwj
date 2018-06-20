@@ -89,8 +89,9 @@
         </mt-cell>
       </div>
       <div class="info center-item">
-        <mt-cell title="手机号" is-link>
-          <span>{{userInfo.user_mobile}}</span>
+        <mt-cell title="手机号" style="padding-right: 1rem;">
+            <span v-if="userInfo.user_mobile">{{userInfo.user_mobile}}</span>
+            <span v-else>未绑定</span>
           <img slot="icon" src="../../assets/img/userCenter/phone.png"  width="18" height="18" />
         </mt-cell>
         <mt-cell title="设置密码" is-link to="/setPassword">

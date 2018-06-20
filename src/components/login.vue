@@ -79,6 +79,7 @@
           telCodeStatus: false,
           timeCount: 60,
           countBtn: '获取验证码',
+          countDownTimer: null,
           loginForm: {
             tel: '',
             key:'',
@@ -155,7 +156,8 @@
                 }else{
                   that.telCodeStatus = false;
                   that.loginForm.key = '';
-                  MessageBox('提示', '获取短信失败,请重新获取.');
+                  MessageBox('提示', '图形验证码错误,请重新输入.');
+                  that.handleGetImgCode();
                 }
               }
             })
@@ -163,20 +165,23 @@
         },
         countDown: function(t){
           var that = this;
-          var setTime;
           if(t == 0){
-            this.telCodeStatus = false;
-            this.countBtn = '获取验证码';
-            this.timeCount = 60;
-            clearTimeout(setTime);
+            that.clearCountDownTimer();
           }else{
             this.countBtn = t+"s";
             t--;
-            setTime = setTimeout(function() {
+            that.countDownTimer = setTimeout(function() {
                 that.countDown(t)
               },
               1000)
           }
+        },
+        clearCountDownTimer() {
+          clearTimeout(this.countDownTimer);
+          this.countDownTimer = null;
+          this.telCodeStatus = false;
+          this.countBtn = '获取验证码';
+          this.timeCount = 60;
         },
         submitForm: function(formName) {
           var that = this;
@@ -194,12 +199,17 @@
                   if(data.status == 200){
                     localStorage.setItem("token",data.data.token);
                     that.$store.commit('setLogin',true);
+
                     if(data.data.has_weixin_grant == 0){
                       window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50352eddf02dd20a&redirect_uri=http://api.xwkj2018.com/user/get_profile_weixin&response_type=code&scope=snsapi_userinfo&state="+ data.data.user_id +"#wechat_redirect";
                     }else{
                       that.$router.go(-1);
                     }
                     localStorage.setItem("login_status","true");
+                    that.clearCountDownTimer();
+                    that.loginForm.tel = null;
+                    that.loginForm.key = null;
+                    that.loginForm.psw = null;
                   }else{
                     MessageBox('提示', data.message);
                   }
@@ -233,6 +243,8 @@
                       that.$router.go(-1);
                     }
                     localStorage.setItem("login_status","true");
+                    that.loginForm2.tel = null;
+                    that.loginForm2.psw = null;
                   }else{
                     MessageBox('提示', data.message);
                   }
