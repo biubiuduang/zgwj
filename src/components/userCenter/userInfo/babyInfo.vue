@@ -2,18 +2,24 @@
     <div class="babyInfo">
       <el-form label-width="100px" class="demo-ruleForm">
         <el-form-item label="宝宝姓名:">
-          <el-input type="text" placeholder="宝宝姓名" v-model="info.baby_name" auto-complete="off"></el-input>
+          <el-input type="text" placeholder="宝宝姓名" v-model="baby_name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="宝宝性别:">
-          <el-select v-model="info.baby_sex" placeholder="选择宝宝性别">
-            <el-option label="男宝宝" value="male"></el-option>
-            <el-option label="女宝宝" value="female"></el-option>
+          <el-select v-model="baby_sex" placeholder="选择宝宝性别">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="出生日期:">
-            <el-form-item prop="date1">
-              <el-date-picker type="date" placeholder="选择宝宝出生日期" v-model="info.baby_birthday" style="width: 100%;"></el-date-picker>
-            </el-form-item>
+            <el-date-picker type="date"
+                            placeholder="选择宝宝出生日期"
+                            v-model="baby_birthday"
+                            style="width: 100%;"
+            ></el-date-picker>
         </el-form-item>
         <el-form-item class="enter-box">
           <el-button type="primary" @click="submitForm">确认</el-button>
@@ -29,12 +35,60 @@
       },
       data() {
         return {
-
+          options: [{
+            value: 'male',
+            label: '男宝宝'
+          }, {
+            value: 'female',
+            label: '女宝宝'
+          }],
+          baby_name: '',
+          baby_sex: '',
+          baby_birthday: ''
         }
       },
       activated(){
+        this.handleInit();
+        console.log(this.info.baby_birthday);
       },
       methods: {
+        handleInit: function(){
+          var that = this;
+          this.newAjax({
+            url: "user/get_profile",
+            header: {
+              Accept: "application/json; charset=utf-8",
+              token: localStorage.getItem("token")
+            },
+            success: function(data){
+              if(data.status == 200){
+                var baby = data.data;
+
+                that.baby_name = baby.baby_name ? baby.baby_name : '';
+                console.log(baby.baby_sex);
+                //that.baby_sex = baby.baby_sex;
+
+                if(baby.baby_sex == 'unselect' || baby.baby_sex == ''){
+                  that.baby_sex = '';
+                }else{
+                  that.baby_sex = baby.baby_sex;
+                }
+                if(baby.baby_birthday){
+                  that.baby_birthday = baby.baby_birthday;
+                }else{
+                  that.baby_birthday = "";
+                }
+
+                console.log(that.gradeCard);
+                if(data.data.gradecard == undefined){
+                  that.userLV = "会员"
+                }else{
+                  that.userLV = data.data.gradecard.card_name+"会员"
+                }
+              }
+            }
+          })
+        },
         submitForm: function(){
           var that = this;
           this.newAjax({
@@ -45,9 +99,9 @@
               token: localStorage.getItem("token")
             },
             data: {
-              baby_name: that.info.baby_name,
-              baby_sex: that.info.baby_sex,
-              baby_birthday: that.$moment(that.info.baby_birthday).format("YYYY-MM-DD")
+              baby_name: that.baby_name,
+              baby_sex: that.baby_sex,
+              baby_birthday: that.$moment(that.baby_birthday).format("YYYY-MM-DD")
             },
             success: function(data){
               if(data.status == 200){
