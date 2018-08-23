@@ -53,7 +53,7 @@
     export default {
       data() {
         var checkTel = (rule, value, callback) => {
-          var myreg=/^[1][3,4,5,6,7,8][0-9]{9}$/;
+          var myreg=/^[1][0-9][0-9]{9}$/;
           if (!myreg.test(value)) {
             return callback(new Error('请输入11位手机号'));
           }else{
