@@ -1,5 +1,5 @@
 <template>
-  <div class="page-loadmore payment">
+  <div class="payment">
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <p class="backNav">
         <i class="el-icon-arrow-left" @click="$router.back()"></i>
