@@ -60,7 +60,7 @@
               <div class="list-box">
                 <div class="pv-img" :style="{ backgroundImage: 'url(' + item.goods_thumb + ')','background-repeat':'no-repeat','background-size':'cover','background-position':'center' }"></div>
                 <p>{{item.goods_name}}</p>
-                <p class="age-name goods-price">租赁价:{{item.goods_price}}</p>
+                <p class="age-name goods-price">天猫价:{{item.goods_price}}</p>
               </div>
             </router-link>
           </template>

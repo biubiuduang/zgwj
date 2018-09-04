@@ -14,7 +14,7 @@
       <div class="detail-info">
         <div class="title-info">
           <p class="title">{{details.goods_name}}</p>
-          <p class="money">租赁价:{{details.goods_price}}</p>
+          <p class="money">天猫价:{{details.goods_price}}</p>
         </div>
         <p class="age-info">
           <span class="is-stars">

@@ -30,7 +30,7 @@
             <div class="info-msg">
               <p class="is-stars" v-if="item.is_star == 1">星标玩具</p>
               <p class="is-stars" v-else>非星标玩具</p>
-              <p class="age-name goods-price">租赁价:{{item.goods_price}}</p>
+              <p class="age-name goods-price">天猫价:{{item.goods_price}}</p>
             </div>
           </div>
         </router-link>
